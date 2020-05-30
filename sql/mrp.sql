@@ -11,34 +11,35 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8 */;
 
---
--- DB name: `mrp`
---
-
+-- Schema smartmaintenance
+-- -----------------------------------------------------
+USE `smartmaintenance`;
 -- --------------------------------------------------------
 
 --
 -- Struttura della tabella `access_level`
 --
 
-CREATE TABLE IF NOT EXISTS `access_level` (
-  `id_access_level` int(11) NOT NULL,
-  `name` varchar(45) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Access levels';
+CREATE TABLE IF NOT EXISTS `access_level`
+(
+    `id_access_level` int(11)     NOT NULL,
+    `name`            varchar(45) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8 COMMENT ='Access levels';
 
 --
 -- Dump dei dati per la tabella `access_level`
 --
 
-INSERT INTO `access_level` (`id_access_level`, `name`) VALUES
-(50, 'user'),
-(60, 'manager'),
-(100, 'admin');
+INSERT INTO `access_level` (`id_access_level`, `name`)
+VALUES (200, 'planner'),
+       (300, 'maintainer'),
+       (100, 'admin');
 
 -- --------------------------------------------------------
 
