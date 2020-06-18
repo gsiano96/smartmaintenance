@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ScheduledActivities
+ * Class ScheduledActivitiesScreen
  *
  * {ViewResponsability}
  *
@@ -12,7 +12,7 @@ namespace views\maintainer;
 
 use framework\View;
 
-class ScheduledActivities extends View
+class ScheduledActivitiesScreen extends View
 {
 
     /**
@@ -23,21 +23,23 @@ class ScheduledActivities extends View
     public function __construct($tplName = null)
     {
         if (empty($tplName))
-            $tplName = "/maintainer/scheduled_activities";
+            $tplName = "/maintainer/scheduled_activities_screen";
         parent::__construct($tplName);
     }
 
-    public function setScheduledActivityRow($scheduledActivities){
-        $this->openBlock("ScheduledActivitiesRow");
+    public function setScheduledActivityScreenRow($scheduledActivities){
+        $this->openBlock("ActivityParametersRow");
         foreach ($scheduledActivities as $activity){
-            $this->setVar("IDData", $activity["ActID"]);
             $this->setVar("DescriptionData", $activity["ActDescription"]);
             $this->setVar("TimeData", $activity["ActEstimatedTime"]);
-            if($activity["ActInterrupt"]==1)
-                $trad="Yes";
-            else
-                $trad="No";
-            $this->setVar("InterrumptibleData", $trad);
+            $this->parseCurrentBlock();
+        }
+        $this->setBlock();
+    }
+    public function setMaterialActivityScreenRow($materials){
+        $this->openBlock("ActivityMaterialParameter");
+        foreach ($materials as $material){
+            $this->setVar("ActivityMaterials", $material["MatName"]);
             $this->parseCurrentBlock();
         }
         $this->setBlock();

@@ -14,6 +14,54 @@
     <title>Scheduled Activities</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="scheduled_activities" class="navbar-brand"> Maintainer</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav">
+                <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Call Activities</a>
+                    <div class="dropdown-menu">
+                        <!-- BEGIN CallActivitiesStats -->
+                        <label class="dropdown-item disabled"> {Statistic} </label>
+                        <!-- END CallActivitiesStats -->
+                        <a class="dropdown-item" href="#">
+                            Go To
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Closing EWO</a>
+                    <div class="dropdown-menu">
+                        <!-- BEGIN ClosingEWOStats -->
+                        <label class="dropdown-item disabled"> {Statistic} </label>
+                        <!-- END ClosingEWOStats -->
+                        <a class="dropdown-item" href="#">
+                            Go To
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown ">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Extra Activities</a>
+                    <div class="dropdown-menu">
+                        <!-- BEGIN ExtraActivitiesStats -->
+                        <label class="dropdown-item disabled"> {Statistic} </label>
+                        <!-- END ExtraActivitiesStats -->
+                        <a class="dropdown-item" href="#">
+                            Go To
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div class="container">
     <h1>Scheduled Activities</h1>
     <table class="table">
@@ -27,7 +75,7 @@
         <tbody>
         <!-- BEGIN ScheduledActivitiesRow -->
         <tr>
-            <td><a href="#">{DescriptionData}</a></td>
+            <td><a href="scheduled_activities_screen?iden={IDData}" >{DescriptionData}</a></td>
             <td>{TimeData}</td>
             <td>{InterrumptibleData}</td>
         </tr>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ScheduledActivities
+ * Class ScheduledActivitiesScreen
  *
  * {ModelResponsability}
  *
@@ -12,7 +12,7 @@ namespace models\maintainer;
 
 use framework\Model;
 
-class ScheduledActivities extends Model
+class ScheduledActivitiesScreen extends Model
 {
     /**
     * Object constructor.
@@ -20,7 +20,6 @@ class ScheduledActivities extends Model
     */
     public function __construct()
     {
-        $this->connect(DBHOST,DBUSER,DBPASSWORD,"smartmaintenance");
         parent::__construct();
     }
 
@@ -33,7 +32,8 @@ class ScheduledActivities extends Model
     {
 
     }
-    public function getScheduledActivitiesFromDb()
+
+    public function getScheduledActivityFromDb($IDAct)
     {
         $this->sql = <<<SQL
         SELECT 
@@ -44,7 +44,29 @@ class ScheduledActivities extends Model
         FROM
             maintenance_procedure
         WHERE 
-            procedure_class = 'planned procedure';
+            procedure_class = 'planned procedure'
+            AND id_activity = $IDAct;
+SQL;
+
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
+    public function getMaterialsForActivityFromDb($IDAct)
+    {
+        $this->sql = <<<SQL
+        SELECT
+            material.name as MatName, 
+            material.id_material as MatID, 
+            materials_maintenace_procedures.id_maintenance_procedure,
+            maintenance_procedure.id_activity
+        FROM
+            material
+        INNER JOIN 
+	        materials_maintenace_procedures ON material.id_material = materials_maintenace_procedures.id_material
+        INNER JOIN maintenance_procedure ON id_maintenance_procedure = id_activity
+        WHERE
+            id_activity=$IDAct;
 SQL;
 
         $this->updateResultSet();
