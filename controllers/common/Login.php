@@ -61,7 +61,7 @@ class Login extends Controller
                 if ($this->model->getNameRole() == 'admin') {
                     $returnPage = SITEURL;
                 } else {
-                    $returnPage = SITEURL . "/" . $this->model->getNameRole();
+                    $returnPage = SITEURL . "/" . $this->model->getNameRole() . "/?id_user=" . $this->model->getId();
                 }
                 #$returnPage = (isset($_GET["return_link"])) ? SITEURL . "/" . $_GET["return_link"] : SITEURL;
                 header("Location:" . $returnPage);
