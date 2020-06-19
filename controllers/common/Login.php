@@ -59,9 +59,9 @@ class Login extends Controller
             if ($this->model->isLogged()) {
                 $this->hide("LoginErrorMessage");
                 if ($this->model->getNameRole() == 'admin') {
-                    $returnPage = SITEURL . "/maintainer/";
+                    $returnPage = SITEURL;
                 } else {
-                    $returnPage = SITEURL . "/maintainer/" . $this->model->getNameRole();
+                    $returnPage = SITEURL . "/" . $this->model->getNameRole();
                 }
                 #$returnPage = (isset($_GET["return_link"])) ? SITEURL . "/" . $_GET["return_link"] : SITEURL;
                 header("Location:" . $returnPage);
