@@ -57,9 +57,14 @@ class Login extends Controller
             $password = $_POST["password"];
             $this->model->login($email,$password);
             if ($this->model->isLogged()) {
-               $this->hide("LoginErrorMessage");
-               $returnPage = (isset($_GET["return_link"])) ? SITEURL . "/" . $_GET["return_link"] : SITEURL;
-               header("Location:". $returnPage);
+                $this->hide("LoginErrorMessage");
+                if ($this->model->getNameRole() == 'admin') {
+                    $returnPage = SITEURL . "/maintainer/";
+                } else {
+                    $returnPage = SITEURL . "/maintainer/" . $this->model->getNameRole();
+                }
+                #$returnPage = (isset($_GET["return_link"])) ? SITEURL . "/" . $_GET["return_link"] : SITEURL;
+                header("Location:" . $returnPage);
             }
         } else if (isset($_POST["login_form_do_logout"])) {
             $this->model->logout();
@@ -110,5 +115,6 @@ class Login extends Controller
         $model = new LoginModel();
         return $model;
     }
+
 
 }
