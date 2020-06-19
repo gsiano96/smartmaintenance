@@ -44,4 +44,12 @@ class ScheduledActivitiesScreen extends View
         }
         $this->setBlock();
     }
+    public function setNoteActivityScreenRow($notes){
+        $this->openBlock("ActivityNotesParameter");
+        foreach ($notes as $note){
+            $this->setVar("ActivityNotes", $note["ActNote"]);
+            $this->parseCurrentBlock();
+        }
+        $this->setBlock();
+    }
 }

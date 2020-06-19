@@ -38,6 +38,9 @@ class ScheduledActivitiesScreen extends Controller
         $this->view->setScheduledActivityScreenRow($activity);
         $materials = $this->model->getMaterialsForActivityFromDb($IDAct);
         $this->view->setMaterialActivityScreenRow($materials);
+        $notes = $this->model->getNoteForActivityFromDb($IDAct);
+        $this->view->setNoteActivityScreenRow($notes);
+
     }
 
     /**
@@ -49,6 +52,7 @@ class ScheduledActivitiesScreen extends Controller
     {
 
     }
+
 
     /**
     * Inizialize the View by loading static design of /maintainer/scheduled_activities_screen.html.tpl

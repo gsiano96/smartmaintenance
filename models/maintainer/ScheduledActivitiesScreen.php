@@ -63,13 +63,30 @@ SQL;
         FROM
             material
         INNER JOIN 
-	        materials_maintenace_procedures ON material.id_material = materials_maintenace_procedures.id_material
+           materials_maintenace_procedures ON material.id_material = materials_maintenace_procedures.id_material
         INNER JOIN maintenance_procedure ON id_maintenance_procedure = id_activity
         WHERE
             id_activity=$IDAct;
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
+    public function getNoteForActivityFromDb($IDAct)
+    {
+        $this->sql = <<<SQL
+        SELECT
+	        employees_maintenance_procedures.note as ActNote 
+        FROM
+	        employees_maintenance_procedures
+        INNER JOIN 
+	        maintenance_procedure ON employees_maintenance_procedures.id_maintenance_procedure = maintenance_procedure.id_activity
+        WHERE
+	        id_activity = $IDAct;
 SQL;
 
         $this->updateResultSet();
         return $this->getResultSet();
     }
+
 }

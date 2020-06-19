@@ -22,6 +22,25 @@
             else
                 elem.setAttribute("style","visibility:hidden");
         }
+        function viewNotes() {
+            elem = document.getElementById("NotesSection");
+            flag = elem.style.visibility;
+            if (flag == "hidden"){
+                elem.setAttribute("style","visibility:visible");
+            }
+            else
+                elem.setAttribute("style","visibility:hidden");
+        }
+        function getTime() {
+            var currentdate = new Date();
+            var datetime = currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getFullYear() + " "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+            document.getElementById("ActStart").setAttribute("value",datetime);
+        }
     </script>
     <title>Simulatori</title>
 </head>
@@ -37,9 +56,9 @@
         </tr>
         <!-- END ActivityParametersRow -->
         <tr>
-            <td><button type="button" class="btn btn-success btn-block btn-sm">Start <i class="fa fa-clock-o"></i></button></td>
+            <td><button name="timeStart" type="submit" class="btn btn-success btn-block btn-sm" onclick="getTime()">Start <i class="fa fa-clock-o"></i></button></td>
             <!-- BEGIN ActivityStartParameter -->
-            <td><input type="text" readonly></td>
+            <td><input id="ActStart" type="text" readonly></td>
             <!-- END ActivityStartParameter -->
         </tr>
         <tr>
@@ -52,7 +71,7 @@
     </table>
     <button type="button" class="btn btn-danger btn-lg btn-block"> Call <i class="fa fa-bell"></i></button>
     <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="viewMaterial()"> Materials <i class="fa fa-gavel"></i></button>
-    <button type="button" class="btn btn-success btn-lg btn-block"> Notes <i class="fa fa-sticky-note"></i></button>
+    <button type="button" class="btn btn-success btn-lg btn-block" onclick="viewNotes()"> Notes <i class="fa fa-sticky-note"></i></button>
 </div>
     <div id="MaterialSection" style="visibility: hidden">
         <hr style=" align='left' ;size='10' ;width='300' ;color='yellow' " >
@@ -61,6 +80,14 @@
         <label>{ActivityMaterials}</label>
         </br>
         <!-- END ActivityMaterialParameter -->
+    </div>
+    <div id="NotesSection" style="visibility: hidden">
+        <hr style=" align='left' ;size='10' ;width='300' ;color='yellow' " >
+        <h3> NOTES </h3>
+        <!-- BEGIN ActivityNotesParameter -->
+        <label>{ActivityNotes}</label>
+        </br>
+        <!-- END ActivityNotesParameter -->
     </div>
 </body>
 </html>

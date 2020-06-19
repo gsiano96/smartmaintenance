@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ScheduledActivities
+ * Class Index
  *
  * {ModelResponsability}
  *
@@ -12,7 +12,7 @@ namespace models\maintainer;
 
 use framework\Model;
 
-class ScheduledActivities extends Model
+class Index extends Model
 {
     /**
     * Object constructor.
@@ -20,7 +20,6 @@ class ScheduledActivities extends Model
     */
     public function __construct()
     {
-        $this->connect(DBHOST,DBUSER,DBPASSWORD,"smartmaintenance");
         parent::__construct();
     }
 
@@ -33,21 +32,17 @@ class ScheduledActivities extends Model
     {
 
     }
-    public function getScheduledActivitiesFromDb()
-    {
+
+    public function getNameById($Iden){
         $this->sql = <<<SQL
         SELECT 
-	        id_activity as ActID,
-            activity_description as ActDescription,
-            estimated_intervetion_time as ActEstimatedTime,
-            interruptible as ActInterrupt
+	        first_name as Name,
+            last_name as Surname
         FROM
-            maintenance_procedure
-        INNER JOIN employees_maintenance_procedures ON id_activity = employees_maintenance_procedures.id_maintenance_procedure
+            employee
         WHERE 
-	        employees_maintenance_procedures.id_employee = 3 AND procedure_class = "planned procedure"
+	        id_employee = $Iden
 SQL;
-
         $this->updateResultSet();
         return $this->getResultSet();
     }

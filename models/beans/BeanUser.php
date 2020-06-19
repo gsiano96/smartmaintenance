@@ -64,7 +64,7 @@ class BeanUser extends MySqlRecord implements Bean
      *
      * Comment for field id_access_level: Not specified.<br>
      * Field information:
-     *  - Data type: int(11)
+     *  - Data type: int
      *  - Null : NO
      *  - DB Index: MUL
      *  - Default: 
@@ -120,7 +120,7 @@ class BeanUser extends MySqlRecord implements Bean
      *
      * Comment for field enabled: Not specified.<br>
      * Field information:
-     *  - Data type: int(11)
+     *  - Data type: int
      *  - Null : NO
      *  - DB Index: 
      *  - Default: 1
@@ -133,12 +133,12 @@ class BeanUser extends MySqlRecord implements Bean
      * Class attribute for storing the SQL DDL of table user
      * @var string base64 encoded $ddl
      */
-    private $ddl = "Q1JFQVRFIFRBQkxFIGB1c2VyYCAoCiAgYGlkX3VzZXJgIGludCgxMSkgTk9UIE5VTEwgQVVUT19JTkNSRU1FTlQsCiAgYGlkX2FjY2Vzc19sZXZlbGAgaW50KDExKSBOT1QgTlVMTCwKICBgZnVsbF9uYW1lYCB2YXJjaGFyKDQ1KSBOT1QgTlVMTCwKICBgZW1haWxgIHZhcmNoYXIoMTAwKSBOT1QgTlVMTCwKICBgcGFzc3dvcmRgIHZhcmNoYXIoMjAwKSBOT1QgTlVMTCwKICBgZW5hYmxlZGAgaW50KDExKSBOT1QgTlVMTCBERUZBVUxUICcxJywKICBQUklNQVJZIEtFWSAoYGlkX3VzZXJgKSwKICBVTklRVUUgS0VZIGB1bmlxdWVfZW1haWxgIChgZW1haWxgKSwKICBLRVkgYGZrX3VzZXJfYWNjZXNzX2xldmVsX2lkeGAgKGBpZF9hY2Nlc3NfbGV2ZWxgKSwKICBLRVkgYGlkeF9mdWxsX25hbWVgIChgZnVsbF9uYW1lYCksCiAgQ09OU1RSQUlOVCBgZmtfdXNlcl9hY2Nlc3NfbGV2ZWwxYCBGT1JFSUdOIEtFWSAoYGlkX2FjY2Vzc19sZXZlbGApIFJFRkVSRU5DRVMgYGFjY2Vzc19sZXZlbGAgKGBpZF9hY2Nlc3NfbGV2ZWxgKSBPTiBERUxFVEUgTk8gQUNUSU9OIE9OIFVQREFURSBOTyBBQ1RJT04KKSBFTkdJTkU9SW5ub0RCIEFVVE9fSU5DUkVNRU5UPTMgREVGQVVMVCBDSEFSU0VUPXV0ZjggQ09NTUVOVD0nVXNlcnMgY3JlZGVudGlhbHMn";
+    private $ddl = "Q1JFQVRFIFRBQkxFIGB1c2VyYCAoCiAgYGlkX3VzZXJgIGludCBOT1QgTlVMTCBBVVRPX0lOQ1JFTUVOVCwKICBgaWRfYWNjZXNzX2xldmVsYCBpbnQgTk9UIE5VTEwsCiAgYGZ1bGxfbmFtZWAgdmFyY2hhcig0NSkgQ0hBUkFDVEVSIFNFVCB1dGY4IENPTExBVEUgdXRmOF9nZW5lcmFsX2NpIE5PVCBOVUxMLAogIGBlbWFpbGAgdmFyY2hhcigxMDApIE5PVCBOVUxMLAogIGBwYXNzd29yZGAgdmFyY2hhcigyMDApIE5PVCBOVUxMLAogIGBlbmFibGVkYCBpbnQgTk9UIE5VTEwgREVGQVVMVCAnMScsCiAgUFJJTUFSWSBLRVkgKGBpZF91c2VyYCksCiAgVU5JUVVFIEtFWSBgdW5pcXVlX2VtYWlsYCAoYGVtYWlsYCksCiAgS0VZIGBma191c2VyX2FjY2Vzc19sZXZlbF9pZHhgIChgaWRfYWNjZXNzX2xldmVsYCksCiAgS0VZIGBpZHhfZnVsbF9uYW1lYCAoYGZ1bGxfbmFtZWApLAogIENPTlNUUkFJTlQgYGZrX3VzZXJfYWNjZXNzX2xldmVsMWAgRk9SRUlHTiBLRVkgKGBpZF9hY2Nlc3NfbGV2ZWxgKSBSRUZFUkVOQ0VTIGBhY2Nlc3NfbGV2ZWxgIChgaWRfYWNjZXNzX2xldmVsYCksCiAgQ09OU1RSQUlOVCBgZmtfdXNlcl9lbXBsb3llZWAgRk9SRUlHTiBLRVkgKGBpZF91c2VyYCkgUkVGRVJFTkNFUyBgZW1wbG95ZWVgIChgaWRfZW1wbG95ZWVgKQopIEVOR0lORT1Jbm5vREIgQVVUT19JTkNSRU1FTlQ9MTcgREVGQVVMVCBDSEFSU0VUPXV0ZjggQ09NTUVOVD0nVXNlcnMgY3JlZGVudGlhbHMn";
 
     /**
      * setIdUser Sets the class attribute idUser with a given value
      *
-     * The attribute idUser maps the field id_user defined as int(11).<br>
+     * The attribute idUser maps the field id_user defined as int.<br>
      * Comment for field id_user: Not specified.<br>
      * @param int $idUser
      * @category Modifier
@@ -151,7 +151,7 @@ class BeanUser extends MySqlRecord implements Bean
     /**
      * setIdAccessLevel Sets the class attribute idAccessLevel with a given value
      *
-     * The attribute idAccessLevel maps the field id_access_level defined as int(11).<br>
+     * The attribute idAccessLevel maps the field id_access_level defined as int.<br>
      * Comment for field id_access_level: Not specified.<br>
      * @param int $idAccessLevel
      * @category Modifier
@@ -203,7 +203,7 @@ class BeanUser extends MySqlRecord implements Bean
     /**
      * setEnabled Sets the class attribute enabled with a given value
      *
-     * The attribute enabled maps the field enabled defined as int(11).<br>
+     * The attribute enabled maps the field enabled defined as int.<br>
      * Comment for field enabled: Not specified.<br>
      * @param int $enabled
      * @category Modifier
@@ -216,7 +216,7 @@ class BeanUser extends MySqlRecord implements Bean
     /**
      * getIdUser gets the class attribute idUser value
      *
-     * The attribute idUser maps the field id_user defined as int(11).<br>
+     * The attribute idUser maps the field id_user defined as int.<br>
      * Comment for field id_user: Not specified.
      * @return int $idUser
      * @category Accessor of $idUser
@@ -229,7 +229,7 @@ class BeanUser extends MySqlRecord implements Bean
     /**
      * getIdAccessLevel gets the class attribute idAccessLevel value
      *
-     * The attribute idAccessLevel maps the field id_access_level defined as int(11).<br>
+     * The attribute idAccessLevel maps the field id_access_level defined as int.<br>
      * Comment for field id_access_level: Not specified.
      * @return int $idAccessLevel
      * @category Accessor of $idAccessLevel
@@ -281,7 +281,7 @@ class BeanUser extends MySqlRecord implements Bean
     /**
      * getEnabled gets the class attribute enabled value
      *
-     * The attribute enabled maps the field enabled defined as int(11).<br>
+     * The attribute enabled maps the field enabled defined as int.<br>
      * Comment for field enabled: Not specified.
      * @return int $enabled
      * @category Accessor of $enabled

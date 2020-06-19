@@ -77,12 +77,12 @@ class BeanAccessLevel extends MySqlRecord implements Bean
      * Class attribute for storing the SQL DDL of table access_level
      * @var string base64 encoded $ddl
      */
-    private $ddl = "Q1JFQVRFIFRBQkxFIGBhY2Nlc3NfbGV2ZWxgICgKICBgaWRfYWNjZXNzX2xldmVsYCBpbnQoMTEpIE5PVCBOVUxMLAogIGBuYW1lYCB2YXJjaGFyKDQ1KSBOT1QgTlVMTCwKICBQUklNQVJZIEtFWSAoYGlkX2FjY2Vzc19sZXZlbGApCikgRU5HSU5FPUlubm9EQiBERUZBVUxUIENIQVJTRVQ9dXRmOCBDT01NRU5UPSdBY2Nlc3MgbGV2ZWxzJw==";
+    private $ddl = "Q1JFQVRFIFRBQkxFIGBhY2Nlc3NfbGV2ZWxgICgKICBgaWRfYWNjZXNzX2xldmVsYCBpbnQgTk9UIE5VTEwsCiAgYG5hbWVgIHZhcmNoYXIoNDUpIE5PVCBOVUxMLAogIFBSSU1BUlkgS0VZIChgaWRfYWNjZXNzX2xldmVsYCkKKSBFTkdJTkU9SW5ub0RCIERFRkFVTFQgQ0hBUlNFVD11dGY4IENPTU1FTlQ9J0FjY2VzcyBsZXZlbHMn";
 
     /**
      * setIdAccessLevel Sets the class attribute idAccessLevel with a given value
      *
-     * The attribute idAccessLevel maps the field id_access_level defined as int(11).<br>
+     * The attribute idAccessLevel maps the field id_access_level defined as int.<br>
      * Comment for field id_access_level: Not specified.<br>
      * @param int $idAccessLevel
      * @category Modifier
@@ -108,7 +108,7 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     /**
      * getIdAccessLevel gets the class attribute idAccessLevel value
      *
-     * The attribute idAccessLevel maps the field id_access_level defined as int(11).<br>
+     * The attribute idAccessLevel maps the field id_access_level defined as int.<br>
      * Comment for field id_access_level: Not specified.
      * @return int $idAccessLevel
      * @category Accessor of $idAccessLevel
