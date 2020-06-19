@@ -1,9 +1,9 @@
 <?php
 /**
- * Class BeanStore
- * Bean class for object oriented management of the MySQL table store
+ * Class BeanMaterial
+ * Bean class for object oriented management of the MySQL table material
  *
- * Comment of the managed table store: Not specified.
+ * Comment of the managed table material: Not specified.
  *
  * Responsibility:
  *
@@ -20,7 +20,7 @@
  *
  * @extends MySqlRecord
  * @implements Bean
- * @filesource BeanStore.php
+ * @filesource BeanMaterial.php
  * @category MySql Database Bean Class
  * @package models/bean
  * @author Rosario Carvello <rosario.carvello@gmail.com>
@@ -29,12 +29,12 @@
  * @copyright (c) 2016 Rosario Carvello <rosario.carvello@gmail.com> - All rights reserved. See License.txt file
  * @license BSD
  * @license https://opensource.org/licenses/BSD-3-Clause This software is distributed under BSD Public License.
-*/
+ */
 namespace models\beans;
 use framework\MySqlRecord;
 use framework\Bean;
 
-class BeanStore extends MySqlRecord implements Bean
+class BeanMaterial extends MySqlRecord implements Bean
 {
     /**
      * A control attribute for the update operation.
@@ -46,56 +46,56 @@ class BeanStore extends MySqlRecord implements Bean
     private $allowUpdate = false;
 
     /**
-     * Class attribute for mapping the primary key store_code of table store
+     * Class attribute for mapping the primary key id_material of table material
      *
-     * Comment for field store_code: Not specified<br>
-     * @var int $storeCode
+     * Comment for field id_material: Not specified<br>
+     * @var int $idMaterial
      */
-    private $storeCode;
+    private $idMaterial;
 
     /**
      * A class attribute for evaluating if the table has an autoincrement primary key
      * @var bool $isPkAutoIncrement
      */
-    private $isPkAutoIncrement = false;
+    private $isPkAutoIncrement = true;
 
     /**
      * Class attribute for mapping table field name
      *
      * Comment for field name: Not specified.<br>
      * Field information:
-     *  - Data type: varchar(45)
-     *  - Null : YES
-     *  - DB Index: 
-     *  - Default: 
-     *  - Extra:  
+     *  - Data type: varchar(100)
+     *  - Null : NO
+     *  - DB Index:
+     *  - Default:
+     *  - Extra:
      * @var string $name
      */
     private $name;
 
     /**
-     * Class attribute for storing the SQL DDL of table store
+     * Class attribute for storing the SQL DDL of table material
      * @var string base64 encoded $ddl
      */
-    private $ddl = "Q1JFQVRFIFRBQkxFIGBzdG9yZWAgKAogIGBzdG9yZV9jb2RlYCBpbnQoMTEpIE5PVCBOVUxMLAogIGBuYW1lYCB2YXJjaGFyKDQ1KSBERUZBVUxUIE5VTEwsCiAgUFJJTUFSWSBLRVkgKGBzdG9yZV9jb2RlYCkKKSBFTkdJTkU9SW5ub0RCIERFRkFVTFQgQ0hBUlNFVD11dGY4";
+    private $ddl = "Q1JFQVRFIFRBQkxFIGBtYXRlcmlhbGAgKAogIGBpZF9tYXRlcmlhbGAgaW50IE5PVCBOVUxMIEFVVE9fSU5DUkVNRU5ULAogIGBuYW1lYCB2YXJjaGFyKDEwMCkgTk9UIE5VTEwsCiAgUFJJTUFSWSBLRVkgKGBpZF9tYXRlcmlhbGApCikgRU5HSU5FPUlubm9EQiBERUZBVUxUIENIQVJTRVQ9dXRmOA==";
 
     /**
-     * setStoreCode Sets the class attribute storeCode with a given value
+     * setIdMaterial Sets the class attribute idMaterial with a given value
      *
-     * The attribute storeCode maps the field store_code defined as int(11).<br>
-     * Comment for field store_code: Not specified.<br>
-     * @param int $storeCode
+     * The attribute idMaterial maps the field id_material defined as int.<br>
+     * Comment for field id_material: Not specified.<br>
+     * @param int $idMaterial
      * @category Modifier
      */
-    public function setStoreCode($storeCode)
+    public function setIdMaterial($idMaterial)
     {
-        $this->storeCode = (int)$storeCode;
+        $this->idMaterial = (int)$idMaterial;
     }
 
     /**
      * setName Sets the class attribute name with a given value
      *
-     * The attribute name maps the field name defined as varchar(45).<br>
+     * The attribute name maps the field name defined as varchar(100).<br>
      * Comment for field name: Not specified.<br>
      * @param string $name
      * @category Modifier
@@ -106,22 +106,22 @@ class BeanStore extends MySqlRecord implements Bean
     }
 
     /**
-     * getStoreCode gets the class attribute storeCode value
+     * getIdMaterial gets the class attribute idMaterial value
      *
-     * The attribute storeCode maps the field store_code defined as int(11).<br>
-     * Comment for field store_code: Not specified.
-     * @return int $storeCode
-     * @category Accessor of $storeCode
+     * The attribute idMaterial maps the field id_material defined as int.<br>
+     * Comment for field id_material: Not specified.
+     * @return int $idMaterial
+     * @category Accessor of $idMaterial
      */
-    public function getStoreCode()
+    public function getIdMaterial()
     {
-        return $this->storeCode;
+        return $this->idMaterial;
     }
 
     /**
      * getName gets the class attribute name value
      *
-     * The attribute name maps the field name defined as varchar(45).<br>
+     * The attribute name maps the field name defined as varchar(100).<br>
      * Comment for field name: Not specified.
      * @return string $name
      * @category Accessor of $name
@@ -132,7 +132,7 @@ class BeanStore extends MySqlRecord implements Bean
     }
 
     /**
-     * Gets DDL SQL code of the table store
+     * Gets DDL SQL code of the table material
      * @return string
      * @category Accessor
      */
@@ -148,24 +148,24 @@ class BeanStore extends MySqlRecord implements Bean
     */
     public function getTableName()
     {
-        return "store";
+        return "material";
     }
 
     /**
-     * The BeanStore constructor
+     * The BeanMaterial constructor
      *
      * It creates and initializes an object in two way:
-     *  - with null (not fetched) data if none $storeCode is given.
-     *  - with a fetched data row from the table store having store_code=$storeCode
-     * @param int $storeCode. If omitted an empty (not fetched) instance is created.
-     * @return BeanStore Object
+     *  - with null (not fetched) data if none $idMaterial is given.
+     *  - with a fetched data row from the table material having id_material=$idMaterial
+     * @param int $idMaterial . If omitted an empty (not fetched) instance is created.
+     * @return BeanMaterial Object
      */
-    public function __construct($storeCode = null)
+    public function __construct($idMaterial = null)
     {
         // $this->connect(DBHOST,DBUSER,DBPASSWORD,DBNAME,DBPORT);
         parent::__construct();
-        if (!empty($storeCode)) {
-            $this->select($storeCode);
+        if (!empty($idMaterial)) {
+            $this->select($idMaterial);
         }
     }
 
@@ -186,24 +186,24 @@ class BeanStore extends MySqlRecord implements Bean
     }
 
     /**
-     * Fetchs a table row of store into the object.
+     * Fetchs a table row of material into the object.
      *
      * Fetched table fields values are assigned to class attributes and they can be managed by using
      * the accessors/modifiers methods of the class.
-     * @param int $storeCode the primary key store_code value of table store which identifies the row to select.
+     * @param int $idMaterial the primary key id_material value of table material which identifies the row to select.
      * @return int affected selected row
      * @category DML
      */
-    public function select($storeCode)
+    public function select($idMaterial)
     {
-        $sql =  "SELECT * FROM store WHERE store_code={$this->parseValue($storeCode,'int')}";
+        $sql = "SELECT * FROM material WHERE id_material={$this->parseValue($idMaterial,'int')}";
         $this->resetLastSqlError();
-        $result =  $this->query($sql);
-        $this->resultSet=$result;
+        $result = $this->query($sql);
+        $this->resultSet = $result;
         $this->lastSql = $sql;
-        if ($result){
+        if ($result) {
             $rowObject = $result->fetch_object();
-            @$this->storeCode = (integer)$rowObject->store_code;
+            @$this->idMaterial = (integer)$rowObject->id_material;
             @$this->name = $this->replaceAposBackSlash($rowObject->name);
             $this->allowUpdate = true;
         } else {
@@ -213,25 +213,25 @@ class BeanStore extends MySqlRecord implements Bean
     }
 
     /**
-     * Deletes a specific row from the table store
-     * @param int $storeCode the primary key store_code value of table store which identifies the row to delete.
+     * Deletes a specific row from the table material
+     * @param int $idMaterial the primary key id_material value of table material which identifies the row to delete.
      * @return int affected deleted row
      * @category DML
      */
-    public function delete($storeCode)
+    public function delete($idMaterial)
     {
-        $sql = "DELETE FROM store WHERE store_code={$this->parseValue($storeCode,'int')}";
+        $sql = "DELETE FROM material WHERE id_material={$this->parseValue($idMaterial,'int')}";
         $this->resetLastSqlError();
         $result = $this->query($sql);
         $this->lastSql = $sql;
         if (!$result) {
-            $this->lastSqlError = $this->sqlstate . " - ". $this->error;
+            $this->lastSqlError = $this->sqlstate . " - " . $this->error;
         }
         return $this->affected_rows;
     }
 
     /**
-     * Insert the current object into a new table row of store
+     * Insert the current object into a new table row of material
      *
      * All class attributes values defined for mapping all table fields are automatically used during inserting
      * @return mixed MySQL insert result
@@ -240,13 +240,13 @@ class BeanStore extends MySqlRecord implements Bean
     public function insert()
     {
         if ($this->isPkAutoIncrement) {
-            $this->storeCode = "";
+            $this->idMaterial = "";
         }
         // $constants = get_defined_constants();
         $sql = <<< SQL
-            INSERT INTO store
-            (store_code,name)
-            VALUES({$this->parseValue($this->storeCode)},
+            INSERT INTO material
+            (name)
+            VALUES(
 			{$this->parseValue($this->name,'notNumber')})
 SQL;
         $this->resetLastSqlError();
@@ -257,39 +257,39 @@ SQL;
         } else {
             $this->allowUpdate = true;
             if ($this->isPkAutoIncrement) {
-                $this->storeCode = $this->insert_id;
+                $this->idMaterial = $this->insert_id;
             }
         }
         return $result;
     }
 
     /**
-     * Updates a specific row from the table store with the values of the current object.
+     * Updates a specific row from the table material with the values of the current object.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating of selected row.<br>
      * Null values are used for all attributes not previously setted.
-     * @param int $storeCode the primary key store_code value of table store which identifies the row to update.
+     * @param int $idMaterial the primary key id_material value of table material which identifies the row to update.
      * @return mixed MySQL update result
      * @category DML
      */
-    public function update($storeCode)
+    public function update($idMaterial)
     {
         // $constants = get_defined_constants();
         if ($this->allowUpdate) {
             $sql = <<< SQL
             UPDATE
-                store
+                material
             SET 
-				name={$this->parseValue($this->name,'notNumber')}
+				name={$this->parseValue($this->name, 'notNumber')}
             WHERE
-                store_code={$this->parseValue($storeCode,'int')}
+                id_material={$this->parseValue($idMaterial, 'int')}
 SQL;
             $this->resetLastSqlError();
             $result = $this->query($sql);
             if (!$result) {
                 $this->lastSqlError = $this->sqlstate . " - ". $this->error;
             } else {
-                $this->select($storeCode);
+                $this->select($idMaterial);
                 $this->lastSql = $sql;
                 return $result;
             }
@@ -299,16 +299,16 @@ SQL;
     }
 
     /**
-     * Facility for updating a row of store previously loaded.
+     * Facility for updating a row of material previously loaded.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating.
-     * @category DML Helper
      * @return mixed MySQLi update result
+     * @category DML Helper
      */
     public function updateCurrent()
     {
-        if ($this->storeCode != "") {
-            return $this->update($this->storeCode);
+        if ($this->idMaterial != "") {
+            return $this->update($this->idMaterial);
         } else {
             return false;
         }

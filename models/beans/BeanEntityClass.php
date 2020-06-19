@@ -1,9 +1,9 @@
 <?php
 /**
- * Class BeanCustomer
- * Bean class for object oriented management of the MySQL table customer
+ * Class BeanEntityClass
+ * Bean class for object oriented management of the MySQL table entity_class
  *
- * Comment of the managed table customer: Not specified.
+ * Comment of the managed table entity_class: Not specified.
  *
  * Responsibility:
  *
@@ -20,7 +20,7 @@
  *
  * @extends MySqlRecord
  * @implements Bean
- * @filesource BeanCustomer.php
+ * @filesource BeanEntityClass.php
  * @category MySql Database Bean Class
  * @package models/bean
  * @author Rosario Carvello <rosario.carvello@gmail.com>
@@ -29,12 +29,12 @@
  * @copyright (c) 2016 Rosario Carvello <rosario.carvello@gmail.com> - All rights reserved. See License.txt file
  * @license BSD
  * @license https://opensource.org/licenses/BSD-3-Clause This software is distributed under BSD Public License.
-*/
+ */
 namespace models\beans;
 use framework\MySqlRecord;
 use framework\Bean;
 
-class BeanCustomer extends MySqlRecord implements Bean
+class BeanEntityClass extends MySqlRecord implements Bean
 {
     /**
      * A control attribute for the update operation.
@@ -46,12 +46,12 @@ class BeanCustomer extends MySqlRecord implements Bean
     private $allowUpdate = false;
 
     /**
-     * Class attribute for mapping the primary key customer_id of table customer
+     * Class attribute for mapping the primary key id_entity_class of table entity_class
      *
-     * Comment for field customer_id: Not specified<br>
-     * @var int $customerId
+     * Comment for field id_entity_class: Not specified<br>
+     * @var int $idEntityClass
      */
-    private $customerId;
+    private $idEntityClass;
 
     /**
      * A class attribute for evaluating if the table has an autoincrement primary key
@@ -60,79 +60,79 @@ class BeanCustomer extends MySqlRecord implements Bean
     private $isPkAutoIncrement = true;
 
     /**
-     * Class attribute for mapping table field customer_name
+     * Class attribute for mapping table field name
      *
-     * Comment for field customer_name: Not specified.<br>
+     * Comment for field name: Not specified.<br>
      * Field information:
      *  - Data type: varchar(45)
      *  - Null : YES
      *  - DB Index: 
      *  - Default: 
      *  - Extra:  
-     * @var string $customerName
+     * @var string $name
      */
-    private $customerName;
+    private $name;
 
     /**
-     * Class attribute for storing the SQL DDL of table customer
+     * Class attribute for storing the SQL DDL of table entity_class
      * @var string base64 encoded $ddl
      */
-    private $ddl = "Q1JFQVRFIFRBQkxFIGBjdXN0b21lcmAgKAogIGBjdXN0b21lcl9pZGAgaW50KDExKSBOT1QgTlVMTCBBVVRPX0lOQ1JFTUVOVCwKICBgY3VzdG9tZXJfbmFtZWAgdmFyY2hhcig0NSkgREVGQVVMVCBOVUxMLAogIFBSSU1BUlkgS0VZIChgY3VzdG9tZXJfaWRgKQopIEVOR0lORT1Jbm5vREIgREVGQVVMVCBDSEFSU0VUPXV0Zjg=";
+    private $ddl = "Q1JFQVRFIFRBQkxFIGBlbnRpdHlfY2xhc3NgICgKICBgaWRfZW50aXR5X2NsYXNzYCBpbnQgTk9UIE5VTEwgQVVUT19JTkNSRU1FTlQsCiAgYG5hbWVgIHZhcmNoYXIoNDUpIERFRkFVTFQgTlVMTCwKICBQUklNQVJZIEtFWSAoYGlkX2VudGl0eV9jbGFzc2ApCikgRU5HSU5FPUlubm9EQiBBVVRPX0lOQ1JFTUVOVD04IERFRkFVTFQgQ0hBUlNFVD11dGY4";
 
     /**
-     * setCustomerId Sets the class attribute customerId with a given value
+     * setIdEntityClass Sets the class attribute idEntityClass with a given value
      *
-     * The attribute customerId maps the field customer_id defined as int(11).<br>
-     * Comment for field customer_id: Not specified.<br>
-     * @param int $customerId
+     * The attribute idEntityClass maps the field id_entity_class defined as int.<br>
+     * Comment for field id_entity_class: Not specified.<br>
+     * @param int $idEntityClass
      * @category Modifier
      */
-    public function setCustomerId($customerId)
+    public function setIdEntityClass($idEntityClass)
     {
-        $this->customerId = (int)$customerId;
+        $this->idEntityClass = (int)$idEntityClass;
     }
 
     /**
-     * setCustomerName Sets the class attribute customerName with a given value
+     * setName Sets the class attribute name with a given value
      *
-     * The attribute customerName maps the field customer_name defined as varchar(45).<br>
-     * Comment for field customer_name: Not specified.<br>
-     * @param string $customerName
+     * The attribute name maps the field name defined as varchar(45).<br>
+     * Comment for field name: Not specified.<br>
+     * @param string $name
      * @category Modifier
      */
-    public function setCustomerName($customerName)
+    public function setName($name)
     {
-        $this->customerName = (string)$customerName;
+        $this->name = (string)$name;
     }
 
     /**
-     * getCustomerId gets the class attribute customerId value
+     * getIdEntityClass gets the class attribute idEntityClass value
      *
-     * The attribute customerId maps the field customer_id defined as int(11).<br>
-     * Comment for field customer_id: Not specified.
-     * @return int $customerId
-     * @category Accessor of $customerId
+     * The attribute idEntityClass maps the field id_entity_class defined as int.<br>
+     * Comment for field id_entity_class: Not specified.
+     * @return int $idEntityClass
+     * @category Accessor of $idEntityClass
      */
-    public function getCustomerId()
+    public function getIdEntityClass()
     {
-        return $this->customerId;
+        return $this->idEntityClass;
     }
 
     /**
-     * getCustomerName gets the class attribute customerName value
+     * getName gets the class attribute name value
      *
-     * The attribute customerName maps the field customer_name defined as varchar(45).<br>
-     * Comment for field customer_name: Not specified.
-     * @return string $customerName
-     * @category Accessor of $customerName
+     * The attribute name maps the field name defined as varchar(45).<br>
+     * Comment for field name: Not specified.
+     * @return string $name
+     * @category Accessor of $name
      */
-    public function getCustomerName()
+    public function getName()
     {
-        return $this->customerName;
+        return $this->name;
     }
 
     /**
-     * Gets DDL SQL code of the table customer
+     * Gets DDL SQL code of the table entity_class
      * @return string
      * @category Accessor
      */
@@ -148,24 +148,24 @@ class BeanCustomer extends MySqlRecord implements Bean
     */
     public function getTableName()
     {
-        return "customer";
+        return "entity_class";
     }
 
     /**
-     * The BeanCustomer constructor
+     * The BeanEntityClass constructor
      *
      * It creates and initializes an object in two way:
-     *  - with null (not fetched) data if none $customerId is given.
-     *  - with a fetched data row from the table customer having customer_id=$customerId
-     * @param int $customerId. If omitted an empty (not fetched) instance is created.
-     * @return BeanCustomer Object
+     *  - with null (not fetched) data if none $idEntityClass is given.
+     *  - with a fetched data row from the table entity_class having id_entity_class=$idEntityClass
+     * @param int $idEntityClass . If omitted an empty (not fetched) instance is created.
+     * @return BeanEntityClass Object
      */
-    public function __construct($customerId = null)
+    public function __construct($idEntityClass = null)
     {
         // $this->connect(DBHOST,DBUSER,DBPASSWORD,DBNAME,DBPORT);
         parent::__construct();
-        if (!empty($customerId)) {
-            $this->select($customerId);
+        if (!empty($idEntityClass)) {
+            $this->select($idEntityClass);
         }
     }
 
@@ -186,25 +186,25 @@ class BeanCustomer extends MySqlRecord implements Bean
     }
 
     /**
-     * Fetchs a table row of customer into the object.
+     * Fetchs a table row of entity_class into the object.
      *
      * Fetched table fields values are assigned to class attributes and they can be managed by using
      * the accessors/modifiers methods of the class.
-     * @param int $customerId the primary key customer_id value of table customer which identifies the row to select.
+     * @param int $idEntityClass the primary key id_entity_class value of table entity_class which identifies the row to select.
      * @return int affected selected row
      * @category DML
      */
-    public function select($customerId)
+    public function select($idEntityClass)
     {
-        $sql =  "SELECT * FROM customer WHERE customer_id={$this->parseValue($customerId,'int')}";
+        $sql = "SELECT * FROM entity_class WHERE id_entity_class={$this->parseValue($idEntityClass,'int')}";
         $this->resetLastSqlError();
-        $result =  $this->query($sql);
-        $this->resultSet=$result;
+        $result = $this->query($sql);
+        $this->resultSet = $result;
         $this->lastSql = $sql;
-        if ($result){
+        if ($result) {
             $rowObject = $result->fetch_object();
-            @$this->customerId = (integer)$rowObject->customer_id;
-            @$this->customerName = $this->replaceAposBackSlash($rowObject->customer_name);
+            @$this->idEntityClass = (integer)$rowObject->id_entity_class;
+            @$this->name = $this->replaceAposBackSlash($rowObject->name);
             $this->allowUpdate = true;
         } else {
             $this->lastSqlError = $this->sqlstate . " - ". $this->error;
@@ -213,25 +213,25 @@ class BeanCustomer extends MySqlRecord implements Bean
     }
 
     /**
-     * Deletes a specific row from the table customer
-     * @param int $customerId the primary key customer_id value of table customer which identifies the row to delete.
+     * Deletes a specific row from the table entity_class
+     * @param int $idEntityClass the primary key id_entity_class value of table entity_class which identifies the row to delete.
      * @return int affected deleted row
      * @category DML
      */
-    public function delete($customerId)
+    public function delete($idEntityClass)
     {
-        $sql = "DELETE FROM customer WHERE customer_id={$this->parseValue($customerId,'int')}";
+        $sql = "DELETE FROM entity_class WHERE id_entity_class={$this->parseValue($idEntityClass,'int')}";
         $this->resetLastSqlError();
         $result = $this->query($sql);
         $this->lastSql = $sql;
         if (!$result) {
-            $this->lastSqlError = $this->sqlstate . " - ". $this->error;
+            $this->lastSqlError = $this->sqlstate . " - " . $this->error;
         }
         return $this->affected_rows;
     }
 
     /**
-     * Insert the current object into a new table row of customer
+     * Insert the current object into a new table row of entity_class
      *
      * All class attributes values defined for mapping all table fields are automatically used during inserting
      * @return mixed MySQL insert result
@@ -240,14 +240,14 @@ class BeanCustomer extends MySqlRecord implements Bean
     public function insert()
     {
         if ($this->isPkAutoIncrement) {
-            $this->customerId = "";
+            $this->idEntityClass = "";
         }
         // $constants = get_defined_constants();
         $sql = <<< SQL
-            INSERT INTO customer
-            (customer_name)
+            INSERT INTO entity_class
+            (name)
             VALUES(
-			{$this->parseValue($this->customerName,'notNumber')})
+			{$this->parseValue($this->name,'notNumber')})
 SQL;
         $this->resetLastSqlError();
         $result = $this->query($sql);
@@ -257,39 +257,39 @@ SQL;
         } else {
             $this->allowUpdate = true;
             if ($this->isPkAutoIncrement) {
-                $this->customerId = $this->insert_id;
+                $this->idEntityClass = $this->insert_id;
             }
         }
         return $result;
     }
 
     /**
-     * Updates a specific row from the table customer with the values of the current object.
+     * Updates a specific row from the table entity_class with the values of the current object.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating of selected row.<br>
      * Null values are used for all attributes not previously setted.
-     * @param int $customerId the primary key customer_id value of table customer which identifies the row to update.
+     * @param int $idEntityClass the primary key id_entity_class value of table entity_class which identifies the row to update.
      * @return mixed MySQL update result
      * @category DML
      */
-    public function update($customerId)
+    public function update($idEntityClass)
     {
         // $constants = get_defined_constants();
         if ($this->allowUpdate) {
             $sql = <<< SQL
             UPDATE
-                customer
+                entity_class
             SET 
-				customer_name={$this->parseValue($this->customerName,'notNumber')}
+				name={$this->parseValue($this->name, 'notNumber')}
             WHERE
-                customer_id={$this->parseValue($customerId,'int')}
+                id_entity_class={$this->parseValue($idEntityClass, 'int')}
 SQL;
             $this->resetLastSqlError();
             $result = $this->query($sql);
             if (!$result) {
                 $this->lastSqlError = $this->sqlstate . " - ". $this->error;
             } else {
-                $this->select($customerId);
+                $this->select($idEntityClass);
                 $this->lastSql = $sql;
                 return $result;
             }
@@ -299,16 +299,16 @@ SQL;
     }
 
     /**
-     * Facility for updating a row of customer previously loaded.
+     * Facility for updating a row of entity_class previously loaded.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating.
-     * @category DML Helper
      * @return mixed MySQLi update result
+     * @category DML Helper
      */
     public function updateCurrent()
     {
-        if ($this->customerId != "") {
-            return $this->update($this->customerId);
+        if ($this->idEntityClass != "") {
+            return $this->update($this->idEntityClass);
         } else {
             return false;
         }
