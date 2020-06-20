@@ -1,6 +1,6 @@
 <?php
 /**
- * Class OnCallActivities
+ * Class ExtraActivities
  *
  * {ViewResponsability}
  *
@@ -12,7 +12,7 @@ namespace views\maintainer;
 
 use framework\View;
 
-class OnCallActivities extends View
+class ExtraActivities extends View
 {
 
     /**
@@ -23,21 +23,12 @@ class OnCallActivities extends View
     public function __construct($tplName = null)
     {
         if (empty($tplName))
-            $tplName = "/maintainer/on_call_activities";
+            $tplName = "/maintainer/extra_activities";
         parent::__construct($tplName);
     }
 
-    public function setMaintainerNameRow($data){
-        $this->openBlock("MaintainerName");
-        foreach ($data as $dataname){
-            $this->setVar("Maintainer", $dataname["Name"]." ".$dataname["Surname"]);
-            $this->parseCurrentBlock();
-        }
-        $this->setBlock();
-    }
-
-    public function setOnCallActivityRow($scheduledActivities){
-        $this->openBlock("OnCallActivitiesRow");
+    public function setExtraActivityRow($scheduledActivities){
+        $this->openBlock("ExtraActivitiesRow");
         foreach ($scheduledActivities as $activity){
             $this->setVar("IDData", $activity["ActID"]);
             $this->setVar("DescriptionData", $activity["ActDescription"]);
@@ -47,6 +38,15 @@ class OnCallActivities extends View
             else
                 $trad="No";
             $this->setVar("InterrumptibleData", $trad);
+            $this->parseCurrentBlock();
+        }
+        $this->setBlock();
+    }
+
+    public function setMaintainerNameRow($data){
+        $this->openBlock("MaintainerName");
+        foreach ($data as $dataname){
+            $this->setVar("Maintainer", $dataname["Name"]." ".$dataname["Surname"]);
             $this->parseCurrentBlock();
         }
         $this->setBlock();

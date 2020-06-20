@@ -33,6 +33,21 @@ class ScheduledActivities extends Model
     {
 
     }
+
+    public function getNameById($Iden){
+        $this->sql = <<<SQL
+        SELECT 
+	        first_name as Name,
+            last_name as Surname
+        FROM
+            employee
+        WHERE 
+	        id_employee = $Iden
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
     public function getScheduledActivitiesFromDb($IDUsr)
     {
         $this->sql = <<<SQL

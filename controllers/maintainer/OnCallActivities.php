@@ -33,6 +33,8 @@ class OnCallActivities extends Controller
         $this->model = empty($model) ? $this->getModel() : $model;
         parent::__construct($this->view,$this->model);
         $iden = $this->getWhatYouGet();
+        $data = $this->model->getNameById($iden);
+        $this->view->setMaintainerNameRow($data);
         $activities = $this->model->getOnCallActivitiesFromDb($iden);
         $this->view->setOnCallActivityRow($activities);
     }

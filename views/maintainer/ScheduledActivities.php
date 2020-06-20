@@ -27,6 +27,15 @@ class ScheduledActivities extends View
         parent::__construct($tplName);
     }
 
+    public function setMaintainerNameRow($data){
+        $this->openBlock("MaintainerName");
+        foreach ($data as $dataname){
+            $this->setVar("Maintainer", $dataname["Name"]." ".$dataname["Surname"]);
+            $this->parseCurrentBlock();
+        }
+        $this->setBlock();
+    }
+
     public function setScheduledActivityRow($scheduledActivities){
         $this->openBlock("ScheduledActivitiesRow");
         foreach ($scheduledActivities as $activity){

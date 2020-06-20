@@ -1,6 +1,6 @@
 <?php
 /**
- * Class OnCallActivities
+ * Class ExtraActivities
  *
  * {ModelResponsability}
  *
@@ -12,7 +12,7 @@ namespace models\maintainer;
 
 use framework\Model;
 
-class OnCallActivities extends Model
+class ExtraActivities extends Model
 {
     /**
     * Object constructor.
@@ -47,7 +47,7 @@ SQL;
         return $this->getResultSet();
     }
 
-    public function getOnCallActivitiesFromDb($IDUsr)
+    public function getExtraActivitiesFromDb($IDUsr)
     {
         $this->sql = <<<SQL
         SELECT 
@@ -59,7 +59,7 @@ SQL;
             maintenance_procedure
         INNER JOIN employees_maintenance_procedures ON id_activity = employees_maintenance_procedures.id_maintenance_procedure
         WHERE 
-	        employees_maintenance_procedures.id_employee = $IDUsr AND procedure_class = "unplanned procedure (ewo)"
+	        employees_maintenance_procedures.id_employee = $IDUsr AND procedure_class = "extra"
 SQL;
 
         $this->updateResultSet();

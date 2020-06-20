@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ScheduledActivities
+ * Class ExtraActivities
  *
  * {ControllerResponsability}
  *
@@ -13,10 +13,10 @@ namespace controllers\maintainer;
 use framework\Controller;
 use framework\Model;
 use framework\View;
-use models\maintainer\ScheduledActivities as ScheduledActivitiesModel;
-use views\maintainer\ScheduledActivities as ScheduledActivitiesView;
+use models\maintainer\ExtraActivities as ExtraActivitiesModel;
+use views\maintainer\ExtraActivities as ExtraActivitiesView;
 
-class ScheduledActivities extends Controller
+class ExtraActivities extends Controller
 {
     protected $view;
     protected $model;
@@ -34,9 +34,9 @@ class ScheduledActivities extends Controller
         parent::__construct($this->view,$this->model);
         $iden = $this->getWhatYouGet();
         $data = $this->model->getNameById($iden);
-        $activities = $this->model->getScheduledActivitiesFromDb($iden);
-        $this->view->setScheduledActivityRow($activities);
         $this->view->setMaintainerNameRow($data);
+        $activities = $this->model->getExtraActivitiesFromDb($iden);
+        $this->view->setExtraActivityRow($activities);
     }
 
     /**
@@ -57,23 +57,23 @@ class ScheduledActivities extends Controller
     }
 
     /**
-    * Inizialize the View by loading static design of /maintainer/scheduled_activities.html.tpl
-    * managed by views\maintainer\ScheduledActivities class
+    * Inizialize the View by loading static design of /maintainer/extra_activities.html.tpl
+    * managed by views\maintainer\ExtraActivities class
     *
     */
     public function getView()
     {
-        $view = new ScheduledActivitiesView("/maintainer/scheduled_activities");
+        $view = new ExtraActivitiesView("/maintainer/extra_activities");
         return $view;
     }
 
     /**
-    * Inizialize the Model by loading models\maintainer\ScheduledActivities class
+    * Inizialize the Model by loading models\maintainer\ExtraActivities class
     *
     */
     public function getModel()
     {
-        $model = new ScheduledActivitiesModel();
+        $model = new ExtraActivitiesModel();
         return $model;
     }
 }

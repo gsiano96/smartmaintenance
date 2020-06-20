@@ -16,9 +16,11 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
+        <!-- BEGIN MaintainerName -->
         <div class="navbar-header">
-            <a href="scheduled_activities" class="navbar-brand"> Maintainer</a>
+            <label class="navbar-brand"> {Maintainer}</label>
         </div>
+        <!-- END MaintainerName -->
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
