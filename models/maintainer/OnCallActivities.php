@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ScheduledActivities
+ * Class OnCallActivities
  *
  * {ModelResponsability}
  *
@@ -12,7 +12,7 @@ namespace models\maintainer;
 
 use framework\Model;
 
-class ScheduledActivities extends Model
+class OnCallActivities extends Model
 {
     /**
     * Object constructor.
@@ -20,7 +20,6 @@ class ScheduledActivities extends Model
     */
     public function __construct()
     {
-        $this->connect(DBHOST,DBUSER,DBPASSWORD,"smartmaintenance");
         parent::__construct();
     }
 
@@ -33,7 +32,8 @@ class ScheduledActivities extends Model
     {
 
     }
-    public function getScheduledActivitiesFromDb($IDUsr)
+
+    public function getOnCallActivitiesFromDb($IDUsr)
     {
         $this->sql = <<<SQL
         SELECT 
@@ -45,7 +45,7 @@ class ScheduledActivities extends Model
             maintenance_procedure
         INNER JOIN employees_maintenance_procedures ON id_activity = employees_maintenance_procedures.id_maintenance_procedure
         WHERE 
-	        employees_maintenance_procedures.id_employee = $IDUsr AND procedure_class = "planned procedure"
+	        employees_maintenance_procedures.id_employee = $IDUsr AND procedure_class = "unplanned procedure (ewo)"
 SQL;
 
         $this->updateResultSet();

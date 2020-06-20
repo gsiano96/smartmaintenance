@@ -32,9 +32,11 @@ class Index extends Controller
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
         parent::__construct($this->view,$this->model);
-        $usrName = $this->getWhatYouGet();
-        $data = $this->model->getNameById($usrName);
+        $usrIden = $this->getWhatYouGet();
+        $data = $this->model->getNameById($usrIden);
+        $stats = $this->model->getStatsById($usrIden);
         $this->view->setMaintainerNameRow($data);
+        $this->view->setNavbarStats($stats,$usrIden);
     }
 
     /**

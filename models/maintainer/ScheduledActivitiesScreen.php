@@ -89,4 +89,18 @@ SQL;
         return $this->getResultSet();
     }
 
+    public function getInterForActivityFromDb($IDAct){
+        $this->sql = <<<SQL
+        SELECT
+	        interruptible as ActInter 
+        FROM
+	        maintenance_procedure
+        WHERE
+	        id_activity = $IDAct;
+SQL;
+
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
 }

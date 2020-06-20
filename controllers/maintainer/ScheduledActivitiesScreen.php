@@ -40,7 +40,8 @@ class ScheduledActivitiesScreen extends Controller
         $this->view->setMaterialActivityScreenRow($materials);
         $notes = $this->model->getNoteForActivityFromDb($IDAct);
         $this->view->setNoteActivityScreenRow($notes);
-
+        $inter = $this->model->getInterForActivityFromDb($IDAct);
+        $this->view->setManageButtonActivityScreenRow($inter);
     }
 
     /**

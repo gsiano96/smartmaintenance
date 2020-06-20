@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ScheduledActivities
+ * Class OnCallActivities
  *
  * {ControllerResponsability}
  *
@@ -13,10 +13,10 @@ namespace controllers\maintainer;
 use framework\Controller;
 use framework\Model;
 use framework\View;
-use models\maintainer\ScheduledActivities as ScheduledActivitiesModel;
-use views\maintainer\ScheduledActivities as ScheduledActivitiesView;
+use models\maintainer\OnCallActivities as OnCallActivitiesModel;
+use views\maintainer\OnCallActivities as OnCallActivitiesView;
 
-class ScheduledActivities extends Controller
+class OnCallActivities extends Controller
 {
     protected $view;
     protected $model;
@@ -33,8 +33,8 @@ class ScheduledActivities extends Controller
         $this->model = empty($model) ? $this->getModel() : $model;
         parent::__construct($this->view,$this->model);
         $iden = $this->getWhatYouGet();
-        $activities = $this->model->getScheduledActivitiesFromDb($iden);
-        $this->view->setScheduledActivityRow($activities);
+        $activities = $this->model->getOnCallActivitiesFromDb($iden);
+        $this->view->setOnCallActivityRow($activities);
     }
 
     /**
@@ -55,23 +55,23 @@ class ScheduledActivities extends Controller
     }
 
     /**
-    * Inizialize the View by loading static design of /maintainer/scheduled_activities.html.tpl
-    * managed by views\maintainer\ScheduledActivities class
+    * Inizialize the View by loading static design of /maintainer/on_call_activities.html.tpl
+    * managed by views\maintainer\OnCallActivities class
     *
     */
     public function getView()
     {
-        $view = new ScheduledActivitiesView("/maintainer/scheduled_activities");
+        $view = new OnCallActivitiesView("/maintainer/on_call_activities");
         return $view;
     }
 
     /**
-    * Inizialize the Model by loading models\maintainer\ScheduledActivities class
+    * Inizialize the Model by loading models\maintainer\OnCallActivities class
     *
     */
     public function getModel()
     {
-        $model = new ScheduledActivitiesModel();
+        $model = new OnCallActivitiesModel();
         return $model;
     }
 }

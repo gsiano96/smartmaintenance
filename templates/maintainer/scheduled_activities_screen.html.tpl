@@ -69,9 +69,11 @@
         </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-danger btn-lg btn-block"> Call <i class="fa fa-bell"></i></button>
+    <!-- BEGIN ManageButton -->
+    <button type="button" class="btn btn-danger btn-lg btn-block" {Inter}> Call <i class="fa fa-bell"></i></button>
     <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="viewMaterial()"> Materials <i class="fa fa-gavel"></i></button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="viewNotes()"> Notes <i class="fa fa-sticky-note"></i></button>
+    <!-- END ManageButton -->
 </div>
     <div id="MaterialSection" style="visibility: hidden">
         <hr style=" align='left' ;size='10' ;width='300' ;color='yellow' " >
