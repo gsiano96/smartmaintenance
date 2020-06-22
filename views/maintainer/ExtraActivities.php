@@ -43,6 +43,7 @@ class ExtraActivities extends View
         $this->setBlock();
     }
 
+/*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
     public function setMaintainerNameRow($data){
         $this->openBlock("MaintainerName");
         foreach ($data as $dataname){
@@ -51,5 +52,23 @@ class ExtraActivities extends View
         }
         $this->setBlock();
     }
+
+    public function setNavbarStats($stats, $iden){
+        $this->openBlock("ScheduledActivitiesStats");
+        $this->setVar("Statistic", $stats[0]);
+        $this->setVar("IDUser", $iden);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+        $this->openBlock("OnCallActivitiesStats");
+        $this->setVar("Statistic", $stats[1]);
+        $this->setVar("IDUser", $iden);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+        $this->openBlock("HomeReferenceBlock");
+        $this->setVar("IDUser", $iden);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+    }
+/*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
     
 }
