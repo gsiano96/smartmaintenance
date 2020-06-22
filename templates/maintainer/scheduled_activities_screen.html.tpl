@@ -51,8 +51,8 @@
         <tbody>
         <!-- BEGIN ActivityParametersRow -->
         <tr>
-            <td><a href="#">{DescriptionData}</a></td>
-            <td>{TimeData}</td>
+            <td><label>{DescriptionData}</label></td>
+            <td><label>TIME: {TimeData}</label></td>
         </tr>
         <!-- END ActivityParametersRow -->
         <tr>
@@ -70,7 +70,7 @@
         </tbody>
     </table>
     <!-- BEGIN ManageButton -->
-    <button type="button" class="btn btn-danger btn-lg btn-block" {Inter}> Call <i class="fa fa-bell"></i></button>
+    <button type="button" class="btn btn-danger btn-lg btn-block" {Inter} onclick="location.href='on_call_activities?iden={IDUser}';"> Call <i class="fa fa-bell"></i></button>
     <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="viewMaterial()"> Materials <i class="fa fa-gavel"></i></button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="viewNotes()"> Notes <i class="fa fa-sticky-note"></i></button>
     <!-- END ManageButton -->

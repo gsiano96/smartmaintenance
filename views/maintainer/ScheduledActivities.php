@@ -27,9 +27,10 @@ class ScheduledActivities extends View
         parent::__construct($tplName);
     }
 
-    public function setScheduledActivityRow($scheduledActivities){
+    public function setScheduledActivityRow($iden,$scheduledActivities){
         $this->openBlock("ScheduledActivitiesRow");
         foreach ($scheduledActivities as $activity){
+            $this->setVar("IDUser", $iden);
             $this->setVar("IDData", $activity["ActID"]);
             $this->setVar("DescriptionData", $activity["ActDescription"]);
             $this->setVar("TimeData", $activity["ActEstimatedTime"]);

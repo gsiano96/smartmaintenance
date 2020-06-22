@@ -53,7 +53,7 @@ class ScheduledActivitiesScreen extends View
         $this->setBlock();
     }
 
-    public function setManageButtonActivityScreenRow($inter){
+    public function setManageButtonActivityScreenRow($inter,$iden){
         foreach ($inter as $int)
             $tmp = $int["ActInter"];
         if($tmp == 0)
@@ -61,6 +61,7 @@ class ScheduledActivitiesScreen extends View
         else
             $value = " ";
         $this->openBlock("ManageButton");
+        $this->setVar("IDUser", $iden);
         $this->setVar("Inter", $value);
         $this->parseCurrentBlock();
         $this->setBlock();

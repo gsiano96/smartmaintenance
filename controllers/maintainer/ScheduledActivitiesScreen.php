@@ -32,8 +32,9 @@ class ScheduledActivitiesScreen extends Controller
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
         parent::__construct($this->view,$this->model);
-
-        $IDAct = $this->getWhatYouGet();
+        $getResult = $this->getWhatYouGet();
+        $IDAct = $getResult["idenD"];
+        $iden = $getResult["idenU"];
         $activity = $this->model->getScheduledActivityFromDb($IDAct);
         $this->view->setScheduledActivityScreenRow($activity);
         $materials = $this->model->getMaterialsForActivityFromDb($IDAct);
@@ -41,7 +42,7 @@ class ScheduledActivitiesScreen extends Controller
         $notes = $this->model->getNoteForActivityFromDb($IDAct);
         $this->view->setNoteActivityScreenRow($notes);
         $inter = $this->model->getInterForActivityFromDb($IDAct);
-        $this->view->setManageButtonActivityScreenRow($inter);
+        $this->view->setManageButtonActivityScreenRow($inter,$iden);
     }
 
     /**
@@ -79,7 +80,8 @@ class ScheduledActivitiesScreen extends Controller
     private function getWhatYouGet()
     {
         foreach($_GET as $get_variable => $value) {
-            return $value;
+            $elem[$get_variable] = $value;
         }
+        return $elem;
     }
 }

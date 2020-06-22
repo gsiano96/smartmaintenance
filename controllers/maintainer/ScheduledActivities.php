@@ -34,7 +34,7 @@ class ScheduledActivities extends Controller
         parent::__construct($this->view,$this->model);
         $iden = $this->getWhatYouGet();
         $activities = $this->model->getScheduledActivitiesFromDb($iden);
-        $this->view->setScheduledActivityRow($activities);
+        $this->view->setScheduledActivityRow($iden,$activities);
 /*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
         $data = $this->model->getNameById($iden);
         $this->view->setMaintainerNameRow($data);
