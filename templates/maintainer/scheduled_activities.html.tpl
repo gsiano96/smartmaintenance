@@ -56,7 +56,7 @@
                     <div class="dropdown-menu">
                         <!-- BEGIN ExtraActivitiesStats -->
                         <label class="dropdown-item disabled"> {Statistic} </label>
-                        <a class="dropdown-item" href="{IDUser}">
+                        <a class="dropdown-item" href="extra_activities?iden={IDUser}">
                             Go To
                             <i class="fa fa-arrow-right"></i>
                         </a>

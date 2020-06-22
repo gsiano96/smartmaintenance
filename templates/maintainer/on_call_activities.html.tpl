@@ -24,17 +24,19 @@
         <!-- END MaintainerName -->
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
+                <!-- BEGIN HomeReferenceBlock -->
+                <li class="nav-item active"><a class="nav-link" href="index?iden={IDUser}">Home</a></li>
+                <!-- END HomeReferenceBlock -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Scheduled Activities</a>
                     <div class="dropdown-menu">
                         <!-- BEGIN ScheduledActivitiesStats -->
                         <label class="dropdown-item disabled"> {Statistic} </label>
-                        <!-- END ScheduledActivitiesStats -->
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="scheduled_activities?iden={IDUser}">
                             Go To
                             <i class="fa fa-arrow-right"></i>
                         </a>
+                        <!-- END ScheduledActivitiesStats -->
                     </div>
                 </li>
                 <li class="nav-item dropdown">
@@ -54,11 +56,11 @@
                     <div class="dropdown-menu">
                         <!-- BEGIN ExtraActivitiesStats -->
                         <label class="dropdown-item disabled"> {Statistic} </label>
-                        <!-- END ExtraActivitiesStats -->
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="extra_activities?iden={IDUser}">
                             Go To
                             <i class="fa fa-arrow-right"></i>
                         </a>
+                        <!-- END ExtraActivitiesStats -->
                     </div>
                 </li>
             </ul>

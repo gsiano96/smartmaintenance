@@ -27,15 +27,6 @@ class OnCallActivities extends View
         parent::__construct($tplName);
     }
 
-    public function setMaintainerNameRow($data){
-        $this->openBlock("MaintainerName");
-        foreach ($data as $dataname){
-            $this->setVar("Maintainer", $dataname["Name"]." ".$dataname["Surname"]);
-            $this->parseCurrentBlock();
-        }
-        $this->setBlock();
-    }
-
     public function setOnCallActivityRow($scheduledActivities){
         $this->openBlock("OnCallActivitiesRow");
         foreach ($scheduledActivities as $activity){
@@ -51,5 +42,33 @@ class OnCallActivities extends View
         }
         $this->setBlock();
     }
+
+    /*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+    public function setMaintainerNameRow($data){
+        $this->openBlock("MaintainerName");
+        foreach ($data as $dataname){
+            $this->setVar("Maintainer", $dataname["Name"]." ".$dataname["Surname"]);
+            $this->parseCurrentBlock();
+        }
+        $this->setBlock();
+    }
+
+    public function setNavbarStats($stats, $iden){
+        $this->openBlock("ScheduledActivitiesStats");
+        $this->setVar("Statistic", $stats[0]);
+        $this->setVar("IDUser", $iden);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+        $this->openBlock("ExtraActivitiesStats");
+        $this->setVar("Statistic", $stats[2]);
+        $this->setVar("IDUser", $iden);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+        $this->openBlock("HomeReferenceBlock");
+        $this->setVar("IDUser", $iden);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+    }
+    /*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
     
 }
