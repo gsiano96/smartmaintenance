@@ -23,7 +23,6 @@
         <!-- END MaintainerName -->
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
-                <li class="nav-item active"><a class="nav-link" href="#">Home</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Scheduled Activities</a>
                     <div class="dropdown-menu">
