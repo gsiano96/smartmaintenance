@@ -34,20 +34,6 @@ class ScheduledActivities extends Model
 
     }
 
-    public function getNameById($Iden){
-        $this->sql = <<<SQL
-        SELECT 
-	        first_name as Name,
-            last_name as Surname
-        FROM
-            employee
-        WHERE 
-	        id_employee = $Iden
-SQL;
-        $this->updateResultSet();
-        return $this->getResultSet();
-    }
-
     public function getScheduledActivitiesFromDb($IDUsr)
     {
         $this->sql = <<<SQL
@@ -66,4 +52,83 @@ SQL;
         $this->updateResultSet();
         return $this->getResultSet();
     }
+
+/*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+    public function getNameById($Iden){
+        $this->sql = <<<SQL
+        SELECT 
+	        first_name as Name,
+            last_name as Surname
+        FROM
+            employee
+        WHERE 
+	        id_employee = $Iden
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
+    public function getStatsById($Iden){
+        $planned = $this->getPlannedById($Iden);
+        foreach ($planned as $plan)
+            $nplan = $plan["PlannedCount"];
+        $unplanned = $this->getUnplannedById($Iden);
+        foreach ($unplanned as $unplan)
+            $nunplan = $unplan["UnplannedCount"];
+        $extra = $this->getExtraById($Iden);
+        foreach ($extra as $ext)
+            $next = $ext["ExtraCount"];
+        $stats = array($nplan, $nunplan, $next);
+        return $stats;
+    }
+
+    public function getPlannedById($Iden){
+        $this->sql = <<<SQL
+        SELECT 
+	        COUNT(id_activity) as PlannedCount
+        FROM 
+	        maintenance_procedure
+        INNER JOIN 
+	        employees_maintenance_procedures ON id_activity = employees_maintenance_procedures.id_maintenance_procedure
+        WHERE 
+	        procedure_class = 'planned procedure' AND employees_maintenance_procedures.id_employee = $Iden
+SQL;
+        $this->updateResultSet();
+        $planned = $this->getResultSet();
+        return $planned;
+    }
+
+    public function getUnplannedById($Iden){
+        $this->sql = <<<SQL
+        SELECT 
+	        COUNT(id_activity) as UnplannedCount
+        FROM 
+	        maintenance_procedure
+        INNER JOIN 
+	        employees_maintenance_procedures ON id_activity = employees_maintenance_procedures.id_maintenance_procedure
+        WHERE 
+	        procedure_class = 'unplanned procedure (ewo)' AND employees_maintenance_procedures.id_employee = $Iden
+SQL;
+        $this->updateResultSet();
+        $unplanned = $this->getResultSet();
+        return $unplanned;
+    }
+
+    public function getExtraById($Iden){
+        $this->sql = <<<SQL
+        SELECT 
+	        COUNT(id_activity) as ExtraCount
+        FROM 
+	        maintenance_procedure
+        INNER JOIN 
+	        employees_maintenance_procedures ON id_activity = employees_maintenance_procedures.id_maintenance_procedure
+        WHERE 
+	        procedure_class = 'extra' AND employees_maintenance_procedures.id_employee = $Iden
+SQL;
+        $this->updateResultSet();
+        $extra = $this->getResultSet();
+        return $extra;
+    }
+/*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+
 }
