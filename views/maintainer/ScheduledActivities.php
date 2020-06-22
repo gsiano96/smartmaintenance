@@ -29,18 +29,27 @@ class ScheduledActivities extends View
 
     public function setScheduledActivityRow($iden,$scheduledActivities){
         $this->openBlock("ScheduledActivitiesRow");
-        foreach ($scheduledActivities as $activity){
-            $this->setVar("IDUser", $iden);
-            $this->setVar("IDData", $activity["ActID"]);
-            $this->setVar("DescriptionData", $activity["ActDescription"]);
-            $this->setVar("TimeData", $activity["ActEstimatedTime"]);
-            if($activity["ActInterrupt"]==1)
-                $trad="Yes";
-            else
-                $trad="No";
-            $this->setVar("InterrumptibleData", $trad);
-            $this->parseCurrentBlock();
+        if ($scheduledActivities->num_rows == 0) {
+            $vuoto = " ";
+            $this->setVar("IDData", $vuoto);
+            $this->setVar("DescriptionData", $vuoto);
+            $this->setVar("TimeData", $vuoto);
+            $this->setVar("InterrumptibleData", $vuoto);
         }
+        else {
+            foreach ($scheduledActivities as $activity) {
+                $this->setVar("IDUser", $iden);
+                $this->setVar("IDData", $activity["ActID"]);
+                $this->setVar("DescriptionData", $activity["ActDescription"]);
+                $this->setVar("TimeData", $activity["ActEstimatedTime"]);
+                if ($activity["ActInterrupt"] == 1)
+                    $trad = "Yes";
+                else
+                    $trad = "No";
+                $this->setVar("InterrumptibleData", $trad);
+            }
+        }
+        $this->parseCurrentBlock();
         $this->setBlock();
     }
 
