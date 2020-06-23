@@ -80,7 +80,7 @@
         <tbody>
         <!-- BEGIN ScheduledActivitiesRow -->
         <tr>
-            <td><a href="scheduled_activities_screen?idenD={IDData}&idenU={IDUser}" >{DescriptionData}</a></td>
+            <td><a href="scheduled_activities_screen?idenD={IDData}&idenU={IDUser}">{DescriptionData}</a></td>
             <td>{TimeData}</td>
             <td>{InterrumptibleData}</td>
         </tr>

@@ -11,8 +11,9 @@
 namespace models\maintainer;
 
 use framework\Model;
+use models\beans\BeanEmployeesMaintenanceProcedures;
 
-class ScheduledActivitiesScreen extends Model
+class ScheduledActivitiesScreen extends BeanEmployeesMaintenanceProcedures
 {
     /**
     * Object constructor.

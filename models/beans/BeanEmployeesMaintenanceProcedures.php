@@ -424,7 +424,7 @@ class BeanEmployeesMaintenanceProcedures extends MySqlRecord
      */
     public function close()
     {
-        unset($this);
+        //unset($this);
     }
 
     /**

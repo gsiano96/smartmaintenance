@@ -27,6 +27,7 @@ class ScheduledActivitiesScreen extends Controller
     * @param View $view
     * @param Model $mode
     */
+
     public function __construct(View $view=null, Model $model=null)
     {
         $this->view = empty($view) ? $this->getView() : $view;
@@ -43,6 +44,8 @@ class ScheduledActivitiesScreen extends Controller
         $this->view->setNoteActivityScreenRow($notes);
         $inter = $this->model->getInterForActivityFromDb($IDAct);
         $this->view->setManageButtonActivityScreenRow($inter,$iden);
+        $StartStop = $this->handleStartStopVisual();
+        $this->view->setStartStopRows($StartStop[0],$StartStop[1]);
     }
 
     /**
@@ -52,7 +55,7 @@ class ScheduledActivitiesScreen extends Controller
     */
     protected function autorun($parameters = null)
     {
-
+        $this->handleFormActionsSubmission();
     }
 
 
@@ -83,5 +86,39 @@ class ScheduledActivitiesScreen extends Controller
             $elem[$get_variable] = $value;
         }
         return $elem;
+    }
+
+/*--------------- INIZIO SEZIONE DI INSERIMENTO DATABASE & GESTIONE $POST --------------------*/
+
+    private function handleFormActionsSubmission()
+    {
+        $getResult = $this->getWhatYouGet();
+        $IDAct = $getResult["idenD"];
+        $iden = $getResult["idenU"];
+        $this->model->select($iden,$IDAct);
+        if (isset($_POST["timeStart"]) || isset($_POST["timeStop"])) {
+            $this->handlePostFields();
+            $this->model->update($iden,$IDAct);
+        }
+    }
+
+    private function handlePostFields()
+    {
+        if (isset($_POST["timeStart"]))
+            $this->model->setStartDatetime(@$_POST["ActStart"]);
+        if (isset($_POST["timeStop"]))
+            $this->model->setStopDatetime(@$_POST["ActStop"]);
+     }
+/*--------------- FINE SEZIONE DI INSERIMENTO DATABASE & GESTIONE $POST --------------------*/
+
+    private function handleStartStopVisual(){
+        $getResult = $this->getWhatYouGet();
+        $IDAct = $getResult["idenD"];
+        $iden = $getResult["idenU"];
+        $this->model->select($iden,$IDAct);
+        $startT = $this->model->getStartDatetime();
+        $stopT = $this->model->getStopDatetime();
+        $param = Array($startT,$stopT);
+        return $param;
     }
 }

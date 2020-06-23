@@ -66,4 +66,15 @@ class ScheduledActivitiesScreen extends View
         $this->parseCurrentBlock();
         $this->setBlock();
     }
+
+    public function setStartStopRows($start,$stop){
+        $this->openBlock("ActivityStartParameter");
+        $this->setVar("StartTime", $start);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+        $this->openBlock("ActivityStopParameter");
+        $this->setVar("StopTime", $stop);
+        $this->parseCurrentBlock();
+        $this->setBlock();
+    }
 }

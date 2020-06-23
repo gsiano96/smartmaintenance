@@ -31,15 +31,18 @@
             else
                 elem.setAttribute("style","visibility:hidden");
         }
-        function getTime() {
+        function getTime($param) {
             var currentdate = new Date();
-            var datetime = currentdate.getDate() + "/"
-                + (currentdate.getMonth()+1)  + "/"
-                + currentdate.getFullYear() + " "
+            var datetime = currentdate.getFullYear()+ "-"
+                + (currentdate.getMonth()+1) + "-"
+                + currentdate.getDate() + " "
                 + currentdate.getHours() + ":"
                 + currentdate.getMinutes() + ":"
                 + currentdate.getSeconds();
-            document.getElementById("ActStart").setAttribute("value",datetime);
+            if($param==0)
+                document.getElementById("ActStart").setAttribute("value",datetime);
+            else
+                document.getElementById("ActStop").setAttribute("value",datetime);
         }
     </script>
     <title>Simulatori</title>
@@ -55,18 +58,20 @@
             <td><label>TIME: {TimeData}</label></td>
         </tr>
         <!-- END ActivityParametersRow -->
-        <tr>
-            <td><button name="timeStart" type="submit" class="btn btn-success btn-block btn-sm" onclick="getTime()">Start <i class="fa fa-clock-o"></i></button></td>
-            <!-- BEGIN ActivityStartParameter -->
-            <td><input id="ActStart" type="text" readonly></td>
-            <!-- END ActivityStartParameter -->
-        </tr>
-        <tr>
-            <td><button type="button" class="btn btn-danger btn-block btn-sm">Stop <i class="fa fa-clock-o"></i></button></td>
-            <!-- BEGIN ActivityStopParameter -->
-            <td><input type="text" readonly></td>
-            <!-- END ActivityStopParameter -->
-        </tr>
+        <form class="form-horizontal" method="post">
+            <tr>
+                <td><button name="timeStart" type="submit" class="btn btn-success btn-block btn-sm" onclick="getTime(0)">Start <i class="fa fa-clock-o"></i></button></td>
+                <!-- BEGIN ActivityStartParameter -->
+                <td><input id="ActStart" name="ActStart" type="text" value="{StartTime}" readonly></td>
+                <!-- END ActivityStartParameter -->
+            </tr>
+            <tr>
+                <td><button name="timeStop" type="submit" class="btn btn-danger btn-block btn-sm" onclick="getTime(1)">Stop <i class="fa fa-clock-o"></i></button></td>
+                <!-- BEGIN ActivityStopParameter -->
+                <td><input id="ActStop" name="ActStop" type="text" value="{StopTime}" readonly></td>
+                <!-- END ActivityStopParameter -->
+            </tr>
+        </form>
         </tbody>
     </table>
     <!-- BEGIN ManageButton -->
