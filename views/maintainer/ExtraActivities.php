@@ -35,6 +35,7 @@ class ExtraActivities extends View
             $this->setVar("DescriptionData", $vuoto);
             $this->setVar("TimeData", $vuoto);
             $this->setVar("InterrumptibleData", $vuoto);
+            $this->parseCurrentBlock();
         }
         else {
             foreach ($scheduledActivities as $activity) {
@@ -46,9 +47,9 @@ class ExtraActivities extends View
                 else
                     $trad = "No";
                 $this->setVar("InterrumptibleData", $trad);
+                $this->parseCurrentBlock();
             }
         }
-        $this->parseCurrentBlock();
         $this->setBlock();
     }
 

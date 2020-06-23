@@ -38,17 +38,31 @@ class ScheduledActivitiesScreen extends View
     }
     public function setMaterialActivityScreenRow($materials){
         $this->openBlock("ActivityMaterialParameter");
-        foreach ($materials as $material){
-            $this->setVar("ActivityMaterials", $material["MatName"]);
+        if ($materials->num_rows == 0) {
+            $vuoto = " ";
+            $this->setVar("ActivityMaterials", $vuoto);
             $this->parseCurrentBlock();
+        }
+        else {
+            foreach ($materials as $material) {
+                $this->setVar("ActivityMaterials", $material["MatName"]);
+                $this->parseCurrentBlock();
+            }
         }
         $this->setBlock();
     }
     public function setNoteActivityScreenRow($notes){
         $this->openBlock("ActivityNotesParameter");
-        foreach ($notes as $note){
-            $this->setVar("ActivityNotes", $note["ActNote"]);
+        if ($notes->num_rows == 0) {
+            $vuoto = " ";
+            $this->setVar("ActivityNotes", $vuoto);
             $this->parseCurrentBlock();
+        }
+        else{
+            foreach ($notes as $note){
+                $this->setVar("ActivityNotes", $note["ActNote"]);
+                $this->parseCurrentBlock();
+            }
         }
         $this->setBlock();
     }
