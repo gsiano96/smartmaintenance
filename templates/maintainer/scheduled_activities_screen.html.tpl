@@ -58,7 +58,7 @@
             <td><label>TIME: {TimeData}</label></td>
         </tr>
         <!-- END ActivityParametersRow -->
-        <form class="form-horizontal" method="post">
+        <form id="formSS" class="form-horizontal" method="post">
             <tr>
                 <td><button name="timeStart" type="submit" class="btn btn-success btn-block btn-sm" onclick="getTime(0)">Start <i class="fa fa-clock-o"></i></button></td>
                 <!-- BEGIN ActivityStartParameter -->
@@ -66,16 +66,16 @@
                 <!-- END ActivityStartParameter -->
             </tr>
             <tr>
-                <td><button name="timeStop" type="submit" class="btn btn-danger btn-block btn-sm" onclick="getTime(1)">Stop <i class="fa fa-clock-o"></i></button></td>
                 <!-- BEGIN ActivityStopParameter -->
+                <td><button name="timeStop" type="submit" class="btn btn-danger btn-block btn-sm" onclick="getTime(1);">Stop <i class="fa fa-clock-o"></i></button></td>
                 <td><input id="ActStop" name="ActStop" type="text" value="{StopTime}" readonly></td>
                 <!-- END ActivityStopParameter -->
             </tr>
-        </form>
         </tbody>
     </table>
     <!-- BEGIN ManageButton -->
-    <button type="button" class="btn btn-danger btn-lg btn-block" {Inter} onclick="location.href='on_call_activities?iden={IDUser}';"> Call <i class="fa fa-bell"></i></button>
+    <button type="submit" name="timeStopInt" onclick="getTime(1);" class="btn btn-danger btn-lg btn-block" {Inter} > Call <i class="fa fa-bell"></i></button>
+    </form>
     <button type="button" class="btn btn-secondary btn-lg btn-block" onclick="viewMaterial()"> Materials <i class="fa fa-gavel"></i></button>
     <button type="button" class="btn btn-success btn-lg btn-block" onclick="viewNotes()"> Notes <i class="fa fa-sticky-note"></i></button>
     <!-- END ManageButton -->

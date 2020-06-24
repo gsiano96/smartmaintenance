@@ -75,7 +75,6 @@ class ScheduledActivitiesScreen extends View
         else
             $value = " ";
         $this->openBlock("ManageButton");
-        $this->setVar("IDUser", $iden);
         $this->setVar("Inter", $value);
         $this->parseCurrentBlock();
         $this->setBlock();

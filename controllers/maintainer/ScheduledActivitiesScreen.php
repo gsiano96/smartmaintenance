@@ -45,7 +45,7 @@ class ScheduledActivitiesScreen extends Controller
         $inter = $this->model->getInterForActivityFromDb($IDAct);
         $this->view->setManageButtonActivityScreenRow($inter,$iden);
         $StartStop = $this->handleStartStopVisual();
-        $this->view->setStartStopRows($StartStop[0],$StartStop[1]);
+        $this->view->setStartStopRows($StartStop[0],$StartStop[1],$iden,$inter);
     }
 
     /**
@@ -95,10 +95,17 @@ class ScheduledActivitiesScreen extends Controller
         $getResult = $this->getWhatYouGet();
         $IDAct = $getResult["idenD"];
         $iden = $getResult["idenU"];
+        $inter = $this->model->getInterForActivityFromDb($IDAct);
+        foreach ($inter as $int)
+            $tmp = $int["ActInter"];
         $this->model->select($iden,$IDAct);
-        if (isset($_POST["timeStart"]) || isset($_POST["timeStop"])) {
+        if (isset($_POST["timeStart"]) || isset($_POST["timeStop"]) || isset($_POST["timeStopInt"])) {
             $this->handlePostFields();
             $this->model->update($iden,$IDAct);
+            if(isset($_POST["timeStop"]) && $tmp == 0)
+                header("location: index?iden=".$iden);
+            elseif (isset($_POST["timeStopInt"]) && $tmp == 1)
+                header("location: on_call_activities?iden=".$iden);
         }
     }
 
@@ -106,7 +113,7 @@ class ScheduledActivitiesScreen extends Controller
     {
         if (isset($_POST["timeStart"]))
             $this->model->setStartDatetime(@$_POST["ActStart"]);
-        if (isset($_POST["timeStop"]))
+        if (isset($_POST["timeStop"]) || isset($_POST["timeStopInt"]))
             $this->model->setStopDatetime(@$_POST["ActStop"]);
      }
 /*--------------- FINE SEZIONE DI INSERIMENTO DATABASE & GESTIONE $POST --------------------*/
