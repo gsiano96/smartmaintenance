@@ -40,7 +40,6 @@ class ScheduledActivities extends View
         else {
             foreach ($scheduledActivities as $activity) {
                 $this->setVar("IDData", $activity["ActID"]);
-                $this->setVar("IDUser", $iden);
                 $this->setVar("DescriptionData", $activity["ActDescription"]);
                 $this->setVar("TimeData", $activity["ActEstimatedTime"]);
                 if ($activity["ActInterrupt"] == 1)
@@ -68,16 +67,13 @@ class ScheduledActivities extends View
     public function setNavbarStats($stats, $iden){
         $this->openBlock("CallActivitiesStats");
         $this->setVar("Statistic", $stats[1]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
         $this->openBlock("ExtraActivitiesStats");
         $this->setVar("Statistic", $stats[2]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
         $this->openBlock("HomeReferenceBlock");
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
     }

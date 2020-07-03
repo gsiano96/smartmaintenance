@@ -29,14 +29,17 @@ class Index extends Controller
     */
     public function __construct(View $view=null, Model $model=null)
     {
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "maintainer/index");
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
-        parent::__construct($this->view,$this->model);
-        $usrIden = $this->getWhatYouGet();
+        parent::__construct($this->view, $this->model);
+        $usrIden = $this->user->getId();
         $data = $this->model->getNameById($usrIden);
         $stats = $this->model->getStatsById($usrIden);
         $this->view->setMaintainerNameRow($data);
-        $this->view->setNavbarStats($stats,$usrIden);
+        $this->view->setNavbarStats($stats, $usrIden);
     }
 
     /**
@@ -46,15 +49,14 @@ class Index extends Controller
     */
     protected function autorun($parameters = null)
     {
-
-    }
-
-    private function getWhatYouGet()
-    {
-        foreach ($_GET as $get_variable => $value) {
-            return $value;
+        echo $_POST["login_form_do_logout"];
+        if (isset($_POST["login_form_do_logout"])) {
+            $this->user->logout();
+            header("Location:" . SITEURL);
         }
+
     }
+
 
     /**
     * Inizialize the View by loading static design of /maintainer/index.html.tpl

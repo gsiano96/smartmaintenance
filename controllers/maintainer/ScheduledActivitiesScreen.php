@@ -30,12 +30,15 @@ class ScheduledActivitiesScreen extends Controller
 
     public function __construct(View $view=null, Model $model=null)
     {
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "maintainer/scheduled_activities_screen");
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
-        parent::__construct($this->view,$this->model);
+        parent::__construct($this->view, $this->model);
         $getResult = $this->getWhatYouGet();
         $IDAct = $getResult["idenD"];
-        $iden = $getResult["idenU"];
+        $iden = $this->user->getId();
         $activity = $this->model->getScheduledActivityFromDb($IDAct);
         $this->view->setScheduledActivityScreenRow($activity);
         $materials = $this->model->getMaterialsForActivityFromDb($IDAct);
@@ -94,7 +97,7 @@ class ScheduledActivitiesScreen extends Controller
     {
         $getResult = $this->getWhatYouGet();
         $IDAct = $getResult["idenD"];
-        $iden = $getResult["idenU"];
+        $iden = $this->user->getId();
         $inter = $this->model->getInterForActivityFromDb($IDAct);
         foreach ($inter as $int)
             $tmp = $int["ActInter"];
@@ -118,14 +121,15 @@ class ScheduledActivitiesScreen extends Controller
      }
 /*--------------- FINE SEZIONE DI INSERIMENTO DATABASE & GESTIONE $POST --------------------*/
 
-    private function handleStartStopVisual(){
+    private function handleStartStopVisual()
+    {
         $getResult = $this->getWhatYouGet();
         $IDAct = $getResult["idenD"];
-        $iden = $getResult["idenU"];
-        $this->model->select($iden,$IDAct);
+        $iden = $this->user->getId();
+        $this->model->select($iden, $IDAct);
         $startT = $this->model->getStartDatetime();
         $stopT = $this->model->getStopDatetime();
-        $param = Array($startT,$stopT);
+        $param = array($startT, $stopT);
         return $param;
     }
 }

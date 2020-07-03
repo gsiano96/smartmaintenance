@@ -29,18 +29,21 @@ class ScheduledActivities extends Controller
     */
     public function __construct(View $view=null, Model $model=null)
     {
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "maintainer/scheduled_activities");
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
-        parent::__construct($this->view,$this->model);
-        $iden = $this->getWhatYouGet();
+        parent::__construct($this->view, $this->model);
+        $iden = $this->user->getId();
         $activities = $this->model->getScheduledActivitiesFromDb($iden);
-        $this->view->setScheduledActivityRow($iden,$activities);
-/*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+        $this->view->setScheduledActivityRow($iden, $activities);
+        /*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
         $data = $this->model->getNameById($iden);
         $this->view->setMaintainerNameRow($data);
         $stats = $this->model->getStatsById($iden);
-        $this->view->setNavbarStats($stats,$iden);
-/*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+        $this->view->setNavbarStats($stats, $iden);
+        /*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
     }
 
     /**
@@ -53,12 +56,6 @@ class ScheduledActivities extends Controller
 
     }
 
-    private function getWhatYouGet()
-    {
-        foreach ($_GET as $get_variable => $value) {
-            return $value;
-        }
-    }
 
     /**
     * Inizialize the View by loading static design of /maintainer/scheduled_activities.html.tpl

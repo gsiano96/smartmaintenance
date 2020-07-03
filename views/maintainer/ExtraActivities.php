@@ -31,7 +31,7 @@ class ExtraActivities extends View
         $this->openBlock("ExtraActivitiesRow");
         if ($scheduledActivities->num_rows == 0) {
             $vuoto = " ";
-            $this->setVar("IDData", $vuoto);
+            #$this->setVar("IDData", $vuoto);
             $this->setVar("DescriptionData", $vuoto);
             $this->setVar("TimeData", $vuoto);
             $this->setVar("InterrumptibleData", $vuoto);
@@ -39,7 +39,7 @@ class ExtraActivities extends View
         }
         else {
             foreach ($scheduledActivities as $activity) {
-                $this->setVar("IDData", $activity["ActID"]);
+                #$this->setVar("IDData", $activity["ActID"]);
                 $this->setVar("DescriptionData", $activity["ActDescription"]);
                 $this->setVar("TimeData", $activity["ActEstimatedTime"]);
                 if ($activity["ActInterrupt"] == 1)
@@ -66,16 +66,13 @@ class ExtraActivities extends View
     public function setNavbarStats($stats, $iden){
         $this->openBlock("ScheduledActivitiesStats");
         $this->setVar("Statistic", $stats[0]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
         $this->openBlock("OnCallActivitiesStats");
         $this->setVar("Statistic", $stats[1]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
         $this->openBlock("HomeReferenceBlock");
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
     }

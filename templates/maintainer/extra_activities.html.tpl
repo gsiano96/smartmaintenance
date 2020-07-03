@@ -25,14 +25,14 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
                 <!-- BEGIN HomeReferenceBlock -->
-                <li class="nav-item active"><a class="nav-link" href="index?iden={IDUser}">Home</a></li>
+                <li class="nav-item active"><a class="nav-link" href="index">Home</a></li>
                 <!-- END HomeReferenceBlock -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Scheduled Activities</a>
                     <div class="dropdown-menu">
                         <!-- BEGIN ScheduledActivitiesStats -->
                         <label class="dropdown-item disabled"> {Statistic} </label>
-                        <a class="dropdown-item" href="scheduled_activities?iden={IDUser}">
+                        <a class="dropdown-item" href="scheduled_activities">
                             Go To
                             <i class="fa fa-arrow-right"></i>
                         </a>
@@ -44,7 +44,7 @@
                     <div class="dropdown-menu">
                         <!-- BEGIN OnCallActivitiesStats -->
                         <label class="dropdown-item disabled"> {Statistic} </label>
-                        <a class="dropdown-item" href="on_call_activities?iden={IDUser}">
+                        <a class="dropdown-item" href="on_call_activities">
                             Go To
                             <i class="fa fa-arrow-right"></i>
                         </a>
@@ -80,7 +80,7 @@
         <tbody>
         <!-- BEGIN ExtraActivitiesRow -->
         <tr>
-            <td><a href="extra_activities_screen?iden={IDData}" >{DescriptionData}</a></td>
+            <td><a href="extra_activities">{DescriptionData}</a></td>
             <td>{TimeData}</td>
             <td>{InterrumptibleData}</td>
         </tr>

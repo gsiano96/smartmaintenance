@@ -29,9 +29,16 @@ class Index extends Controller
     */
     public function __construct(View $view=null, Model $model=null)
     {
+        $this->user = $this->restrictToAuthentication(null, "index.php");
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
-        parent::__construct($this->view,$this->model);
+        parent::__construct($this->view, $this->model);
+        echo $this->user->getRole();
+        if ($this->user->getRole() == MAINTAINER_ROLE_ID)
+            $returnPage = SITEURL . "/maintainer/index";
+        elseif ($this->user->getRole() == PLANNER_ROLE_ID)
+            $returnPage = SITEURL . "/planner/index";
+        header("Location:" . $returnPage);
     }
 
     /**

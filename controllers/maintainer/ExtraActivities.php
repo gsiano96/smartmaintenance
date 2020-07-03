@@ -29,18 +29,21 @@ class ExtraActivities extends Controller
     */
     public function __construct(View $view=null, Model $model=null)
     {
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "maintainer/extra_activities");
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
-        parent::__construct($this->view,$this->model);
-        $iden = $this->getWhatYouGet();
+        parent::__construct($this->view, $this->model);
+        $iden = $this->user->getId();
         $activities = $this->model->getExtraActivitiesFromDb($iden);
         $this->view->setExtraActivityRow($activities);
-/*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+        /*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
         $data = $this->model->getNameById($iden);
         $this->view->setMaintainerNameRow($data);
         $stats = $this->model->getStatsById($iden);
-        $this->view->setNavbarStats($stats,$iden);
-/*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
+        $this->view->setNavbarStats($stats, $iden);
+        /*------------ FINE SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
     }
 
     /**

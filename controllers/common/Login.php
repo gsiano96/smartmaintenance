@@ -14,12 +14,11 @@
 */
 namespace controllers\common;
 
+use framework\classes\ChiperService;
 use framework\Controller;
 use framework\Model;
+use framework\User as LoginModel;
 use framework\View;
-
-use framework\User as  LoginModel;
-use framework\classes\ChiperService;
 use views\common\Login as LoginView;
 
 class Login extends Controller
@@ -28,11 +27,11 @@ class Login extends Controller
     protected $model;
 
     /**
-    * Object constructor.
-    *
-    * @param View $view
-    * @param Model $mode
-    */
+     * Object constructor.
+     *
+     * @param View $view
+     * @param Model $mode
+     */
     public function __construct(View $view=null, Model $model=null)
     {
         $this->view = empty($view) ? $this->getView() : $view;
@@ -41,11 +40,11 @@ class Login extends Controller
     }
 
     /**
-    * Autorun method.
+     * Autorun method.
      *
-    * @param mixed|null $parameters Parameters to manage
-    *
-    */
+     * @param mixed|null $parameters Parameters to manage
+     *
+     */
     protected function autorun($parameters = null)
     {
         // Handles login form submission
@@ -58,12 +57,7 @@ class Login extends Controller
             $this->model->login($email,$password);
             if ($this->model->isLogged()) {
                 $this->hide("LoginErrorMessage");
-                if ($this->model->getNameRole() == 'admin') {
-                    $returnPage = SITEURL;
-                } else {
-                    $returnPage = SITEURL . "/" . $this->model->getNameRole() . "/?id_user=" . $this->model->getId();
-                }
-                #$returnPage = (isset($_GET["return_link"])) ? SITEURL . "/" . $_GET["return_link"] : SITEURL;
+                $returnPage = (isset($_GET["return_link"])) ? SITEURL . "/" . $_GET["return_link"] : SITEURL;
                 header("Location:" . $returnPage);
             }
         } else if (isset($_POST["login_form_do_logout"])) {
@@ -96,10 +90,10 @@ class Login extends Controller
     }
 
     /**
-    * Inizialize the View by loading static design of /common/login.html.tpl
-    * managed by views\common\Login class
-    *
-    */
+     * Inizialize the View by loading static design of /common/login.html.tpl
+     * managed by views\common\Login class
+     *
+     */
     public function getView()
     {
         $view = new LoginView("/common/login");
@@ -107,14 +101,13 @@ class Login extends Controller
     }
 
     /**
-    * Inizialize the Model by loading models\common\Login class
-    *
-    */
+     * Inizialize the Model by loading models\common\Login class
+     *
+     */
     public function getModel()
     {
         $model = new LoginModel();
         return $model;
     }
-
 
 }

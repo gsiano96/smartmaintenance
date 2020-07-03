@@ -39,17 +39,14 @@ class Index extends View
     public function setNavbarStats($stats, $iden){
         $this->openBlock("ScheduledActivitiesStats");
         $this->setVar("Statistic", $stats[0]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
         $this->openBlock("CallActivitiesStats");
         $this->setVar("Statistic", $stats[1]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
         $this->openBlock("ExtraActivitiesStats");
         $this->setVar("Statistic", $stats[2]);
-        $this->setVar("IDUser", $iden);
         $this->parseCurrentBlock();
         $this->setBlock();
      }
