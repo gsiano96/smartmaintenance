@@ -1,6 +1,6 @@
 <?php
 /**
- * Class ExtraActivities
+ * Class ClosingEWO
  *
  * {ControllerResponsability}
  *
@@ -13,10 +13,10 @@ namespace controllers\maintainer;
 use framework\Controller;
 use framework\Model;
 use framework\View;
-use models\maintainer\ExtraActivities as ExtraActivitiesModel;
-use views\maintainer\ExtraActivities as ExtraActivitiesView;
+use models\maintainer\ClosingEWO as ClosingEWOModel;
+use views\maintainer\ClosingEWO as ClosingEWOView;
 
-class ExtraActivities extends Controller
+class ClosingEWO extends Controller
 {
     protected $view;
     protected $model;
@@ -32,14 +32,13 @@ class ExtraActivities extends Controller
         /*------------ INIZIO SEZIONE DI GESTIONE ACCESSO -----------------*/
         $this->grantRole(ADMIN_ROLE_ID);  // Administrator
         $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
-        $this->user = $this->restrictToAuthentication(null, "maintainer/extra_activities");
+        $this->user = $this->restrictToAuthentication(null, "maintainer/closing_ewo");
         /*------------ FINE SEZIONE DI GESTIONE ACCESSO -----------------*/
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
         parent::__construct($this->view, $this->model);
         $iden = $this->user->getId();
-        $activities = $this->model->getExtraActivitiesFromDb($iden);
-        $this->view->setExtraActivityRow($activities);
+        $this->view->setClosingEWORow();
         /*------------ INIZIO SEZIONE DI GESTIONE DELLA NAVBAR -----------------*/
         $data = $this->model->getNameById($iden);
         $this->view->setMaintainerNameRow($data);
@@ -58,31 +57,24 @@ class ExtraActivities extends Controller
 
     }
 
-    private function getWhatYouGet()
-    {
-        foreach ($_GET as $get_variable => $value) {
-            return $value;
-        }
-    }
-
     /**
-    * Inizialize the View by loading static design of /maintainer/extra_activities.html.tpl
-    * managed by views\maintainer\ExtraActivities class
+    * Inizialize the View by loading static design of /maintainer/closing_ewo.html.tpl
+    * managed by views\maintainer\ClosingEWO class
     *
     */
     public function getView()
     {
-        $view = new ExtraActivitiesView("/maintainer/extra_activities");
+        $view = new ClosingEWOView("/maintainer/closing_ewo");
         return $view;
     }
 
     /**
-    * Inizialize the Model by loading models\maintainer\ExtraActivities class
+    * Inizialize the Model by loading models\maintainer\ClosingEWO class
     *
     */
     public function getModel()
     {
-        $model = new ExtraActivitiesModel();
+        $model = new ClosingEWOModel();
         return $model;
     }
 }
