@@ -43,7 +43,7 @@
                     <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Closing EWO</a>
                     <div class="dropdown-menu">
                         <!-- BEGIN ClosingEWOStats -->
-                        <label class="dropdown-item disabled"> 0} </label>
+                        <label class="dropdown-item disabled"> 0 </label>
                         <!-- END ClosingEWOStats -->
                         <a class="dropdown-item" href="closing_ewo">
                             Go To
