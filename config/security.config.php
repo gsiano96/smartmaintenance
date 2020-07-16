@@ -52,6 +52,8 @@ define('USER_ROLE', 'id_access_level');
  *
  */
 define('ADMIN_ROLE_ID', 100);
+define('MAINTAINER_ROLE_ID', 50);
+define('PLANNER_ROLE_ID', 60);
 
 /**
  *  Defines a constant for the enable field of the User MySQL Table

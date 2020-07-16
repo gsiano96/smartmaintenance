@@ -244,4 +244,21 @@ class User extends MySqlRecord implements BeanUser
         return true;
     }
 
+
+    public function getNameRole()
+    {
+        $sql = <<<SQL
+        SELECT 
+            name as NameRole
+        FROM
+            access_level
+        WHERE 
+            id_access_level = $this->role;
+SQL;
+        $result = $this->query($sql);
+        $rowObject = $result->fetch_object();
+
+        return $rowObject->{'NameRole'};
+    }
+
 }

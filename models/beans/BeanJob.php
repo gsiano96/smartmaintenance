@@ -1,9 +1,9 @@
 <?php
 /**
- * Class BeanAccessLevel
- * Bean class for object oriented management of the MySQL table access_level
+ * Class BeanJob
+ * Bean class for object oriented management of the MySQL table job
  *
- * Comment of the managed table access_level: Access levels.
+ * Comment of the managed table job: Business Jobs .
  *
  * Responsibility:
  *
@@ -20,7 +20,7 @@
  *
  * @extends MySqlRecord
  * @implements Bean
- * @filesource BeanAccessLevel.php
+ * @filesource BeanJob.php
  * @category MySql Database Bean Class
  * @package models/bean
  * @author Rosario Carvello <rosario.carvello@gmail.com>
@@ -29,12 +29,12 @@
  * @copyright (c) 2016 Rosario Carvello <rosario.carvello@gmail.com> - All rights reserved. See License.txt file
  * @license BSD
  * @license https://opensource.org/licenses/BSD-3-Clause This software is distributed under BSD Public License.
-*/
+ */
 namespace models\beans;
 use framework\MySqlRecord;
 use framework\Bean;
 
-class BeanAccessLevel extends MySqlRecord implements Bean
+class BeanJob extends MySqlRecord implements Bean
 {
     /**
      * A control attribute for the update operation.
@@ -46,56 +46,84 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     private $allowUpdate = false;
 
     /**
-     * Class attribute for mapping the primary key id_access_level of table access_level
+     * Class attribute for mapping the primary key id_job of table job
      *
-     * Comment for field id_access_level: Not specified<br>
-     * @var int $idAccessLevel
+     * Comment for field id_job: Not specified<br>
+     * @var int $idJob
      */
-    private $idAccessLevel;
+    private $idJob;
 
     /**
      * A class attribute for evaluating if the table has an autoincrement primary key
      * @var bool $isPkAutoIncrement
      */
-    private $isPkAutoIncrement = false;
+    private $isPkAutoIncrement = true;
 
     /**
      * Class attribute for mapping table field name
      *
      * Comment for field name: Not specified.<br>
      * Field information:
-     *  - Data type: varchar(45)
+     *  - Data type: varchar(80)
      *  - Null : NO
-     *  - DB Index: 
-     *  - Default: 
-     *  - Extra:  
+     *  - DB Index:
+     *  - Default:
+     *  - Extra:
      * @var string $name
      */
     private $name;
 
     /**
-     * Class attribute for storing the SQL DDL of table access_level
-     * @var string base64 encoded $ddl
+     * Class attribute for mapping table field description
+     *
+     * Comment for field description: Not specified.<br>
+     * Field information:
+     *  - Data type: varchar(100)
+     *  - Null : YES
+     *  - DB Index:
+     *  - Default:
+     *  - Extra:
+     * @var string $description
      */
-    private $ddl = "Q1JFQVRFIFRBQkxFIGBhY2Nlc3NfbGV2ZWxgICgKICBgaWRfYWNjZXNzX2xldmVsYCBpbnQgTk9UIE5VTEwsCiAgYG5hbWVgIHZhcmNoYXIoNDUpIE5PVCBOVUxMLAogIFBSSU1BUlkgS0VZIChgaWRfYWNjZXNzX2xldmVsYCkKKSBFTkdJTkU9SW5ub0RCIERFRkFVTFQgQ0hBUlNFVD11dGY4IENPTU1FTlQ9J0FjY2VzcyBsZXZlbHMn";
+    private $description;
 
     /**
-     * setIdAccessLevel Sets the class attribute idAccessLevel with a given value
+     * Class attribute for mapping table field enabled
      *
-     * The attribute idAccessLevel maps the field id_access_level defined as int.<br>
-     * Comment for field id_access_level: Not specified.<br>
-     * @param int $idAccessLevel
+     * Comment for field enabled: Not specified.<br>
+     * Field information:
+     *  - Data type: int
+     *  - Null : NO
+     *  - DB Index:
+     *  - Default: 1
+     *  - Extra:
+     * @var int $enabled
+     */
+    private $enabled;
+
+    /**
+     * Class attribute for storing the SQL DDL of table job
+     * @var string base64 encoded $ddl
+     */
+    private $ddl = "Q1JFQVRFIFRBQkxFIGBqb2JgICgKICBgaWRfam9iYCBpbnQgTk9UIE5VTEwgQVVUT19JTkNSRU1FTlQsCiAgYG5hbWVgIHZhcmNoYXIoODApIE5PVCBOVUxMLAogIGBkZXNjcmlwdGlvbmAgdmFyY2hhcigxMDApIERFRkFVTFQgTlVMTCwKICBgZW5hYmxlZGAgaW50IE5PVCBOVUxMIERFRkFVTFQgJzEnLAogIFBSSU1BUlkgS0VZIChgaWRfam9iYCkKKSBFTkdJTkU9SW5ub0RCIEFVVE9fSU5DUkVNRU5UPTE5MCBERUZBVUxUIENIQVJTRVQ9dXRmOCBDT01NRU5UPSdCdXNpbmVzcyBKb2JzICc=";
+
+    /**
+     * setIdJob Sets the class attribute idJob with a given value
+     *
+     * The attribute idJob maps the field id_job defined as int.<br>
+     * Comment for field id_job: Not specified.<br>
+     * @param int $idJob
      * @category Modifier
      */
-    public function setIdAccessLevel($idAccessLevel)
+    public function setIdJob($idJob)
     {
-        $this->idAccessLevel = (int)$idAccessLevel;
+        $this->idJob = (int)$idJob;
     }
 
     /**
      * setName Sets the class attribute name with a given value
      *
-     * The attribute name maps the field name defined as varchar(45).<br>
+     * The attribute name maps the field name defined as varchar(80).<br>
      * Comment for field name: Not specified.<br>
      * @param string $name
      * @category Modifier
@@ -106,22 +134,48 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     }
 
     /**
-     * getIdAccessLevel gets the class attribute idAccessLevel value
+     * setDescription Sets the class attribute description with a given value
      *
-     * The attribute idAccessLevel maps the field id_access_level defined as int.<br>
-     * Comment for field id_access_level: Not specified.
-     * @return int $idAccessLevel
-     * @category Accessor of $idAccessLevel
+     * The attribute description maps the field description defined as varchar(100).<br>
+     * Comment for field description: Not specified.<br>
+     * @param string $description
+     * @category Modifier
      */
-    public function getIdAccessLevel()
+    public function setDescription($description)
     {
-        return $this->idAccessLevel;
+        $this->description = (string)$description;
+    }
+
+    /**
+     * setEnabled Sets the class attribute enabled with a given value
+     *
+     * The attribute enabled maps the field enabled defined as int.<br>
+     * Comment for field enabled: Not specified.<br>
+     * @param int $enabled
+     * @category Modifier
+     */
+    public function setEnabled($enabled)
+    {
+        $this->enabled = (int)$enabled;
+    }
+
+    /**
+     * getIdJob gets the class attribute idJob value
+     *
+     * The attribute idJob maps the field id_job defined as int.<br>
+     * Comment for field id_job: Not specified.
+     * @return int $idJob
+     * @category Accessor of $idJob
+     */
+    public function getIdJob()
+    {
+        return $this->idJob;
     }
 
     /**
      * getName gets the class attribute name value
      *
-     * The attribute name maps the field name defined as varchar(45).<br>
+     * The attribute name maps the field name defined as varchar(80).<br>
      * Comment for field name: Not specified.
      * @return string $name
      * @category Accessor of $name
@@ -132,7 +186,33 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     }
 
     /**
-     * Gets DDL SQL code of the table access_level
+     * getDescription gets the class attribute description value
+     *
+     * The attribute description maps the field description defined as varchar(100).<br>
+     * Comment for field description: Not specified.
+     * @return string $description
+     * @category Accessor of $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * getEnabled gets the class attribute enabled value
+     *
+     * The attribute enabled maps the field enabled defined as int.<br>
+     * Comment for field enabled: Not specified.
+     * @return int $enabled
+     * @category Accessor of $enabled
+     */
+    public function getEnabled()
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * Gets DDL SQL code of the table job
      * @return string
      * @category Accessor
      */
@@ -142,30 +222,30 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     }
 
     /**
-    * Gets the name of the managed table
+     * Gets the name of the managed table
     * @return string
     * @category Accessor
     */
     public function getTableName()
     {
-        return "access_level";
+        return "job";
     }
 
     /**
-     * The BeanAccessLevel constructor
+     * The BeanJob constructor
      *
      * It creates and initializes an object in two way:
-     *  - with null (not fetched) data if none $idAccessLevel is given.
-     *  - with a fetched data row from the table access_level having id_access_level=$idAccessLevel
-     * @param int $idAccessLevel. If omitted an empty (not fetched) instance is created.
-     * @return BeanAccessLevel Object
+     *  - with null (not fetched) data if none $idJob is given.
+     *  - with a fetched data row from the table job having id_job=$idJob
+     * @param int $idJob . If omitted an empty (not fetched) instance is created.
+     * @return BeanJob Object
      */
-    public function __construct($idAccessLevel = null)
+    public function __construct($idJob = null)
     {
         // $this->connect(DBHOST,DBUSER,DBPASSWORD,DBNAME,DBPORT);
         parent::__construct();
-        if (!empty($idAccessLevel)) {
-            $this->select($idAccessLevel);
+        if (!empty($idJob)) {
+            $this->select($idJob);
         }
     }
 
@@ -186,25 +266,27 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     }
 
     /**
-     * Fetchs a table row of access_level into the object.
+     * Fetchs a table row of job into the object.
      *
      * Fetched table fields values are assigned to class attributes and they can be managed by using
      * the accessors/modifiers methods of the class.
-     * @param int $idAccessLevel the primary key id_access_level value of table access_level which identifies the row to select.
+     * @param int $idJob the primary key id_job value of table job which identifies the row to select.
      * @return int affected selected row
      * @category DML
      */
-    public function select($idAccessLevel)
+    public function select($idJob)
     {
-        $sql =  "SELECT * FROM access_level WHERE id_access_level={$this->parseValue($idAccessLevel,'int')}";
+        $sql = "SELECT * FROM job WHERE id_job={$this->parseValue($idJob,'int')}";
         $this->resetLastSqlError();
-        $result =  $this->query($sql);
-        $this->resultSet=$result;
+        $result = $this->query($sql);
+        $this->resultSet = $result;
         $this->lastSql = $sql;
-        if ($result){
+        if ($result) {
             $rowObject = $result->fetch_object();
-            @$this->idAccessLevel = (integer)$rowObject->id_access_level;
+            @$this->idJob = (integer)$rowObject->id_job;
             @$this->name = $this->replaceAposBackSlash($rowObject->name);
+            @$this->description = $this->replaceAposBackSlash($rowObject->description);
+            @$this->enabled = (integer)$rowObject->enabled;
             $this->allowUpdate = true;
         } else {
             $this->lastSqlError = $this->sqlstate . " - ". $this->error;
@@ -213,25 +295,25 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     }
 
     /**
-     * Deletes a specific row from the table access_level
-     * @param int $idAccessLevel the primary key id_access_level value of table access_level which identifies the row to delete.
+     * Deletes a specific row from the table job
+     * @param int $idJob the primary key id_job value of table job which identifies the row to delete.
      * @return int affected deleted row
      * @category DML
      */
-    public function delete($idAccessLevel)
+    public function delete($idJob)
     {
-        $sql = "DELETE FROM access_level WHERE id_access_level={$this->parseValue($idAccessLevel,'int')}";
+        $sql = "DELETE FROM job WHERE id_job={$this->parseValue($idJob,'int')}";
         $this->resetLastSqlError();
         $result = $this->query($sql);
         $this->lastSql = $sql;
         if (!$result) {
-            $this->lastSqlError = $this->sqlstate . " - ". $this->error;
+            $this->lastSqlError = $this->sqlstate . " - " . $this->error;
         }
         return $this->affected_rows;
     }
 
     /**
-     * Insert the current object into a new table row of access_level
+     * Insert the current object into a new table row of job
      *
      * All class attributes values defined for mapping all table fields are automatically used during inserting
      * @return mixed MySQL insert result
@@ -240,14 +322,16 @@ class BeanAccessLevel extends MySqlRecord implements Bean
     public function insert()
     {
         if ($this->isPkAutoIncrement) {
-            $this->idAccessLevel = "";
+            $this->idJob = "";
         }
         // $constants = get_defined_constants();
         $sql = <<< SQL
-            INSERT INTO access_level
-            (id_access_level,name)
-            VALUES({$this->parseValue($this->idAccessLevel)},
-			{$this->parseValue($this->name,'notNumber')})
+            INSERT INTO job
+            (name,description,enabled)
+            VALUES(
+			{$this->parseValue($this->name, 'notNumber')},
+			{$this->parseValue($this->description, 'notNumber')},
+			{$this->parseValue($this->enabled)})
 SQL;
         $this->resetLastSqlError();
         $result = $this->query($sql);
@@ -257,39 +341,41 @@ SQL;
         } else {
             $this->allowUpdate = true;
             if ($this->isPkAutoIncrement) {
-                $this->idAccessLevel = $this->insert_id;
+                $this->idJob = $this->insert_id;
             }
         }
         return $result;
     }
 
     /**
-     * Updates a specific row from the table access_level with the values of the current object.
+     * Updates a specific row from the table job with the values of the current object.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating of selected row.<br>
      * Null values are used for all attributes not previously setted.
-     * @param int $idAccessLevel the primary key id_access_level value of table access_level which identifies the row to update.
+     * @param int $idJob the primary key id_job value of table job which identifies the row to update.
      * @return mixed MySQL update result
      * @category DML
      */
-    public function update($idAccessLevel)
+    public function update($idJob)
     {
         // $constants = get_defined_constants();
         if ($this->allowUpdate) {
             $sql = <<< SQL
             UPDATE
-                access_level
+                job
             SET 
-				name={$this->parseValue($this->name,'notNumber')}
+				name={$this->parseValue($this->name, 'notNumber')},
+				description={$this->parseValue($this->description, 'notNumber')},
+				enabled={$this->parseValue($this->enabled)}
             WHERE
-                id_access_level={$this->parseValue($idAccessLevel,'int')}
+                id_job={$this->parseValue($idJob, 'int')}
 SQL;
             $this->resetLastSqlError();
             $result = $this->query($sql);
             if (!$result) {
                 $this->lastSqlError = $this->sqlstate . " - ". $this->error;
             } else {
-                $this->select($idAccessLevel);
+                $this->select($idJob);
                 $this->lastSql = $sql;
                 return $result;
             }
@@ -299,16 +385,16 @@ SQL;
     }
 
     /**
-     * Facility for updating a row of access_level previously loaded.
+     * Facility for updating a row of job previously loaded.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating.
-     * @category DML Helper
      * @return mixed MySQLi update result
+     * @category DML Helper
      */
     public function updateCurrent()
     {
-        if ($this->idAccessLevel != "") {
-            return $this->update($this->idAccessLevel);
+        if ($this->idJob != "") {
+            return $this->update($this->idJob);
         } else {
             return false;
         }

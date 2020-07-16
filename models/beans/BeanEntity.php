@@ -1,9 +1,9 @@
 <?php
 /**
- * Class BeanPartType
- * Bean class for object oriented management of the MySQL table part_type
+ * Class BeanEntity
+ * Bean class for object oriented management of the MySQL table entity
  *
- * Comment of the managed table part_type: Levels classification for parts, e.g. assembly, raw material etc.
+ * Comment of the managed table entity: Not specified.
  *
  * Responsibility:
  *
@@ -20,7 +20,7 @@
  *
  * @extends MySqlRecord
  * @implements Bean
- * @filesource BeanPartType.php
+ * @filesource BeanEntity.php
  * @category MySql Database Bean Class
  * @package models/bean
  * @author Rosario Carvello <rosario.carvello@gmail.com>
@@ -29,12 +29,12 @@
  * @copyright (c) 2016 Rosario Carvello <rosario.carvello@gmail.com> - All rights reserved. See License.txt file
  * @license BSD
  * @license https://opensource.org/licenses/BSD-3-Clause This software is distributed under BSD Public License.
-*/
+ */
 namespace models\beans;
 use framework\MySqlRecord;
 use framework\Bean;
 
-class BeanPartType extends MySqlRecord implements Bean
+class BeanEntity extends MySqlRecord implements Bean
 {
     /**
      * A control attribute for the update operation.
@@ -46,18 +46,18 @@ class BeanPartType extends MySqlRecord implements Bean
     private $allowUpdate = false;
 
     /**
-     * Class attribute for mapping the primary key part_type_code of table part_type
+     * Class attribute for mapping the primary key id_entity of table entity
      *
-     * Comment for field part_type_code: Not specified<br>
-     * @var string $partTypeCode
+     * Comment for field id_entity: Not specified<br>
+     * @var int $idEntity
      */
-    private $partTypeCode;
+    private $idEntity;
 
     /**
      * A class attribute for evaluating if the table has an autoincrement primary key
      * @var bool $isPkAutoIncrement
      */
-    private $isPkAutoIncrement = false;
+    private $isPkAutoIncrement = true;
 
     /**
      * Class attribute for mapping table field name
@@ -66,30 +66,44 @@ class BeanPartType extends MySqlRecord implements Bean
      * Field information:
      *  - Data type: varchar(45)
      *  - Null : YES
-     *  - DB Index: 
-     *  - Default: 
-     *  - Extra:  
+     *  - DB Index:
+     *  - Default:
+     *  - Extra:
      * @var string $name
      */
     private $name;
 
     /**
-     * Class attribute for storing the SQL DDL of table part_type
-     * @var string base64 encoded $ddl
+     * Class attribute for mapping table field id_entity_class
+     *
+     * Comment for field id_entity_class: Not specified.<br>
+     * Field information:
+     *  - Data type: int
+     *  - Null : NO
+     *  - DB Index: MUL
+     *  - Default:
+     *  - Extra:
+     * @var int $idEntityClass
      */
-    private $ddl = "Q1JFQVRFIFRBQkxFIGBwYXJ0X3R5cGVgICgKICBgcGFydF90eXBlX2NvZGVgIHZhcmNoYXIoMjApIE5PVCBOVUxMLAogIGBuYW1lYCB2YXJjaGFyKDQ1KSBERUZBVUxUIE5VTEwsCiAgUFJJTUFSWSBLRVkgKGBwYXJ0X3R5cGVfY29kZWApCikgRU5HSU5FPUlubm9EQiBERUZBVUxUIENIQVJTRVQ9dXRmOCBDT01NRU5UPSdMZXZlbHMgY2xhc3NpZmljYXRpb24gZm9yIHBhcnRzLCBlLmcuIGFzc2VtYmx5LCByYXcgbWF0ZXJpYWwgZXRjJw==";
+    private $idEntityClass;
 
     /**
-     * setPartTypeCode Sets the class attribute partTypeCode with a given value
+     * Class attribute for storing the SQL DDL of table entity
+     * @var string base64 encoded $ddl
+     */
+    private $ddl = "Q1JFQVRFIFRBQkxFIGBlbnRpdHlgICgKICBgaWRfZW50aXR5YCBpbnQgTk9UIE5VTEwgQVVUT19JTkNSRU1FTlQsCiAgYG5hbWVgIHZhcmNoYXIoNDUpIERFRkFVTFQgTlVMTCwKICBgaWRfZW50aXR5X2NsYXNzYCBpbnQgTk9UIE5VTEwsCiAgUFJJTUFSWSBLRVkgKGBpZF9lbnRpdHlgKSwKICBLRVkgYGZrX2VudGl0eV9lbnRpdHlfY2xhc3MxX2lkeGAgKGBpZF9lbnRpdHlfY2xhc3NgKSwKICBDT05TVFJBSU5UIGBma19lbnRpdHlfZW50aXR5X2NsYXNzMWAgRk9SRUlHTiBLRVkgKGBpZF9lbnRpdHlfY2xhc3NgKSBSRUZFUkVOQ0VTIGBlbnRpdHlfY2xhc3NgIChgaWRfZW50aXR5X2NsYXNzYCkKKSBFTkdJTkU9SW5ub0RCIEFVVE9fSU5DUkVNRU5UPTI0IERFRkFVTFQgQ0hBUlNFVD11dGY4";
+
+    /**
+     * setIdEntity Sets the class attribute idEntity with a given value
      *
-     * The attribute partTypeCode maps the field part_type_code defined as varchar(20).<br>
-     * Comment for field part_type_code: Not specified.<br>
-     * @param string $partTypeCode
+     * The attribute idEntity maps the field id_entity defined as int.<br>
+     * Comment for field id_entity: Not specified.<br>
+     * @param int $idEntity
      * @category Modifier
      */
-    public function setPartTypeCode($partTypeCode)
+    public function setIdEntity($idEntity)
     {
-        $this->partTypeCode = (string)$partTypeCode;
+        $this->idEntity = (int)$idEntity;
     }
 
     /**
@@ -106,16 +120,29 @@ class BeanPartType extends MySqlRecord implements Bean
     }
 
     /**
-     * getPartTypeCode gets the class attribute partTypeCode value
+     * setIdEntityClass Sets the class attribute idEntityClass with a given value
      *
-     * The attribute partTypeCode maps the field part_type_code defined as varchar(20).<br>
-     * Comment for field part_type_code: Not specified.
-     * @return string $partTypeCode
-     * @category Accessor of $partTypeCode
+     * The attribute idEntityClass maps the field id_entity_class defined as int.<br>
+     * Comment for field id_entity_class: Not specified.<br>
+     * @param int $idEntityClass
+     * @category Modifier
      */
-    public function getPartTypeCode()
+    public function setIdEntityClass($idEntityClass)
     {
-        return $this->partTypeCode;
+        $this->idEntityClass = (int)$idEntityClass;
+    }
+
+    /**
+     * getIdEntity gets the class attribute idEntity value
+     *
+     * The attribute idEntity maps the field id_entity defined as int.<br>
+     * Comment for field id_entity: Not specified.
+     * @return int $idEntity
+     * @category Accessor of $idEntity
+     */
+    public function getIdEntity()
+    {
+        return $this->idEntity;
     }
 
     /**
@@ -132,7 +159,20 @@ class BeanPartType extends MySqlRecord implements Bean
     }
 
     /**
-     * Gets DDL SQL code of the table part_type
+     * getIdEntityClass gets the class attribute idEntityClass value
+     *
+     * The attribute idEntityClass maps the field id_entity_class defined as int.<br>
+     * Comment for field id_entity_class: Not specified.
+     * @return int $idEntityClass
+     * @category Accessor of $idEntityClass
+     */
+    public function getIdEntityClass()
+    {
+        return $this->idEntityClass;
+    }
+
+    /**
+     * Gets DDL SQL code of the table entity
      * @return string
      * @category Accessor
      */
@@ -142,30 +182,30 @@ class BeanPartType extends MySqlRecord implements Bean
     }
 
     /**
-    * Gets the name of the managed table
+     * Gets the name of the managed table
     * @return string
     * @category Accessor
     */
     public function getTableName()
     {
-        return "part_type";
+        return "entity";
     }
 
     /**
-     * The BeanPartType constructor
+     * The BeanEntity constructor
      *
      * It creates and initializes an object in two way:
-     *  - with null (not fetched) data if none $partTypeCode is given.
-     *  - with a fetched data row from the table part_type having part_type_code=$partTypeCode
-     * @param string $partTypeCode. If omitted an empty (not fetched) instance is created.
-     * @return BeanPartType Object
+     *  - with null (not fetched) data if none $idEntity is given.
+     *  - with a fetched data row from the table entity having id_entity=$idEntity
+     * @param int $idEntity . If omitted an empty (not fetched) instance is created.
+     * @return BeanEntity Object
      */
-    public function __construct($partTypeCode = null)
+    public function __construct($idEntity = null)
     {
         // $this->connect(DBHOST,DBUSER,DBPASSWORD,DBNAME,DBPORT);
         parent::__construct();
-        if (!empty($partTypeCode)) {
-            $this->select($partTypeCode);
+        if (!empty($idEntity)) {
+            $this->select($idEntity);
         }
     }
 
@@ -186,25 +226,26 @@ class BeanPartType extends MySqlRecord implements Bean
     }
 
     /**
-     * Fetchs a table row of part_type into the object.
+     * Fetchs a table row of entity into the object.
      *
      * Fetched table fields values are assigned to class attributes and they can be managed by using
      * the accessors/modifiers methods of the class.
-     * @param string $partTypeCode the primary key part_type_code value of table part_type which identifies the row to select.
+     * @param int $idEntity the primary key id_entity value of table entity which identifies the row to select.
      * @return int affected selected row
      * @category DML
      */
-    public function select($partTypeCode)
+    public function select($idEntity)
     {
-        $sql =  "SELECT * FROM part_type WHERE part_type_code={$this->parseValue($partTypeCode,'string')}";
+        $sql = "SELECT * FROM entity WHERE id_entity={$this->parseValue($idEntity,'int')}";
         $this->resetLastSqlError();
-        $result =  $this->query($sql);
-        $this->resultSet=$result;
+        $result = $this->query($sql);
+        $this->resultSet = $result;
         $this->lastSql = $sql;
-        if ($result){
+        if ($result) {
             $rowObject = $result->fetch_object();
-            @$this->partTypeCode = $this->replaceAposBackSlash($rowObject->part_type_code);
+            @$this->idEntity = (integer)$rowObject->id_entity;
             @$this->name = $this->replaceAposBackSlash($rowObject->name);
+            @$this->idEntityClass = (integer)$rowObject->id_entity_class;
             $this->allowUpdate = true;
         } else {
             $this->lastSqlError = $this->sqlstate . " - ". $this->error;
@@ -213,25 +254,25 @@ class BeanPartType extends MySqlRecord implements Bean
     }
 
     /**
-     * Deletes a specific row from the table part_type
-     * @param string $partTypeCode the primary key part_type_code value of table part_type which identifies the row to delete.
+     * Deletes a specific row from the table entity
+     * @param int $idEntity the primary key id_entity value of table entity which identifies the row to delete.
      * @return int affected deleted row
      * @category DML
      */
-    public function delete($partTypeCode)
+    public function delete($idEntity)
     {
-        $sql = "DELETE FROM part_type WHERE part_type_code={$this->parseValue($partTypeCode,'string')}";
+        $sql = "DELETE FROM entity WHERE id_entity={$this->parseValue($idEntity,'int')}";
         $this->resetLastSqlError();
         $result = $this->query($sql);
         $this->lastSql = $sql;
         if (!$result) {
-            $this->lastSqlError = $this->sqlstate . " - ". $this->error;
+            $this->lastSqlError = $this->sqlstate . " - " . $this->error;
         }
         return $this->affected_rows;
     }
 
     /**
-     * Insert the current object into a new table row of part_type
+     * Insert the current object into a new table row of entity
      *
      * All class attributes values defined for mapping all table fields are automatically used during inserting
      * @return mixed MySQL insert result
@@ -240,14 +281,15 @@ class BeanPartType extends MySqlRecord implements Bean
     public function insert()
     {
         if ($this->isPkAutoIncrement) {
-            $this->partTypeCode = "";
+            $this->idEntity = "";
         }
         // $constants = get_defined_constants();
         $sql = <<< SQL
-            INSERT INTO part_type
-            (part_type_code,name)
-            VALUES({$this->parseValue($this->partTypeCode,'notNumber')},
-			{$this->parseValue($this->name,'notNumber')})
+            INSERT INTO entity
+            (name,id_entity_class)
+            VALUES(
+			{$this->parseValue($this->name, 'notNumber')},
+			{$this->parseValue($this->idEntityClass)})
 SQL;
         $this->resetLastSqlError();
         $result = $this->query($sql);
@@ -257,39 +299,40 @@ SQL;
         } else {
             $this->allowUpdate = true;
             if ($this->isPkAutoIncrement) {
-                $this->partTypeCode = $this->insert_id;
+                $this->idEntity = $this->insert_id;
             }
         }
         return $result;
     }
 
     /**
-     * Updates a specific row from the table part_type with the values of the current object.
+     * Updates a specific row from the table entity with the values of the current object.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating of selected row.<br>
      * Null values are used for all attributes not previously setted.
-     * @param string $partTypeCode the primary key part_type_code value of table part_type which identifies the row to update.
+     * @param int $idEntity the primary key id_entity value of table entity which identifies the row to update.
      * @return mixed MySQL update result
      * @category DML
      */
-    public function update($partTypeCode)
+    public function update($idEntity)
     {
         // $constants = get_defined_constants();
         if ($this->allowUpdate) {
             $sql = <<< SQL
             UPDATE
-                part_type
+                entity
             SET 
-				name={$this->parseValue($this->name,'notNumber')}
+				name={$this->parseValue($this->name, 'notNumber')},
+				id_entity_class={$this->parseValue($this->idEntityClass)}
             WHERE
-                part_type_code={$this->parseValue($partTypeCode,'string')}
+                id_entity={$this->parseValue($idEntity, 'int')}
 SQL;
             $this->resetLastSqlError();
             $result = $this->query($sql);
             if (!$result) {
                 $this->lastSqlError = $this->sqlstate . " - ". $this->error;
             } else {
-                $this->select($partTypeCode);
+                $this->select($idEntity);
                 $this->lastSql = $sql;
                 return $result;
             }
@@ -299,16 +342,16 @@ SQL;
     }
 
     /**
-     * Facility for updating a row of part_type previously loaded.
+     * Facility for updating a row of entity previously loaded.
      *
      * All class attribute values defined for mapping all table fields are automatically used during updating.
-     * @category DML Helper
      * @return mixed MySQLi update result
+     * @category DML Helper
      */
     public function updateCurrent()
     {
-        if ($this->partTypeCode != "") {
-            return $this->update($this->partTypeCode);
+        if ($this->idEntity != "") {
+            return $this->update($this->idEntity);
         } else {
             return false;
         }

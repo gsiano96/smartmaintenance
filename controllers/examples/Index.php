@@ -29,6 +29,8 @@ class Index extends Controller
     */
     public function __construct(View $view=null, Model $model=null)
     {
+
+
         $this->view = empty($view) ? $this->getView() : $view;
         $this->model = empty($model) ? $this->getModel() : $model;
         parent::__construct($this->view,$this->model);
