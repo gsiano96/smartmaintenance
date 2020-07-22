@@ -8,7 +8,7 @@
  * @category Application Model
  * @author  {AuthorName} - {AuthorEmail}
 */
-namespace models;
+namespace models\planner;
 
 //use models\beans\BeanPlannedProcedure;
 use framework\Model;
@@ -39,14 +39,14 @@ class ToDoActivities extends /*BeanPlannedProcedure*/ Model
         // Notice: we use PHP HereDoc to specify SQL string
         $this->sql = <<<SQL
         SELECT 
-            activity_id as id,
+            id_activity as id,
             area,
-            typology as type,
-            estimated_intervetion_time_m as estimatedIntervetionTime  
+            tipology as type,
+            estimated_intervetion_time as estimatedIntervetionTime  
         FROM
-            planned_procedure
+            maintenance_procedure
         ORDER BY
-            activity_id;
+            id_activity;
 SQL;
         $this->updateResultSet();
         // The mysqli_result set already has the format:

@@ -8,7 +8,7 @@
  * @category Application View
  * @author  {AuthorName} - {AuthorEmail}
 */
-namespace views;
+namespace views\planner;
 
 use framework\View;
 

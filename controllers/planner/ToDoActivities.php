@@ -1,6 +1,6 @@
 <?php
 /**
- * Class MaintenersAvailability
+ * Class ToDoActivities
  *
  * {ControllerResponsability}
  *
@@ -8,15 +8,16 @@
  * @category Application Controller
  * @author  {AuthorName} - {AuthorEmail}
 */
-namespace controllers;
+namespace controllers\planner;
 
 use framework\Controller;
 use framework\Model;
 use framework\View;
-use models\MaintenersAvailability as MaintenersAvailabilityModel;
-use views\MaintenersAvailability as MaintenersAvailabilityView;
 
-class MaintenersAvailability extends Controller
+use models\planner\ToDoActivities as ToDoActivitiesModel;
+use views\planner\ToDoActivities as ToDoActivitiesView;
+
+class ToDoActivities extends Controller
 {
     protected $view;
     protected $model;
@@ -41,27 +42,30 @@ class MaintenersAvailability extends Controller
     */
     protected function autorun($parameters = null)
     {
-
+       // get the mysqli_result set from model
+       $activities = $this->model->getActivities();
+       // Pass it to view method to show itself in the relative block of the template
+       $this->view->setActivitiesBlock($activities);
     }
 
     /**
-    * Inizialize the View by loading static design of /mainteners_availability.html.tpl
-    * managed by views\MaintenersAvailability class
+    * Inizialize the View by loading static design of /to_do_activities.html.tpl
+    * managed by views\ToDoActivities class
     *
     */
     public function getView()
     {
-        $view = new MaintenersAvailabilityView("/mainteners_availability");
+        $view = new ToDoActivitiesView("/planner/to_do_activities");
         return $view;
     }
 
     /**
-    * Inizialize the Model by loading models\MaintenersAvailability class
+    * Inizialize the Model by loading models\ToDoActivities class
     *
     */
     public function getModel()
     {
-        $model = new MaintenersAvailabilityModel();
+        $model = new ToDoActivitiesModel();
         return $model;
     }
 }
