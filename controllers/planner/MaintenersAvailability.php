@@ -66,7 +66,9 @@ class MaintenersAvailability extends Controller
         
         $skill=0;
         while($row=$sql_requiredSkills->fetch_array()){
-            $requiredSkills[$skill++]=$row["id_skill"];
+            $requiredSkills[$skill]=$row["id_skill"];
+            $requiredSkillsLabel[$skill]=$row["name"];
+            $skill++;
         }
 
         $requiredSkillsNumber=0; //count entries
@@ -90,6 +92,7 @@ class MaintenersAvailability extends Controller
         }
 
         $this->view->setMaintenersAvailability($mainteners,$availableSkillsNumber,$requiredSkillsNumber,$availability);
+        $this->view->setSkillsList($requiredSkillsLabel);
     }
 
     /**

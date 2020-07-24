@@ -17,7 +17,7 @@ use \DatePeriod;
 use \mysqli_result;
 
 
-class MaintenersAvailability extends Model
+class MaintenersTimeslots extends Model
 {
 
     const dayTimeSlots=[['8:00:00','9:00:00'], ['9:30:00','10:00:00'], ['10:00:00', '11:00:00'], ['11:00:00','12:00:00'], ['14:00:00', '15:00:00'], ['15:00:00', '16:00:00'], ['16:00:00', '17:00:00']];
@@ -68,7 +68,6 @@ class MaintenersAvailability extends Model
         $minutes = $since_start->days * 24 * 60;
         $minutes += $since_start->h * 60;
         $minutes += $since_start->i;
-        echo $minutes.' minutes';
 
         return $minutes;
     }
@@ -95,10 +94,20 @@ SQL;
         return $sql_result; //(id_user, full_name) list
     }
 
+    public function getMaintenerFullNameById($maintener_id) : string{
+        $this->sql=<<<SQL
+        SELECT full_name
+        FROM user
+        WHERE id_user=$maintener_id;
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet()->fetch_assoc()["full_name"];
+    }
+
     public function getOccupations(string $maintener_id, int $day, int $week, int $year) : mysqli_result{
         $this->sql=<<<SQL
         SELECT
-            timeslo1,timeslot2,timeslot3,timeslot4,timeslo5,timeslot6,timeslot7
+            timeslot1,timeslot2,timeslot3,timeslot4,timeslot5,timeslot6,timeslot7
         FROM 
             maintener_occupation
         WHERE
@@ -111,24 +120,26 @@ SQL;
 
     }
 
-    public function getMinutesAvailabilities(string $maintener_id, int $day, int $week, int $year) : array{
-        $sql_result=$this->getOccupations($maintener_id,$day,$week,$year);
-        $rows=$sql_result->fetch_array();
-        $availabilityMat=array();
-        $row_index=0;
-        foreach($rows as $row){
-            $availabilityMat[$row_index][0]=self::timeslotDurationMin[0]-$row["timeslot1"];
-            $availabilityMat[$row_index][1]=self::timeslotDurationMin[1]-$row["timeslot2"];
-            $availabilityMat[$row_index][2]=self::timeslotDurationMin[2]-$row["timeslot3"];
-            $availabilityMat[$row_index][3]=self::timeslotDurationMin[3]-$row["timeslot4"];
-            $availabilityMat[$row_index][4]=self::timeslotDurationMin[4]-$row["timeslot5"];
-            $availabilityMat[$row_index][5]=self::timeslotDurationMin[5]-$row["timeslot6"];
-            $availabilityMat[$row_index][6]=self::timeslotDurationMin[6]-$row["timeslot7"];
-            
-            $row_index++;
+    public function getMinutesAvailabilities(string $maintener_id, int $day, int $week, int $year): array
+    {
+        $sql_result = $this->getOccupations($maintener_id, $day, $week, $year);
+        $row = $sql_result->fetch_assoc();
+
+        if (empty($row)) {
+            for ($i = 0; $i < 7; $i++) {
+                $availability[$i] = self::timeslotDurationMin[$i];
+            }
+        } else {
+            $availability[0] = self::timeslotDurationMin[0] - $row["timeslot1"];
+            $availability[1] = self::timeslotDurationMin[1] - $row["timeslot2"];
+            $availability[2] = self::timeslotDurationMin[2] - $row["timeslot3"];
+            $availability[3] = self::timeslotDurationMin[3] - $row["timeslot4"];
+            $availability[4] = self::timeslotDurationMin[4] - $row["timeslot5"];
+            $availability[5] = self::timeslotDurationMin[5] - $row["timeslot6"];
+            $availability[6] = self::timeslotDurationMin[6] - $row["timeslot7"];
         }
 
-        return $availabilityMat;
+        return $availability;
     }
 
     public function getMaintenanceProcedureSkills(int $maintenance_proc_id) : mysqli_result{
