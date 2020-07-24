@@ -79,12 +79,60 @@ class MaintenersTimeslots extends View
         return $check_style;
     }
 
+    public function getStyleByDayAvailab($day_availab){
+        if($day_availab == 1){
+            $style="green";
+        }else if($day_availab < 1){
+            $style="yellow";
+        }
+        return $style;
+    }
+
     public function setWorkspaceNotes(string $notes){
         $this->setVar("workspaceNotes",$notes);
     }
 
     public function setDayAvailability($day_ava){
         $this->setVar("dayAvailability",$day_ava);
+        $this->setVar("bgcolorDayAvailability",$this->getStyleByDayAvailab($day_ava));
     }
+
+    public function setHeader($week,$dayOfTheWeek,$maintenance_description,$mantainer_name){
+        $this->setVar("week",$week);
+        $this->setVar("maintenanceDescription",$maintenance_description);
+        switch($dayOfTheWeek){
+            case 1:
+                $dayString="Monday";
+                break;
+            case 2:
+                $dayString="Tuesday";
+                break;
+            case 3: 
+                $dayString="Wedsday";
+                break;
+            case 4: 
+                $dayString="Thursday";
+                break;
+            case 5: 
+                $dayString="Friday";
+                break;
+            case 6: 
+                $dayString="Saturday";
+                break;
+            case 7:
+                $dayString="Sunday";
+                break;
+        }
+        $this->setVar("dayString",$dayString);
+        $this->setVar("dayNumber",$dayOfTheWeek);
+        $this->setVar("mantainerName",$mantainer_name);
+    }
+
+    public function setNavbar($planner_name){
+        $this->setVar("planner",$planner_name);
+        
+    }
+
+
     
 }

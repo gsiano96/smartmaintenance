@@ -27,7 +27,7 @@ class MaintenersAvailability extends View
         parent::__construct($tplName);
     }
 
-    public function setMaintenersAvailability($mainteners, $skillsNumber, $requiredSkillsNumber, $availability)
+    public function setMaintenersAvailability(array $mainteners, $skillsNumber, int $requiredSkillsNumber, array $availability, $week, $activity_id, $activity_info)
     {
         if (!empty($mainteners)) {
             $this->hide("NoMainteners");
@@ -35,7 +35,6 @@ class MaintenersAvailability extends View
             $i = 0;
             foreach ($mainteners as $maintener) { //for each available maintener
                 $this->setVar("maintenerName", $maintener["full_name"]);
-                $this->setVar("i", $i);
                 $this->setVar("skillsNumber", $skillsNumber[$i]);
                 $this->setVar("requiredSkillsNumber", $requiredSkillsNumber);
                 $this->setVar("availabilityMon", $availability[$i][0]);
@@ -45,6 +44,13 @@ class MaintenersAvailability extends View
                 $this->setVar("availabilityFri", $availability[$i][4]);
                 $this->setVar("availabilitySat", $availability[$i][5]);
                 $this->setVar("availabilitySun", $availability[$i][6]);
+
+                //History parameters
+                $this->setVar("week",$week);
+                $this->setVar("activityId",$activity_id);
+                $this->setVar("activityInfo",$activity_info);
+                //Current parameter
+                $this->setVar("maintainerId",$maintener["id_user"]);
 
                 $this->setVar("btnSkill",$this->getBtnStyleBySkill($skillsNumber[$i],$requiredSkillsNumber));
                 $this->setVar("btnMon",$this->getDayBtnStyle($availability[$i][0]));
@@ -92,6 +98,11 @@ class MaintenersAvailability extends View
             $skills_string.="- $skill \r\n";
         }
         $this->setVar("maintSkillsList",$skills_string);
+    }
+
+    public function setHeader($week,$activity_info){
+        $this->setVar("week",$week);
+        $this->setVar("maintenanceDescription",$activity_info);
     }
     
 }

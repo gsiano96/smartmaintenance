@@ -31,7 +31,7 @@
             width: 100%;
             /*height: 30px;*/
             text-align: center;
-            color: white;
+            /*color: black;*/
             border: 1px solid #ddd;
             border-radius: 5px;
             line-height: 35px;
@@ -46,7 +46,7 @@
         #timeslot5:checked~label[for="timeslot5"],
         #timeslot6:checked~label[for="timeslot6"],
         #timeslot7:checked~label[for="timeslot7"] {
-            color: white;
+            /*color: white;*/
             opacity: 0.5;
         }
     </style>
@@ -58,7 +58,7 @@
         <div class="container">
             <!-- BEGIN MaintainerName -->
             <div class="navbar-header">
-                <label class="navbar-brand"> {Maintainer}</label>
+                <label class="navbar-brand"> {planner}</label>
             </div>
             <!-- END MaintainerName -->
             <div class="collapse navbar-collapse">
@@ -111,44 +111,45 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 text-right">
                 <h2>Week n°:</h2>
             </div>
-            <div class="col-md-2" style="background-color:lavender;">
+            <div class="col-md-1 bg-light text-center">
                 <h2>{week}</h2>
             </div>
-            <div class="col-md-3" style="background-color:lavenderblush;">
+            <div class="col-md-3 text-right">
                 <h2>Activity to Assign:</h2>
             </div>
-            <div class="col-md-5" style="background-color:lavender;">
+            <div class="col-md-6 bg-light text-center">
                 <h2>{maintenanceDescription}</h2>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-2 text-right">
                 <h2>{dayString}</h2>
             </div>
-            <div class="col-md-2" style="background-color:lavender;">
+            <div class="col-md-1 bg-light text-center">
                 <h2>{dayNumber}</h2>
             </div>
         </div>
         <hr>
         <div class="row">
-            <div class="col-md-2 text-center" style="background-color:aquamarine">
+            <div class="col-md-2 text-center bg-light" style="padding:10px">
                 <h4>Workspace Notes</h4>
             </div>
-            <div class="col-md-9 text-right" style="background-color:lavender;">
-                <h4>Availability {maintenerName}:</h4>
+            <div class="col-md-9 text-right bg-light" style="padding:10px;">
+                <h4>Availability {mantainerName}:</h4>
             </div>
-            <div class="col-md-1 text-left" style="background-color:{bgcolorDayAvailability};">
+            <div class="col-md-1 text-center" style="background-color:{bgcolorDayAvailability};padding:10px;border-radius: 5px 0px 0px 5px;">
                 <h4>{dayAvailability}</h4>
             </div>
         </div>
+        <br>
         <div class="row">
-            <div class="col-md-2 form-group" style="background-color:aquamarine">
+            <div class="col-md-2 form-group">
                 <textarea class="form-control" rows="10" id="comment">{workspaceNotes}</textarea>
             </div>
-            <div class="col-md-10 table-responsive" style="background-color:lavender;">
+            <div class="col-md-10 table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <th>Maintener</th>

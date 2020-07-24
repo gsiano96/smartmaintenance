@@ -104,6 +104,23 @@ SQL;
         return $this->getResultSet()->fetch_assoc()["full_name"];
     }
 
+    public function getMaintainerSkillsNumber($maintainer_id) : int{
+        $this->sql=<<<SQL
+        SELECT
+            count(id_skill) as count
+        FROM
+            employees_skills
+        WHERE
+            id_employee=$maintainer_id
+SQL;
+        $this->updateResultSet();
+        $sql_result=$this->getResultSet();
+        if($sql_result->num_rows == 0){
+            return 0;
+        }
+        return $sql_result->fetch_assoc()["count"];
+    }
+
     public function getOccupations(string $maintener_id, int $day, int $week, int $year) : mysqli_result{
         $this->sql=<<<SQL
         SELECT
@@ -140,6 +157,30 @@ SQL;
         }
 
         return $availability;
+    }
+
+    public function getMaintenenaceDescriptionById(int $maintenance_id) : string{
+        $this->sql=<<<SQL
+        SELECT activity_description FROM maintenance_procedure WHERE id_activity=$maintenance_id
+SQL;
+        $this->updateResultSet();
+        $sql_result=$this->getResultSet();
+        $row=$sql_result->fetch_assoc();
+        if(empty($row))
+            return "";
+        return $row["activity_description"];
+    }
+
+    public function getMaintenenaceDurationById(int $maintenance_id) : int{
+        $this->sql=<<<SQL
+        SELECT estimated_intervetion_time FROM maintenance_procedure WHERE id_activity=$maintenance_id
+SQL;
+        $this->updateResultSet();
+        $sql_result=$this->getResultSet();
+        $row=$sql_result->fetch_assoc();
+        if(empty($row))
+            return NULL;
+        return $row["estimated_intervetion_time"];
     }
 
     public function getMaintenanceProcedureSkills(int $maintenance_proc_id) : mysqli_result{

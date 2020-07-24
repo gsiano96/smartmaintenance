@@ -159,6 +159,23 @@ SQL;
         return $sql_result;
     }
 
+    public function getMaintainerSkillsNumber($maintainer_id) : int{
+        $this->sql=<<<SQL
+        SELECT
+            count(id_skill) as count
+        FROM
+            employees_skills
+        WHERE
+            id_employee=$maintainer_id
+SQL;
+        $this->updateResultSet();
+        $sql_result=$this->getResultSet();
+        if($sql_result->num_rows == 0){
+            return 0;
+        }
+        return $sql_result->fetch_assoc()["count"];
+    }
+
     public function getDayAvailability(int $maintener_id, int $week, int $year, int $day) : float{
         $this->sql=<<<SQL
         SELECT

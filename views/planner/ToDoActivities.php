@@ -99,16 +99,22 @@ class ToDoActivities extends View
             $this->hide("NoActivities");
             $this->openBlock("Activities");
             while ($activity = $activities->fetch_object()) {
-                $this->setBlockVarActivitiesid($activity->id);
-                $this->setBlockVarActivitiesarea($activity->area);
-                $this->setBlockVarActivitiestype($activity->type);
-                $this->setBlockVarActivitiesestimatedInterventionTime($activity->estimatedIntervetionTime);
+                $this->setVar("id",$activity->id);
+                $this->setVar("area",$activity->area);
+                $this->setVar("areaName",$activity->areaName);
+                $this->setVar("type",$activity->type);
+                $this->setVar("estimatedInterventionTime",$activity->estimatedIntervetionTime);
+                $this->setVar("activityId",$activity->id);
                 $this->parseCurrentBlock();
             }
             $this->setBlock();
         } else {
             $this->hide("Activities");
         }
+    }
+
+    public function setHeader(int $week){
+        $this->setVar("week",$week);
     }
 
 }

@@ -42,19 +42,21 @@ class MaintenersAvailability extends Controller
     */
     protected function autorun($parameters = null)
     {
-        $_GET["week"]=23;
+        // Session parameters
+        //$_GET["week"]=23;
         $_GET["year"]=2020;
-        $_GET["maintenance_id"]=2;
+        //$_GET["activityId"]=1;
+        //$_GET["activityInfo"]="Descrizione";
 
         $sql_maintList=$this->model->getMaintenerList();
+        //print_r($sql_maintList);
 
         for($i=0;$i<$sql_maintList->num_rows;$i++){
-            $mainteners[$i]=$sql_maintList->fetch_array();
-            //echo $mainteners[$i]["employee_id"];
+            $mainteners[$i]=$sql_maintList->fetch_assoc();
             $sql_res=$this->model->getMaintenerSkills($mainteners[$i]["id_user"]);
 
             $skill=0;
-            while($row=$sql_res->fetch_array()){
+            while($row=$sql_res->fetch_assoc()){
                 $availableSkills[$i][$skill]=$row["id_skill"];
                 $skill++;
             }
@@ -62,37 +64,56 @@ class MaintenersAvailability extends Controller
             $availability[$i]=$this->model->getAvailabilityAllDays($mainteners[$i]["id_user"],$_GET["week"],$_GET["year"]);
         }
 
-        $sql_requiredSkills=$this->model->getMaintenanceProcedureSkills($_GET["maintenance_id"]);
+        $sql_requiredSkills=$this->model->getMaintenanceProcedureSkills($_GET["activityId"]);
+        //print_r($sql_requiredSkills);
         
-        $skill=0;
-        while($row=$sql_requiredSkills->fetch_array()){
-            $requiredSkills[$skill]=$row["id_skill"];
-            $requiredSkillsLabel[$skill]=$row["name"];
-            $skill++;
-        }
+        if ($sql_requiredSkills->num_rows != 0) {
 
-        $requiredSkillsNumber=0; //count entries
-        foreach($requiredSkills as $req_skill){
-           $requiredSkillsNumber++;
-        }
-        
-        $availableSkillsNumber=array(); //inizialization to 0
-        for ($i=0;$i<$sql_maintList->num_rows;$i++){
-            $availableSkillsNumber[$i]=0;
-        }
+            //Lists all required skills ids and names
+            $skill = 0;
+            while ($row = $sql_requiredSkills->fetch_assoc()) {
+                $requiredSkills[$skill] = $row["id_skill"];
+                $requiredSkillsLabel[$skill] = $row["name"];
+                $skill++;
+            }
 
-        for ($i = 0; $i < $sql_maintList->num_rows; $i++) {
+            //Counts all entries in the previous list
+            $requiredSkillsNumber = 0;
             foreach ($requiredSkills as $req_skill) {
-                foreach ($availableSkills[$i] as $ava_skill) {
-                    if ($ava_skill == $req_skill) {
-                        $availableSkillsNumber[$i]++;
+                $requiredSkillsNumber++;
+            }
+
+            //Initializes a list of skills number for each mantainer to 0
+            $availableSkillsNumber = array();
+            for ($i = 0; $i < $sql_maintList->num_rows; $i++) {
+                $availableSkillsNumber[$i] = 0;
+            }
+
+            //For each maintainer, increments the relative skills number if it matchs a required one
+            for ($i = 0; $i < $sql_maintList->num_rows; $i++) {
+                foreach ($requiredSkills as $req_skill) {
+                    foreach ($availableSkills[$i] as $ava_skill) {
+                        if ($ava_skill == $req_skill) {
+                            $availableSkillsNumber[$i]++;
+                        }
                     }
                 }
             }
+
+            $this->view->setSkillsList($requiredSkillsLabel);
+        } else {
+            //Initializes a list of skills number for each mantainer to 0
+            $availableSkillsNumber = array();
+            for ($i = 0; $i < $sql_maintList->num_rows; $i++) {
+                $availableSkillsNumber[$i] = $this->model->getMaintainerSkillsNumber($mainteners[$i]["id_user"]);
+            }
+            $requiredSkillsNumber = 0;
+            $this->view->setVar("maintSkillsList","No skill is required");
         }
 
-        $this->view->setMaintenersAvailability($mainteners,$availableSkillsNumber,$requiredSkillsNumber,$availability);
-        $this->view->setSkillsList($requiredSkillsLabel);
+        $this->view->setMaintenersAvailability($mainteners,$availableSkillsNumber,$requiredSkillsNumber,$availability, $_GET["week"], $_GET["activityId"], $_GET["activityInfo"]);
+        $this->view->setHeader($_GET["week"],$_GET["activityInfo"]);
+        
     }
 
     /**

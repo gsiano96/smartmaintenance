@@ -19,8 +19,8 @@ use views\planner\MaintenersTimeslots as MaintenersTimeslotsView;
 
 class MaintenersTimeslots extends Controller
 {
-    protected /*MaintenersTimeslotsView*/ $view;
-    protected /*MaintenersTimeslotsModel*/ $model;
+    protected $view;
+    protected $model;
 
     /**
     * Object constructor.
@@ -42,52 +42,65 @@ class MaintenersTimeslots extends Controller
     */
     protected function autorun($parameters = null)
     {
-        $_GET["week"] = 23;
-        $_GET["year"] = 2020;
-        $_GET["day"] = 1;
-        $_GET["maintenance_id"] = 2;
-        $_GET["maintenance_description"] = "Prova";
-        $_GET["maintener_id"] = 383;
 
-        $ava_timeslots = $this->model->getMinutesAvailabilities($_GET["maintener_id"], $_GET["day"], $_GET["week"], $_GET["year"]);
+        //Session parameters
+        $_GET["planner"]="planner";
+        //$_GET["week"] = 23;
+        $_GET["year"] = 2020;
+        //$_GET["day"] = 1;
+        //$_GET["activityId"] = 2;
+        //$_GET["maintainerId"] = 383;
+
+        //Model
+        $ava_timeslots = $this->model->getMinutesAvailabilities($_GET["maintainerId"], $_GET["day"], $_GET["week"], $_GET["year"]);
         //print_r($ava_timeslots);
-        $maintener_name=$this->model->getMaintenerFullNameById($_GET["maintener_id"]);
-        $day_availab = $this->model->getDayAvailability($_GET["maintener_id"], $_GET["week"], $_GET["year"], $_GET["day"]);
+        $maintener_name=$this->model->getMaintenerFullNameById($_GET["maintainerId"]);
         
-        $sql_res = $this->model->getMaintenerSkills($_GET["maintener_id"]);
+        $day_availab = $this->model->getDayAvailability($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"]);
+        $activity_minutes=$this->model->getMaintenenaceDurationById($_GET["activityId"]);
+        
+        $sql_res = $this->model->getMaintenerSkills($_GET["maintainerId"]);
         $skill = 0;
         while ($row = $sql_res->fetch_assoc()) {
             $availableSkills[$skill] = $row["id_skill"];
             $skill++;
         }
 
-        $sql_requiredSkills = $this->model->getMaintenanceProcedureSkills($_GET["maintenance_id"]);
+        $sql_requiredSkills = $this->model->getMaintenanceProcedureSkills($_GET["activityId"]);
+        //print_r($sql_requiredSkills);
+        if ($sql_requiredSkills->num_rows != 0) {
+            $skill = 0;
+            while ($row = $sql_requiredSkills->fetch_assoc()) {
+                $requiredSkills[$skill] = $row["id_skill"];
+                //$requiredSkillsLabel[$skill]=$row["name"];
+                $skill++;
+            }
+            $requiredSkillsNumber = 0; //count entries
+            foreach ($requiredSkills as $req_skill) {
+                $requiredSkillsNumber++;
+            }
 
-        $skill = 0;
-        while ($row = $sql_requiredSkills->fetch_assoc()) {
-            $requiredSkills[$skill] = $row["id_skill"];
-            //$requiredSkillsLabel[$skill]=$row["name"];
-            $skill++;
-        }
-        $requiredSkillsNumber = 0; //count entries
-        foreach ($requiredSkills as $req_skill) {
-            $requiredSkillsNumber++;
-        }
-
-        $availableSkillsNumber = 0;
-
-
-        foreach ($requiredSkills as $req_skill) {
-            foreach ($availableSkills as $ava_skill) {
-                if ($ava_skill == $req_skill) {
-                    $availableSkillsNumber++;
+            $availableSkillsNumber = 0;
+            foreach ($requiredSkills as $req_skill) {
+                foreach ($availableSkills as $ava_skill) {
+                    if ($ava_skill == $req_skill) {
+                        $availableSkillsNumber++;
+                    }
                 }
             }
+        } else {
+            //Initializes a list of skills number for each mantainer to 0
+            $availableSkillsNumber = array();
+            $availableSkillsNumber = $this->model->getMaintainerSkillsNumber($_GET["maintainerId"]);
+            $requiredSkillsNumber = 0;
         }
 
-        $this->view->setMaintenersTimeslots($maintener_name, $availableSkillsNumber, $requiredSkillsNumber, $ava_timeslots, 30);
+        //View
+        $this->view->setHeader($_GET["week"],$_GET["day"],$_GET["activityInfo"],$maintener_name);
+        $this->view->setMaintenersTimeslots($maintener_name, $availableSkillsNumber, $requiredSkillsNumber, $ava_timeslots, $activity_minutes);
         $this->view->setDayAvailability($day_availab);
-        $this->view->setWorkspaceNotes("");
+        $this->view->setWorkspaceNotes("Note");
+        
     }
 
     /**

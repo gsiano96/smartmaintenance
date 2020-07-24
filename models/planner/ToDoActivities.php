@@ -12,6 +12,7 @@ namespace models\planner;
 
 //use models\beans\BeanPlannedProcedure;
 use framework\Model;
+use mysqli_result;
 
 class ToDoActivities extends /*BeanPlannedProcedure*/ Model
 {
@@ -33,7 +34,7 @@ class ToDoActivities extends /*BeanPlannedProcedure*/ Model
     {
 
     }
-
+/*
     public function getActivities()
     {
         // Notice: we use PHP HereDoc to specify SQL string
@@ -52,5 +53,22 @@ SQL;
         // The mysqli_result set already has the format:
         // array( array('id'=>'','area'=>'','type'=>'','estimatedIntervetionTime' => '') )
         return $this->getResultSet(); //return iterator mysqli_result
+    }
+*/
+    public function getActivities(int $week) : mysqli_result{
+        $this->sql=<<<SQL
+        SELECT
+            id_activity as id, area, name as areaName, tipology as type, estimated_intervetion_time as estimatedIntervetionTime
+        FROM 
+            maintenance_procedure 
+            INNER JOIN entity 
+            ON (area=id_entity)
+        WHERE
+            week=$week
+        ORDER BY
+            id_activity;
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
     }
 }

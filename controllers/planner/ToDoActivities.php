@@ -42,9 +42,14 @@ class ToDoActivities extends Controller
     */
     protected function autorun($parameters = null)
     {
-       // get the mysqli_result set from model
-       $activities = $this->model->getActivities();
-       // Pass it to view method to show itself in the relative block of the template
+        //Session parameters
+        $week=23;
+
+       // Model
+       $activities = $this->model->getActivities($week);
+
+       // View
+       $this->view->setHeader($week);
        $this->view->setActivitiesBlock($activities);
     }
 
