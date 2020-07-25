@@ -43,13 +43,14 @@ class MaintenersTimeslots extends Controller
     protected function autorun($parameters = null)
     {
 
-        //Session parameters
+        //Session parameters (first invocation)
         $_GET["planner"]="planner";
         //$_GET["week"] = 23;
-        $_GET["year"] = 2020;
-        //$_GET["day"] = 1;
         //$_GET["activityId"] = 2;
+        //$_GET["activityInfo"]
         //$_GET["maintainerId"] = 383;
+        //$_GET["day"] = 1;
+        $_GET["year"] = 2020;
 
         //Model
         $ava_timeslots = $this->model->getMinutesAvailabilities($_GET["maintainerId"], $_GET["day"], $_GET["week"], $_GET["year"]);
@@ -95,12 +96,60 @@ class MaintenersTimeslots extends Controller
             $requiredSkillsNumber = 0;
         }
 
+        //Save parameters for a second invocation
+        $this->view->setHistoryParameters($_GET["week"], $_GET["activityId"], $_GET["activityInfo"], $_GET["maintainerId"],$_GET["day"]);
+
+        //On submit
+        if(isset($_GET["status"])){
+            $status=$this->model->isEmptyMaintenerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"]);
+            if($status){
+                $timeslots[0]=(isset($_GET["timeslot1"])) ? $_GET["timeslot1"] : 0;
+                $timeslots[1]=(isset($_GET["timeslot2"])) ? $_GET["timeslot2"] : 0;
+                $timeslots[2]=(isset($_GET["timeslot3"])) ? $_GET["timeslot3"] : 0;
+                $timeslots[3]=(isset($_GET["timeslot4"])) ? $_GET["timeslot4"] : 0;
+                $timeslots[4]=(isset($_GET["timeslot5"])) ? $_GET["timeslot5"] : 0;
+                $timeslots[5]=(isset($_GET["timeslot6"])) ? $_GET["timeslot6"] : 0;
+                $timeslots[6]=(isset($_GET["timeslot7"])) ? $_GET["timeslot7"] : 0;
+
+                $success=$this->model->setMaintainerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"], $timeslots);
+            }else{
+
+                //Get current occupations as numerical array
+                $timeslots=$this->model->getOccupations($_GET["maintainerId"], $_GET["day"], $_GET["week"], $_GET["year"])->fetch_array(MYSQLI_NUM);
+
+                //Increment occupation by timeslots allocation
+                if(isset($_GET["timeslot1"]))
+                    $timeslots[0] += $_GET["timeslot1"];
+                
+                if(isset($_GET["timeslot2"]))
+                    $timeslots[1] += $_GET["timeslot2"];
+
+                if(isset($_GET["timeslot3"]))
+                    $timeslots[2] += $_GET["timeslot3"];
+
+                if(isset($_GET["timeslot4"]))
+                    $timeslots[3] += $_GET["timeslot4"];
+
+                if(isset($_GET["timeslot5"]))
+                    $timeslots[4] += $_GET["timeslot5"];
+
+                if(isset($_GET["timeslot6"]))
+                    $timeslots[5] += $_GET["timeslot6"];
+
+                if(isset($_GET["timeslot7"]))
+                    $timeslots[6] += $_GET["timeslot7"];
+
+                $success=$this->model->updateMaintainerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"], $timeslots);
+            }
+            header("Location: http://localhost/smartmaintenance/planner/mainteners_timeslots?week={$_GET["week"]}&activityId={$_GET["activityId"]}&activityInfo={$_GET["activityInfo"]}&maintainerId={$_GET["maintainerId"]}&day={$_GET["day"]}&success=$success");
+        }
+
         //View
         $this->view->setHeader($_GET["week"],$_GET["day"],$_GET["activityInfo"],$maintener_name);
         $this->view->setMaintenersTimeslots($maintener_name, $availableSkillsNumber, $requiredSkillsNumber, $ava_timeslots, $activity_minutes);
         $this->view->setDayAvailability($day_availab);
         $this->view->setWorkspaceNotes("Note");
-        
+        $this->view->setStatusMessage($_GET["success"]);
     }
 
     /**
