@@ -65,6 +65,13 @@ class ToDoActivities extends View
         $this->setVar("estimatedInterventionTime",$value);
     }
 
+    public function getCurrentWeek(){
+        $date = date("W");
+
+        $this->setVar("week",$date);
+
+    }
+
     /**
     * Sets value for id inside the block Activities
     *
