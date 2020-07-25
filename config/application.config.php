@@ -25,7 +25,7 @@ define("DBHOST","localhost");
 /**
  *  MySQL User
  */
-define("DBUSER","grupposii");
+define("DBUSER","root");
 
 /**
  * MySQL Password

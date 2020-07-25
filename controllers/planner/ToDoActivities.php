@@ -51,6 +51,8 @@ class ToDoActivities extends Controller
        // View
        $this->view->setHeader($week);
        $this->view->setActivitiesBlock($activities);
+       $this->view->getCurrentWeek();
+
     }
 
     /**
@@ -73,4 +75,5 @@ class ToDoActivities extends Controller
         $model = new ToDoActivitiesModel();
         return $model;
     }
+
 }
