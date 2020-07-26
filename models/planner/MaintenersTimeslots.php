@@ -15,6 +15,7 @@ use \DateInterval;
 use \DateTime;
 use \DatePeriod;
 use \mysqli_result;
+use \FFI\Exception;
 
 
 class MaintenersTimeslots extends Model
@@ -257,6 +258,57 @@ SQL;
         $interval = DateInterval::createFromDateString($str_date_interval); // ex. 1 day
         $period = new DatePeriod($startDate, $interval, $endDate);
         return $period;
+    }
+
+    public function setMaintainerOccupation(int $maintener_id,int $week, int $year,int $day,array $timeslots) : bool{
+        if(count($timeslots) < 7){
+            throw new Exception("Size of the timeslots array is less than 7");
+        }
+        foreach($timeslots as $timeslot){
+            if($timeslot > self::timeslotDurationMin){
+                return false;
+            }
+        }
+        $this->sql=<<<SQL
+        INSERT INTO maintener_occupation
+        (maintener_id,week,year,day,timeslot1,timeslot2,timeslot3,timeslot4,timeslot5,timeslot6,timeslot7)
+        VALUES
+        ($maintener_id,$week,$year,$day,$timeslots[0],$timeslots[1],$timeslots[2],$timeslots[3],$timeslots[4],$timeslots[5],$timeslots[6])
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
+    public function updateMaintainerOccupation(int $maintener_id,int $week, int $year,int $day,array $timeslots) : bool{
+        if(count($timeslots) < 7){
+            throw new Exception("Size of the timeslots array is less than 7");
+        }
+        foreach($timeslots as $timeslot){
+            if($timeslot > self::timeslotDurationMin){
+                return false;
+            }
+        }
+        $this->sql=<<<SQL
+        UPDATE maintener_occupation
+        SET
+        timeslot1=$timeslots[0],timeslot2=$timeslots[1],timeslot3=$timeslots[2],timeslot4=$timeslots[3],timeslot5=$timeslots[4],timeslot6=$timeslots[5],timeslot7=$timeslots[6]
+        WHERE
+        maintener_id=$maintener_id AND week=$week AND year=$year AND day=$day
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
+
+    public function isEmptyMaintenerOccupation(int $maintener_id,int $week, int $year,int $day) : bool{
+        $this->sql=<<<SQL
+        SELECT maintener_id
+        FROM maintener_occupation
+        WHERE maintener_id=$maintener_id AND week=$week AND year=$year AND day=$day
+SQL;
+        $this->updateResultSet();
+        $result=$this->getResultSet();
+        print_r($result->fetch_assoc());
+        return ($result->num_rows == 0) ? true : false;
     }
 
     

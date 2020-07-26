@@ -164,7 +164,12 @@
                     </thead>
 
                     <tbody>
-                        <form name="controls" method="GET">
+                        <form action="mainteners_timeslots" method="GET">
+                            <input type="hidden" name="week" value="{week}">
+                            <input type="hidden" name="activityId" value="{activityId}">
+                            <input type="hidden" name="activityInfo" value="{activityInfo}">
+                            <input type="hidden" name="maintainerId" value="{maintainerId}">
+                            <input type="hidden" name="day" value="{day}">
 
                             <!-- BEGIN MaintenersTimeslots -->
                             <tr>
@@ -215,7 +220,7 @@
                             <tr>
                                 <td style="text-align: center;" colspan="9">
                                     <input type="submit" style="width: 13%; height: 40px" class="btn btn-info"
-                                        value="Send" />
+                                        name="status" value="Send" />
                                 </td>
                             </tr>
                         </form>
@@ -231,6 +236,13 @@
                 </table>
             </div>
         </div>
+        <!-- BEGIN onSubmit -->
+        <div class="row">
+            <div class="col-md-12 text-center alert {alertStyle}" role="alert">
+                {messageStatus}
+            </div>
+        </div>
+        <!-- END onSubmit -->
     </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

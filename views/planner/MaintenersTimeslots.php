@@ -33,7 +33,6 @@ class MaintenersTimeslots extends View
     {
             $this->openBlock("MaintenersTimeslots");
             $this->setVar("maintenerName", $maintener_name);
-               
             $this->setVar("skillsNumber", $skillsNumber);
             $this->setVar("requiredSkillsNumber", $requiredSkillsNumber);
             $this->setVar("timeslot1", $ava_timeslots[0]);
@@ -55,6 +54,22 @@ class MaintenersTimeslots extends View
 
             $this->parseCurrentBlock();
             $this->setBlock();
+    }
+
+    public function setStatusMessage($success)
+    {
+        if (!isset($success)) {
+            $this->hide("onSubmit");
+            return;
+        }
+
+        if ($success) {
+            $this->setVar("alertStyle", "alert-success");
+            $this->setVar("messageStatus", "Assignation completed");
+        } else {
+            $this->setVar("alertStyle", "alert-danger");
+            $this->setVar("messageStatus", "Assignation is not completed");
+        }
     }
 
     public function getStyleBySkill(int $skillsNumber, int $requiredSkillsNumber) : string{
@@ -130,7 +145,14 @@ class MaintenersTimeslots extends View
 
     public function setNavbar($planner_name){
         $this->setVar("planner",$planner_name);
-        
+    }
+
+    public function setHistoryParameters($week,$activityId,$activityInfo,$maintainerId,$day){
+        //$this->setVar("week",$week);
+        $this->setVar("activityId",$activityId);
+        $this->setVar("activityInfo",$activityInfo);
+        $this->setVar("maintainerId",$maintainerId);
+        $this->setVar("day",$day);
     }
 
 
