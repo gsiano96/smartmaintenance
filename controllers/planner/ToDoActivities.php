@@ -44,6 +44,8 @@ class ToDoActivities extends Controller
     {
         //Session parameters
         $week=23;
+        //$week=$this->view->getCurrentWeek();
+        //echo "$week";
 
        // Model
        $activities = $this->model->getActivities($week);
@@ -51,7 +53,7 @@ class ToDoActivities extends Controller
        // View
        $this->view->setHeader($week);
        $this->view->setActivitiesBlock($activities);
-       $this->view->getCurrentWeek();
+       
 
     }
 

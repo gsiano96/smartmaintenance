@@ -56,22 +56,6 @@ class MaintenersTimeslots extends View
             $this->setBlock();
     }
 
-    public function setStatusMessage($success)
-    {
-        if (!isset($success)) {
-            $this->hide("onSubmit");
-            return;
-        }
-
-        if ($success) {
-            $this->setVar("alertStyle", "alert-success");
-            $this->setVar("messageStatus", "Assignation completed");
-        } else {
-            $this->setVar("alertStyle", "alert-danger");
-            $this->setVar("messageStatus", "Assignation is not completed");
-        }
-    }
-
     public function getStyleBySkill(int $skillsNumber, int $requiredSkillsNumber) : string{
         if($skillsNumber == 0){
             $skill_style="red";
@@ -153,6 +137,26 @@ class MaintenersTimeslots extends View
         $this->setVar("activityInfo",$activityInfo);
         $this->setVar("maintainerId",$maintainerId);
         $this->setVar("day",$day);
+    }
+
+    public function setStatusMessage($success)
+    {
+        if (!isset($success)) {
+            $this->hide("onSubmit");
+            return;
+        }
+
+        if ($success==1) {
+            $this->setVar("alertStyle", "alert-success");
+            $this->setVar("messageStatus", "Assignation completed");
+        } else if($success==2) {
+            $this->setVar("alertStyle", "alert-warning");
+            $this->setVar("messageStatus", "Assignation is not completed; consider to improve the time allocation to fit at the best the required time");
+        } else {
+            $this->setVar("alertStyle", "alert-danger");
+            $this->setVar("messageStatus", "Assignation is not completed; the available time is less than the required one or the current activity id is already assigned");
+        }
+
     }
 
 

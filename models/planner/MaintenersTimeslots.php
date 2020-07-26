@@ -21,8 +21,8 @@ use \FFI\Exception;
 class MaintenersTimeslots extends Model
 {
 
-    const dayTimeSlots=[['8:00:00','9:00:00'], ['9:30:00','10:00:00'], ['10:00:00', '11:00:00'], ['11:00:00','12:00:00'], ['14:00:00', '15:00:00'], ['15:00:00', '16:00:00'], ['16:00:00', '17:00:00']];
-    const timeslotDurationMin=[60, 30, 60, 60, 60, 60 ,60];
+    const dayTimeSlots=[['8:00:00','9:00:00'], ['9:00:00','10:00:00'], ['10:00:00', '11:00:00'], ['11:00:00','12:00:00'], ['14:00:00', '15:00:00'], ['15:00:00', '16:00:00'], ['16:00:00', '17:00:00']];
+    const timeslotDurationMin=[60, 60, 60, 60, 60, 60 ,60];
 
     /**
     * Object constructor.
@@ -251,6 +251,18 @@ SQL;
         return $tot;
     }
 
+    public function getMaintenerTimeslot(int $maintainer_id, int $week, int $year, int $day, int $timeslot_string){
+        $this->sql=<<<SQL
+        SELECT $timeslot_string
+        FROM maintener_occupation
+        WHERE maintener_id=$maintainer_id AND week=$week AND year=$year AND day=$day
+SQL;
+        $this->updateResultSet();
+        $sql=$this->getResultSet();
+        if($sql->num_rows == 0) return NULL;
+        return $sql->fetch_assoc()[$timeslot_string];
+    }
+
     protected function getDatePeriod($str_start_date, $str_end_date, $str_date_interval){
         $startDate = new DateTime($str_start_date); //yyyy-mm-dd
         $endDate = new DateTime($str_end_date); //yyyy-mm-dd
@@ -311,5 +323,34 @@ SQL;
         return ($result->num_rows == 0) ? true : false;
     }
 
+    public function isEmptyMaintainerActivityId($maintainerId,$activityId){
+        $this->sql=<<<SQL
+        select id_employee,id_maintenance_procedure
+        from employees_maintenance_procedures
+        where id_employee=$maintainerId AND id_maintenance_procedure=$activityId
+SQL;
+        $this->updateResultSet();
+       
+        if($this->getResultSet()->num_rows == 0){
+            return true;
+        }
+
+        return false;
+    }
+
+    public function setMaintainerActivityId($maintainerId,$activityId){
+        
+        if(!$this->isEmptyMaintainerActivityId($maintainerId,$activityId))
+            throw new Exception("Attempt to create duplicates on a primary key");
+
+        $this->sql=<<<SQL
+        insert into employees_maintenance_procedures 
+        (id_employee, id_maintenance_procedure, state_maintainer, expected_date)
+        values
+        ($maintainerId, $activityId, "Sent", NOW())
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+    }
     
 }

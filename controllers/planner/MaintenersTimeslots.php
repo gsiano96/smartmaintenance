@@ -19,8 +19,8 @@ use views\planner\MaintenersTimeslots as MaintenersTimeslotsView;
 
 class MaintenersTimeslots extends Controller
 {
-    protected $view;
-    protected $model;
+    protected  $view;
+    protected  $model;
 
     /**
     * Object constructor.
@@ -99,48 +99,54 @@ class MaintenersTimeslots extends Controller
         //Save parameters for a second invocation
         $this->view->setHistoryParameters($_GET["week"], $_GET["activityId"], $_GET["activityInfo"], $_GET["maintainerId"],$_GET["day"]);
 
-        //On submit
+        //Only on submit
         if(isset($_GET["status"])){
+
             $status=$this->model->isEmptyMaintenerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"]);
-            if($status){
-                $timeslots[0]=(isset($_GET["timeslot1"])) ? $_GET["timeslot1"] : 0;
-                $timeslots[1]=(isset($_GET["timeslot2"])) ? $_GET["timeslot2"] : 0;
-                $timeslots[2]=(isset($_GET["timeslot3"])) ? $_GET["timeslot3"] : 0;
-                $timeslots[3]=(isset($_GET["timeslot4"])) ? $_GET["timeslot4"] : 0;
-                $timeslots[4]=(isset($_GET["timeslot5"])) ? $_GET["timeslot5"] : 0;
-                $timeslots[5]=(isset($_GET["timeslot6"])) ? $_GET["timeslot6"] : 0;
-                $timeslots[6]=(isset($_GET["timeslot7"])) ? $_GET["timeslot7"] : 0;
-
-                $success=$this->model->setMaintainerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"], $timeslots);
-            }else{
-
-                //Get current occupations as numerical array
-                $timeslots=$this->model->getOccupations($_GET["maintainerId"], $_GET["day"], $_GET["week"], $_GET["year"])->fetch_array(MYSQLI_NUM);
-
-                //Increment occupation by timeslots allocation
-                if(isset($_GET["timeslot1"]))
-                    $timeslots[0] += $_GET["timeslot1"];
-                
-                if(isset($_GET["timeslot2"]))
-                    $timeslots[1] += $_GET["timeslot2"];
-
-                if(isset($_GET["timeslot3"]))
-                    $timeslots[2] += $_GET["timeslot3"];
-
-                if(isset($_GET["timeslot4"]))
-                    $timeslots[3] += $_GET["timeslot4"];
-
-                if(isset($_GET["timeslot5"]))
-                    $timeslots[4] += $_GET["timeslot5"];
-
-                if(isset($_GET["timeslot6"]))
-                    $timeslots[5] += $_GET["timeslot6"];
-
-                if(isset($_GET["timeslot7"]))
-                    $timeslots[6] += $_GET["timeslot7"];
-
-                $success=$this->model->updateMaintainerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"], $timeslots);
+            
+            $status2=$this->model->isEmptyMaintainerActivityId($_GET["maintainerId"],$_GET["activityId"]);
+            if($status2 == false){ //Insert one association maintainer_maintenance_procedure (No duplicates)
+                $success=0;
+                header("Location: http://localhost/smartmaintenance/planner/mainteners_timeslots?week={$_GET["week"]}&activityId={$_GET["activityId"]}&activityInfo={$_GET["activityInfo"]}&maintainerId={$_GET["maintainerId"]}&day={$_GET["day"]}&success=$success");
             }
+
+            $activity_minutes=$this->model->getMaintenenaceDurationById($_GET["activityId"]);
+            $success=false;
+            
+            //First timeslots allocation
+            if($status){
+                
+                $timeslots=$this->getNewOccupations();
+                $verifies=$this->verifyTimeslots($timeslots,$activity_minutes);
+
+                $timeslots=$verifies[0];
+                $success=$verifies[1];
+                if($success==1){ //Insert one entry for activity id
+                    $this->model->setMaintainerActivityId($_GET["maintainerId"],$_GET["activityId"]);
+                    $this->model->setMaintainerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"], $timeslots);
+                }
+
+            }else{ //Successive allocations from different activityId
+                //Get current occupations as numerical array
+                $base_timeslots=$this->model->getOccupations($_GET["maintainerId"], $_GET["day"], $_GET["week"], $_GET["year"])->fetch_array(MYSQLI_NUM);
+                $new_timeslots=$this->getNewOccupations();
+                $verifies=$this->verifyTimeslots($new_timeslots,$activity_minutes);
+
+                $new_timeslots=$verifies[0];
+                $success=$verifies[1];
+                if($success==1){
+                    $timeslots=$this->incrementOccupations($base_timeslots,$new_timeslots);
+                    /*echo "<br>";
+                    print_r($base_timeslots);
+                    echo "<br>";
+                    print_r($new_timeslots);
+                    echo "<br>";
+                    print_r($timeslots);*/
+                    $this->model->setMaintainerActivityId($_GET["maintainerId"],$_GET["activityId"]);
+                    $this->model->updateMaintainerOccupation($_GET["maintainerId"], $_GET["week"], $_GET["year"], $_GET["day"], $timeslots);
+                }
+            }
+            // Display the status of the timeslots allocation
             header("Location: http://localhost/smartmaintenance/planner/mainteners_timeslots?week={$_GET["week"]}&activityId={$_GET["activityId"]}&activityInfo={$_GET["activityInfo"]}&maintainerId={$_GET["maintainerId"]}&day={$_GET["day"]}&success=$success");
         }
 
@@ -171,5 +177,79 @@ class MaintenersTimeslots extends Controller
     {
         $model = new MaintenersTimeslotsModel();
         return $model;
+    }
+
+    public function findLastNonZeroTimeslots($timeslots){
+        for($i=0;$i<count($timeslots);$i++){
+            if($timeslots[$i] != 0)
+                $last_index=$i;
+        }
+        return $last_index;
+    }
+
+    public function getNewOccupations(){
+        //Increment occupation timeslots by timeslots allocation
+
+        $timeslots=array();
+        $timeslots[0]=(isset($_GET["timeslot1"])) ? $_GET["timeslot1"] : 0;
+        $timeslots[1]=(isset($_GET["timeslot2"])) ? $_GET["timeslot2"] : 0;
+        $timeslots[2]=(isset($_GET["timeslot3"])) ? $_GET["timeslot3"] : 0;
+        $timeslots[3]=(isset($_GET["timeslot4"])) ? $_GET["timeslot4"] : 0;
+        $timeslots[4]=(isset($_GET["timeslot5"])) ? $_GET["timeslot5"] : 0;
+        $timeslots[5]=(isset($_GET["timeslot6"])) ? $_GET["timeslot6"] : 0;
+        $timeslots[6]=(isset($_GET["timeslot7"])) ? $_GET["timeslot7"] : 0;
+/*
+        if(isset($_GET["timeslot1"]))
+        $timeslots[0] += $_GET["timeslot1"];
+    
+    if(isset($_GET["timeslot2"]))
+        $timeslots[1] += $_GET["timeslot2"];
+
+    if(isset($_GET["timeslot3"]))
+        $timeslots[2] += $_GET["timeslot3"];
+
+    if(isset($_GET["timeslot4"]))
+        $timeslots[3] += $_GET["timeslot4"];
+
+    if(isset($_GET["timeslot5"]))
+        $timeslots[4] += $_GET["timeslot5"];
+
+    if(isset($_GET["timeslot6"]))
+        $timeslots[5] += $_GET["timeslot6"];
+
+    if(isset($_GET["timeslot7"]))
+        $timeslots[6] += $_GET["timeslot7"];*/
+
+        return $timeslots;
+    }
+
+    public function incrementOccupations($base_occupations, $new_occupations){
+        for ($i=0; $i<count($new_occupations); $i++){
+            $base_occupations[$i] += $new_occupations[$i];
+        }
+        return $base_occupations;
+    }
+
+    public function verifyTimeslots($timeslots,$requiredTime){
+        $availab=0;
+        $length=count($timeslots);
+        for($i=0;$i<$length;$i++){
+            $availab += $timeslots[$i];
+        }
+
+        $delta=$availab-$requiredTime;
+
+        if($delta >= 0 && $delta < 60){
+            $surplus=$delta;
+            $last_index=$this->findLastNonZeroTimeslots($timeslots);
+            $timeslots[$last_index] -= $surplus; //Delete the surplus for best time allocation
+            $success=1;
+        }else if($delta < 0){
+            $success=0;
+        }else{
+            $success=2;
+        }
+
+        return [$timeslots,$success]; //success is 0->error, 1->success, 2->warning
     }
 }
