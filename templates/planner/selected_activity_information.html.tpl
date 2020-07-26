@@ -77,12 +77,12 @@
     </div>
 </nav>
 <div class="container">
-    <form name="controls" method="GET">
+    <form action="mainteners_availability" method="GET">
     <div class="row">
         <div class="col-sm-3"><label>Week n°</label></div>
         <div class="col-sm-3">{week}</div>
         <div class="col-sm-3"><label>activity to assign</label></div>
-        <div class="col-sm-3">{attività}</div>
+        <div class="col-sm-3">{activityInfo}</div>
     </div>
     <hr>
     <div class="row">
@@ -90,15 +90,24 @@
         <div class="col-md-4"><label>Intervention description</label></div>
         <div class="col-md-4"><label>skills needed</label></div>
     </div>
+        <!-- BEGIN Activity -->
     <div class="row">
-        <div class="col-sm-4"><input type="text" /> </input></div>
-        <div class="col-sm-4">{intervention description}</div>
-        <div class="col-md-4">{skills nedded}</div>
+        <div class="col-md-4">{workspacenotes}</div>
+        <div class="col-md-4">{interventiondescription}</div>
+        <!-- END Activity -->
+        <!-- BEGIN Skill -->
+        <div class="col-md-4">{skillsneeded}</div>
+
+        <!-- END Skill -->
     </div>
     <div class="row" style="padding: 20px">
         <div class="col-md-4"> </div>
         <div class="col-md-4"> <input type="file"></div>
         <div class="col-md-4"> <input type="submit"></div>
+        <input type="hidden" name="week" value={week}>
+        <input type="hidden" name="skillneed" value="{skillsneeded}}">
+        <input type="hidden" name="activityId" value="{activityId}">
+        <input type="hidden" name="activityInfo" value="{activityInfo}">
     </div>
     </form>
 </div>

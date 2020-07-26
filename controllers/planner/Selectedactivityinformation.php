@@ -5,6 +5,7 @@ namespace controllers\planner;
 use framework\Controller;
 use framework\Model;
 use framework\View;
+use models\Index;
 use models\planner\Selectedactivityinformation as SelectedactivityinformationModel;
 use views\planner\Selectedactivityinformation as SelectedactivityinformationView;
 
@@ -38,7 +39,25 @@ class Selectedactivityinformation extends Controller
     protected function autorun($parameters = null)
     {
 
-        $this->view->getCurrentWeek();
+        //$this->view->getCurrentWeek();
+        $this->view->setActivityinfo($_GET["activityInfo"]);
+        $week=$this->view->getCurrentWeek();
+        $activity = $this->model->getWorkspacenote($_GET["activityId"]);
+        $this->view->setActivityBlock($activity);
+        $skill=$this->model->getSkillsneeded($_GET["activityId"]);
+
+        if ($skill->num_rows != 0) {
+            $skills = 0;
+            while ($row = $skill->fetch_assoc()) {
+                $requiredSkillsLabel[$skills] = $row["name"];
+                $skills++;
+            }
+        }else{
+            $requiredSkillsLabel[]="No skills required";
+        }
+        $this->view->setSkillsList($requiredSkillsLabel);
+
+        $this->view->setActivityID($_GET["activityId"]);
     }
 
     /**

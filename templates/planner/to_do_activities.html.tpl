@@ -85,7 +85,7 @@
             <div class="col col-12">
                 <h1>Scheduled activities</h1>
                 <hr>
-                <h3>Week n°: <b>{week}</b></h3>
+                <h3>Week n°: <b> {week} </b></h3>
                 <hr>
                 <div class="table-responsive-lg">
                     <table class="table table-hover">
@@ -103,7 +103,7 @@
 
                         <tbody>
                             <!-- BEGIN Activities -->
-                            <form action=mainteners_availability method="GET">
+                            <form action=selected_activity_information method="GET">
                                 <tr>
                                     <td>{id}</td>
                                     <td>{area}</td>

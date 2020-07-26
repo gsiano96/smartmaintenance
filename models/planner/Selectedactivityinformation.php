@@ -12,7 +12,7 @@ namespace models\planner;
 
 //use models\beans\BeanPlannedProcedure;
 use framework\Model;
-
+use mysqli_result;
 class Selectedactivityinformation extends Model
 {
     /**
@@ -33,6 +33,38 @@ class Selectedactivityinformation extends Model
     {
 
     }
+    public function getWorkspacenote(int $id) : mysqli_result{
+        $this->sql=<<<SQL
+        SELECT
+            workspace_notes as wksnote, activity_description as description
+        FROM 
+            maintenance_procedure 
+        WHERE
+            id_activity=$id
+        ORDER BY
+            id_activity;
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
 
+    }
+    public function getSkillsneeded(int $id) : mysqli_result{
+        $this->sql=<<<SQL
+        SELECT 
+            name as name 
+       FROM 
+            skill
+            INNER JOIN skills_maintenance_procedures
+            ON (skill.id_skill=skills_maintenance_procedures.id_skill)
+        WHERE 
+            id_maintenance_procedure= $id;
+       
+        
+SQL;
+        $this->updateResultSet();
+        return $this->getResultSet();
+        
+            
 
+    }
 }
