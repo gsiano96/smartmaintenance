@@ -35,13 +35,13 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- BEGIN HomeReferenceBlock -->
-                    <li class="nav-item active"><a class="nav-link" href="index">Home</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="to_do_activities?logout=yes">Logout</a></li>
                     <!-- END HomeReferenceBlock -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Planned Activities</a>
                         <div class="dropdown-menu">
                             <!-- BEGIN ScheduledActivitiesStats -->
-                            <label class="dropdown-item disabled"> {Statistic} </label>
+                            <label class="dropdown-item disabled"> {plannedStatistic} </label>
                             <a class="dropdown-item" href="to_do_activities">
                                 Go To
                                 <i class="fa fa-arrow-right"></i>
@@ -53,7 +53,7 @@
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Unplanned Activities (EWO)</a>
                         <div class="dropdown-menu">
                             <!-- BEGIN OnCallActivitiesStats -->
-                            <label class="dropdown-item disabled"> {Statistic} </label>
+                            <label class="dropdown-item disabled"> {unplannedStatistic} </label>
                             <a class="dropdown-item" href="on_call_activities">
                                 Go To
                                 <i class="fa fa-arrow-right"></i>

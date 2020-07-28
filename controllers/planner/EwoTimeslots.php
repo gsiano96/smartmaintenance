@@ -45,18 +45,31 @@ class EwoTimeslots extends Controller
      */
     protected function autorun($parameters = null)
     {
+        /*------------ INIZIO SEZIONE DI GESTIONE ACCESSO -----------------*/
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "planner/ewo_compilation");
+        $usrIden = $this->user->getId();
 
-        $_GET["activInfo"] = "Fisciano Molding";
-        $_GET["week"] = 23;
-        $_GET["day"] = 2;
+        if(isset($_GET["logout"])){
+            $this->user->logout();
+            header("Location: ewo_compilation");
+        }
+
+       // $_GET["activInfo"] = "Fisciano Molding";
+       // $_GET["week"] = 23;
+       // $_GET["day"] = 2;
         $_GET["year"] = 2020;
-        $_GET["activId"] = 2;
+        //$_GET["activId"] = 2;
 
 
         $activ_time = $this->model->getMaintenenaceDurationById($_GET["activId"]);
         $activ_skills = $this->model->getMaintenanceProcedureSkills($_GET["activId"]); //list as (id_skill,name)
-        $activ_skills_number=count($activ_skills);
-
+        if (empty($activ_skills)){
+            $activ_skills_number=0;
+        }else {
+            $activ_skills_number = count($activ_skills);
+        }
 
         $maints = $this->model->getMaintenerList(); //matrix
 
@@ -122,7 +135,33 @@ class EwoTimeslots extends Controller
         $this->view->setWorspaceNotes("Note");
         $this->view->setSkillsNeeded($activ_skills);
         $this->view->setStatusMessage($_GET["status"]);
+
+        /*------------ GESTIONE NAVBAR -----------------*/
+        /*------------ QUERY1 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT full_name from user where id_user=$usrIden
+SQL;
+        $this->model->updateResultSet();
+        $full_name=($this->model->getResultSet())->fetch_assoc()["full_name"];
+        $this->view->setVar("planner",$full_name);
+
+        /*------------ QUERY2 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT count(*) as counter from maintenance_procedure where procedure_class='planned procedure' and week={$_GET["week"]}
+SQL;
+        $this->model->updateResultSet();
+        $counter=($this->model->getResultSet())->fetch_assoc()["counter"];
+        $this->view->setVar("plannedStatistic",$counter);
+
+        /*------------ QUERY3 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT count(*) as counter from maintenance_procedure where procedure_class='unplanned procedure (ewo)' and week={$_GET["week"]}
+SQL;
+        $this->model->updateResultSet();
+        $counter=($this->model->getResultSet())->fetch_assoc()["counter"];
+        $this->view->setVar("unplannedStatistic",$counter);
     }
+
 
     /**
      * Inizialize the View by loading static design of /planner/ewo_timeslots.html.tpl
@@ -186,6 +225,8 @@ class EwoTimeslots extends Controller
 
     public function getMaintSkillsNumberOnRequiredSkill($maint_skills, $activ_skills)
     {
+
+
         $counter = 0;
         foreach ($activ_skills as $req_skill) {
             foreach ($maint_skills as $ava_skill) {

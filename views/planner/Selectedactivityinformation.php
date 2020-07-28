@@ -71,7 +71,7 @@ class Selectedactivityinformation extends View
     public function setSkillsList(array $skills){
         $skills_string="";
         foreach($skills as $skill){
-            $skills_string.="- $skill \r\n";
+            $skills_string.="- $skill <br>";
         }
         $this->setVar("skillsneeded",$skills_string);
     }

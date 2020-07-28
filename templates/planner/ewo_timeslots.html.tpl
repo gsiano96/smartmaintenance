@@ -5,7 +5,22 @@
     <title>Bootstrap 4 Website Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap core CSS -->
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"
+        media="screen">-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+    <![endif]-->
 
     <style>
         table tr td input[type="checkbox"] {
@@ -38,19 +53,19 @@
         <div class="container">
             <!-- BEGIN MaintainerName -->
             <div class="navbar-header">
-                <label class="navbar-brand"> {Planner}</label>
+                <label class="navbar-brand"> {planner}</label>
             </div>
             <!-- END MaintainerName -->
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <!-- BEGIN HomeReferenceBlock -->
-                    <li class="nav-item active"><a class="nav-link" href="../../index.php">Home</a></li>
+                    <li class="nav-item active"><a class="nav-link" href="ewo_compilation?logout=yes">Logout</a></li>
                     <!-- END HomeReferenceBlock -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Scheduled Activities</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Planned Activities</a>
                         <div class="dropdown-menu">
                             <!-- BEGIN ScheduledActivitiesStats -->
-                            <label class="dropdown-item disabled"> {Statistic} </label>
+                            <label class="dropdown-item disabled"> {plannedStatistic} </label>
                             <a class="dropdown-item" href="../../index.php">
                                 Go To
                                 <i class="fa fa-arrow-right"></i>
@@ -59,10 +74,10 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown ">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">On Call Activities</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Unplanned Activities</a>
                         <div class="dropdown-menu">
                             <!-- BEGIN OnCallActivitiesStats -->
-                            <label class="dropdown-item disabled"> {Statistic} </label>
+                            <label class="dropdown-item disabled"> {unplannedStatistic} </label>
                             <a class="dropdown-item" href="../../index.php">
                                 Go To
                                 <i class="fa fa-arrow-right"></i>
@@ -89,28 +104,28 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-sm-3"><label>Week n°</label></div>
-            <div class="col-sm-2">{week}</div>
-            <div class="col-sm-2"><label>activity to assign</label></div>
-            <div class="col-sm-3">{activInfo}</div>
-            <div class="col-sm-2">Required time {activTime}</div>
+            <div class="col-sm-2"><h2>Week n°</h2></div>
+            <div class="col-sm-1 "><h2>{week}</h2></div>
+            <div class="col-sm-3"><h2>Activity to assign</h2></div>
+            <div class="col-sm-4 bg-light"><h2>{activInfo}</h2></div>
+            <div class="col-sm-2 bg-light"><h2>Required time {activTime}</h2></div>
         </div>
         <div class="row">
-            <div class="col-sm-3">{dayString}</div>
-            <div class="col-sm-2">{day}</div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-2">Assigned time {time}</div>
-            <div class="col-sm-2">Time to be assigned {time}</div>
+            <div class="col-sm-3 bg-light"><h2>{dayString}</h2></div>
+            <div class="col-sm-2 bg-light"><h2>{day}</h2></div>
+
+            <!--<div class="col-sm-2">Assigned time {time}</div>-->
+            <div class="col-sm-7 bg-light text-right"><h2>Time to be assigned {time}</h2></div>
         </div>
         <hr>
         <form action="ewo_timeslots" method="GET">
             <div class="row">
-                <div class="col-md-4"><label>Workspace Notes</label></div>
-                <div class="col-md-4"><label>Maintainers Avaiability </label></div>
+                <div class="col-md-4"><h3>Workspace Notes</h3></div>
+                <div class="col-md-4"><h3>Maintainers Avaiability </h3></div>
                 <div class="col-md-4"><input type="submit" name="submit" value="Send"></div>
             </div>
             <div class="row">
-                <div class="col-sm-2">{workspaceNotes}</div>
+                <div class="col-sm-2 bg-light">{workspaceNotes}</div>
                 <div class="col-sm-10">
                     <table class="table table-striped">
                         <thead>

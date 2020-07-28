@@ -42,6 +42,16 @@ class MaintenersTimeslots extends Controller
     */
     protected function autorun($parameters = null)
     {
+        /*------------ INIZIO SEZIONE DI GESTIONE ACCESSO -----------------*/
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "planner/to_do_activities");
+        $usrIden = $this->user->getId();
+
+        if(isset($_GET["logout"])){
+            $this->user->logout();
+            header("Location: to_do_activities");
+        }
 
         //Session parameters (first invocation)
         $_GET["planner"]="planner";
@@ -149,13 +159,39 @@ class MaintenersTimeslots extends Controller
             // Display the status of the timeslots allocation
             header("Location: http://localhost/smartmaintenance/planner/mainteners_timeslots?week={$_GET["week"]}&activityId={$_GET["activityId"]}&activityInfo={$_GET["activityInfo"]}&maintainerId={$_GET["maintainerId"]}&day={$_GET["day"]}&success=$success");
         }
-
+        $workspace_notes=$this->model->getWorkspaceNotesById($_GET["activityId"]);
         //View
         $this->view->setHeader($_GET["week"],$_GET["day"],$_GET["activityInfo"],$maintener_name);
         $this->view->setMaintenersTimeslots($maintener_name, $availableSkillsNumber, $requiredSkillsNumber, $ava_timeslots, $activity_minutes);
         $this->view->setDayAvailability($day_availab);
-        $this->view->setWorkspaceNotes("Note");
+        $this->view->setWorkspaceNotes($workspace_notes);
         $this->view->setStatusMessage($_GET["success"]);
+
+
+        /*------------ GESTIONE NAVBAR -----------------*/
+        /*------------ QUERY1 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT full_name from user where id_user=$usrIden
+SQL;
+        $this->model->updateResultSet();
+        $full_name=($this->model->getResultSet())->fetch_assoc()["full_name"];
+        $this->view->setVar("planner",$full_name);
+
+        /*------------ QUERY2 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT count(*) as counter from maintenance_procedure where procedure_class='planned procedure' and week={$_GET["week"]}
+SQL;
+        $this->model->updateResultSet();
+        $counter=($this->model->getResultSet())->fetch_assoc()["counter"];
+        $this->view->setVar("plannedStatistic",$counter);
+
+        /*------------ QUERY3 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT count(*) as counter from maintenance_procedure where procedure_class='unplanned procedure (ewo)' and week={$_GET["week"]}
+SQL;
+        $this->model->updateResultSet();
+        $counter=($this->model->getResultSet())->fetch_assoc()["counter"];
+        $this->view->setVar("unplannedStatistic",$counter);
     }
 
     /**

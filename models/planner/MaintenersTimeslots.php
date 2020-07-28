@@ -271,6 +271,17 @@ SQL;
         $period = new DatePeriod($startDate, $interval, $endDate);
         return $period;
     }
+    public function getWorkspaceNotesById($activityId){
+        $this->sql=<<<SQL
+        SELECT workspace_notes 
+        from maintenance_procedure
+        where id_activity=$activityId
+SQL;
+    $this->updateResultSet();
+    $sql=$this->getResultSet();
+    return $sql->fetch_assoc()["workspace_notes"];
+
+    }
 
     public function setMaintainerOccupation(int $maintener_id,int $week, int $year,int $day,array $timeslots) : bool{
         if(count($timeslots) < 7){

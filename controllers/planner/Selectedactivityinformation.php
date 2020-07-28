@@ -38,7 +38,16 @@ class Selectedactivityinformation extends Controller
      */
     protected function autorun($parameters = null)
     {
+        /*------------ INIZIO SEZIONE DI GESTIONE ACCESSO -----------------*/
+        $this->grantRole(ADMIN_ROLE_ID);  // Administrator
+        $this->grantRole(MAINTAINER_ROLE_ID);   // Manager (see access_level table)
+        $this->user = $this->restrictToAuthentication(null, "planner/to_do_activities");
+        $usrIden = $this->user->getId();
 
+        if(isset($_GET["logout"])){
+            $this->user->logout();
+            header("Location: to_do_activities");
+        }
         //$this->view->getCurrentWeek();
         $this->view->setActivityinfo($_GET["activityInfo"]);
         $week=$this->view->getCurrentWeek();
@@ -55,10 +64,37 @@ class Selectedactivityinformation extends Controller
         }else{
             $requiredSkillsLabel[]="No skills required";
         }
+
         $this->view->setSkillsList($requiredSkillsLabel);
 
         $this->view->setActivityID($_GET["activityId"]);
+
+        /*------------ GESTIONE NAVBAR -----------------*/
+        /*------------ QUERY1 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT full_name from user where id_user=$usrIden
+SQL;
+        $this->model->updateResultSet();
+        $full_name=($this->model->getResultSet())->fetch_assoc()["full_name"];
+        $this->view->setVar("planner",$full_name);
+
+        /*------------ QUERY2 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT count(*) as counter from maintenance_procedure where procedure_class='planned procedure' and week=$week
+SQL;
+        $this->model->updateResultSet();
+        $counter=($this->model->getResultSet())->fetch_assoc()["counter"];
+        $this->view->setVar("plannedStatistic",$counter);
+        /*------------ QUERY3 -----------------*/
+        $this->model->sql=<<<SQL
+        SELECT count(*) as counter from maintenance_procedure where procedure_class='unplanned procedure (ewo)' and week=$week
+SQL;
+        $this->model->updateResultSet();
+        $counter=($this->model->getResultSet())->fetch_assoc()["counter"];
+        $this->view->setVar("unplannedStatistic",$counter);
+
     }
+
 
     /**
      * Inizialize the View by loading static design of /to_do_activities.html.tpl
