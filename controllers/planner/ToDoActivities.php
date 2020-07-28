@@ -43,17 +43,15 @@ class ToDoActivities extends Controller
     protected function autorun($parameters = null)
     {
         //Session parameters
-        $week=23;
-        //$week=$this->view->getCurrentWeek();
-        //echo "$week";
-
+        //$week=23;
+        $week=$this->view->getCurrentWeek();
        // Model
-       $activities = $this->model->getActivities($week);
+        $activities = $this->model->getActivities($week);
 
        // View
-       $this->view->setHeader($week);
-       $this->view->setActivitiesBlock($activities);
-       
+       //$this->view->setHeader($week);
+        $this->view->setActivitiesBlock($activities);
+
 
     }
 

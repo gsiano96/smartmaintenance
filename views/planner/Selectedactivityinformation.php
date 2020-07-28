@@ -22,12 +22,60 @@ class Selectedactivityinformation extends View
         parent::__construct($tplName);
     }
 
-    public function getCurrentWeek(){
+    public function getCurrentWeek(): int
+    {
         $date = date("W");
 
-        $this->setVar("week",$date);
+        $this->setVar("week", $date);
+
+        return $date;
 
     }
 
+    public function setActivityinfo($activity_info)
+    {
+        $this->setVar("activityInfo", $activity_info);
+    }
 
+
+     public function setActivityBlock(\mysqli_result $activity)
+    {
+        if ($activity->num_rows > 0) {
+
+            $this->openBlock("Activity");
+            while ($activi= $activity->fetch_object()) {
+                $this->setVar("workspacenotes", $activi->wksnote);
+                $this->setVar("interventiondescription", $activi->description);
+                $this->parseCurrentBlock();
+            }
+            $this->setBlock();
+        } else {
+            $this->hide("Activity");
+        }
+    }
+   /* public function setSkill(\mysqli_result $skills)
+    {
+        if ($skills->num_rows > 0) {
+
+            $this->openBlock("Skill");
+            while ($skill = $skills->fetch_object()) {
+                $this->setVar("skillsneeded", $skill->name);
+                $this->parseCurrentBlock();
+            }
+            $this->setBlock();
+        } else {
+            $this->hide("Skill");
+        }
+    }
+   */
+    public function setSkillsList(array $skills){
+        $skills_string="";
+        foreach($skills as $skill){
+            $skills_string.="- $skill \r\n";
+        }
+        $this->setVar("skillsneeded",$skills_string);
+    }
+    public function setActivityID (int $id){
+        $this->setVar("activityId",$id);
+    }
 }
