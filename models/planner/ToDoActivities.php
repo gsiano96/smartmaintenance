@@ -64,7 +64,7 @@ SQL;
             INNER JOIN entity 
             ON (area=id_entity)
         WHERE
-            week=$week
+            week=$week and procedure_class='planned procedure'
         ORDER BY
             id_activity;
 SQL;
